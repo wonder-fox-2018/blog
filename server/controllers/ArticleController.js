@@ -41,6 +41,46 @@ class ArticleController{
           })
     }
 
+    // edit article
+    static editArticle(req,res){
+        Article.findOne({
+            _id: req.params.id
+        })
+          .then(article =>{
+            
+            if(article.author == req.decoded.userid){
+                Article.findOneAndUpdate({
+                    _id: req.params.id
+                },{
+                    $set: {
+                       title:req.body.title,
+                       description: req.body.description 
+                    }
+                })
+                  .then(updatedarticle =>{     
+                    res.status(201).json({
+                        msg: 'Article updated',
+                        data: updatedarticle
+                    }) 
+                  })
+                  .catch(error =>{
+                     res.status(500).json({
+                         msg: 'ERROR Update Article ',error
+                     })
+                  })
+            }else if(article.author != req.decoded.userid){
+                res.status(401).json({
+                    msg: 'User is not authorized to update article'
+                })
+            }
+          })
+          .catch(error =>{
+              res.status(500).json({
+                  msg: 'ERROR Edit article ',error
+              })
+          })
+    }
+
 }
 
 module.exports = ArticleController
