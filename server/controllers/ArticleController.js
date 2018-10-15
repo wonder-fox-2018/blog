@@ -47,7 +47,7 @@ class ArticleController{
             _id: req.params.id
         })
           .then(article =>{
-            
+            // check user
             if(article.author == req.decoded.userid){
                 Article.findOneAndUpdate({
                     _id: req.params.id
@@ -77,6 +77,91 @@ class ArticleController{
           .catch(error =>{
               res.status(500).json({
                   msg: 'ERROR Edit article ',error
+              })
+          })
+    }
+
+    // show lists of articles
+    static getListArticles(req,res){
+        Article.find({}).populate('author')
+         .then(articles =>{
+            res.status(200).json({
+                msg: 'List of articles',
+                data: articles
+            })
+         })
+         .catch(error =>{
+             res.status(500).json({
+                msg: 'ERROR Get list of articles' 
+             })
+         })
+    }
+
+    // show detail of articles
+    static getDetails(req,res){
+        Article.findOne({ _id: req.params.id}).populate('author')
+         .then(article=>{
+            res.status(200).json({
+                msg: `Details of article ${article.title}`,
+                data: article
+            })
+         })
+         .catch(error =>{
+             res.status(500).json({
+                 msg: 'ERROR get detail of article ',error
+             })
+         })
+    }
+
+    // delete article
+    static deleteArticle(req,res){
+        Article.findOne({
+            _id: req.params.id
+        })
+          .then(article =>{
+              let deleteArticle = article
+             // check user
+             if(article.author == req.decoded.userid){
+                // Update user data
+                User.findOneAndUpdate({
+                    _id: req.decoded.userid
+                },{
+                    $pull: {
+                        articleslist: deleteArticle._id
+                    }
+                })
+                 .then(user=>{
+
+                    // completely remove article
+                    Article.findOneAndRemove({
+                        _id: req.params.id
+                    })
+                      .then(deletedArticle =>{
+                        res.status(201).json({
+                            msg: 'Article Deleted',
+                            data: deletedArticle
+                        })
+                      })
+                      .catch(error =>{
+                          res.status(500).json({
+                              msg: 'ERROR Delete Article ',error
+                          })
+                      })
+                 })
+                 .catch(error =>{
+                     res.status(500).json({
+                         msg: 'ERROR Update User data when delete article',error
+                     })
+                 })
+             }else{
+                 res.status(403).json({
+                     msg: 'User is not authorized to delete article'
+                 })
+             }
+          })
+          .catch(error =>{
+              res.status(500).json({
+                  msg: 'ERROR Get article before delete ',error
               })
           })
     }
