@@ -75,6 +75,43 @@ class UserController {
             })
         }
     }
+
+    // get details
+    static getDetailUser(req,res){
+        User.findOne({
+            _id: req.decoded.userid
+        }).populate('articleslist')
+          .then(user =>{
+              res.status(200).json({
+                  msg: `Detail of user ${user.name}`,
+                  data: user
+              })
+          })
+          .catch(error =>{
+              res.status(500).json({
+                  msg: 'ERROR Get Details of User ',error
+              })
+          })
+    }
+
+    // get credentials
+    static getCredentials(req,res){
+        User.findOne({
+            _id: req.decoded.userid
+        })
+          .then(user =>{
+              res.status(200).json({
+                  msg: `Basic info of user ${user.name}`,
+                  name: user.name,
+                  email: user.email
+              })
+          })
+          .catch(error =>{
+              res.status(500).json({
+                  msg: `ERROR Get Basic Info `,error
+              })
+          })
+    }
 }
 
 module.exports = UserController

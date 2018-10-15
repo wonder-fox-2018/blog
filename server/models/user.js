@@ -7,19 +7,23 @@ const hashPassword = require('../helpers/hashPassword')
 const UserSchema = new Schema({
     name: {
         type: String,
-        required: [true, 'Name should not be empty']
+        required: [true,'Name should not be empty']
     },
     email: {
         type: String,
-        required: [true,'Email should not be empty'],
         unique: [true,'Please Check your email']
     },
     password: {
-        type: String
+        type: String,
+        required: [true,'Password should not be empty']
     },
     thirdpartylogin: {
         type: String
-    }
+    },
+    articleslist: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Article'
+    }]
 },{
     timestamps : true
 })
