@@ -10,8 +10,11 @@ const ArticleRouter = require('./routes/ArticleRoutes')
 const CommentRouter = require('./routes/CommentRoutes')
 const app = express()
 
-mongoose.connect('mongodb://localhost:27017/blog23db', {useNewUrlParser: true})
-// mongoose.connect('mongodb://localhost:27017/blog23dbtesting', {useNewUrlParser: true})
+if(process.env.NODE_ENV === 'dev'){
+    mongoose.connect('mongodb://localhost:27017/blog23db', {useNewUrlParser: true}) 
+}else if(process.env.NODE_ENV === 'test'){
+    mongoose.connect('mongodb://localhost:27017/blog23dbtesting', {useNewUrlParser: true})
+}
 
 app.use(express.urlencoded({extended : false}))
 app.use(express.json())
