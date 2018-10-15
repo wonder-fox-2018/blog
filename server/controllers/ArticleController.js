@@ -99,7 +99,8 @@ class ArticleController{
 
     // show detail of articles
     static getDetails(req,res){
-        Article.findOne({ _id: req.params.id}).populate('author')
+        Article.findOne({ _id: req.params.id})
+        .populate('author').populate('listcomments')
          .then(article=>{
             res.status(200).json({
                 msg: `Details of article ${article.title}`,

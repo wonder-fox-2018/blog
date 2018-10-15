@@ -7,6 +7,7 @@ const cors = require('cors')
 const IndexRouter = require('./routes/IndexRoutes')
 const UserRouter = require('./routes/UserRoutes')
 const ArticleRouter = require('./routes/ArticleRoutes')
+const CommentRouter = require('./routes/CommentRoutes')
 const app = express()
 
 mongoose.connect('mongodb://localhost:27017/blog23db', {useNewUrlParser: true})
@@ -18,6 +19,7 @@ app.use(cors())
 app.use('/user',IndexRouter)
 app.use('/users',UserRouter)
 app.use('/articles',ArticleRouter)
+app.use('/comments', CommentRouter)
 
 app.get('/', (req,res) =>{ res.send('OK') })
 app.listen(process.env.PORT || 3000, ()=>{
