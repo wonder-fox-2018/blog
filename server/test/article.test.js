@@ -138,8 +138,36 @@ describe('Article CRUD', ()=>{
                 .set('token', tokenTest)
                 .end((err,res)=>{
                     expect(res).to.have.status(201)
+                    expect(res.body.msg).to.equal('Article Deleted')
                     done()
                 })
+        })
+    })
+
+    describe('Negative Test - Unauthorized User try to delete article', ()=>{
+        it('should give an error message', (done)=>{
+            chai.request(app)
+              .post('/user/register')
+              .send({
+                  name: 'Another man',
+                  email: 'another@mail.com',
+                  password: 'another'
+              })
+              .end((err,res)=>{
+                  let anotherToken = res.body.token
+                  expect(res).to.have.status(201)
+                  expect(res.body).to.have.property('token')
+                  
+                  // try to delete article
+                  chai.request(app)
+                    .delete(`/articles/${articleIdTest}`)
+                    .set('token', anotherToken)
+                    .end((err,res)=>{
+                        expect(res).to.have.status(403)
+                        expect(res.body.msg).to.equal('User is not authorized to delete article')
+                        done()
+                    })
+              })
         })
     })
 

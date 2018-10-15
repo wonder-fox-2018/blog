@@ -85,6 +85,9 @@ describe('Commentary CRUD', ()=>{
              })
              .end((err,res)=>{
                  expect(res).to.have.status(201)
+                 expect(res.body.data).to.be.an('object')
+                 expect(res.body.data).to.have.a.property('content')
+                 expect(res.body.data.content).to.equal('Your second comment')
                  done()
              })
         })
@@ -97,6 +100,7 @@ describe('Commentary CRUD', ()=>{
              .set('token', tokenTest)
              .end((err,res)=>{
                  expect(res).to.have.status(200)
+                 expect(res.body.data).to.be.an('array')
                  done()
              })
         })
@@ -109,8 +113,37 @@ describe('Commentary CRUD', ()=>{
              .set('token',tokenTest)
              .end((err,res)=>{
                  expect(res).to.have.status(201)
+                 expect(res.body.msg).to.equal('Comment Deleted')
+                 expect(res.body.data).to.be.an('object')
                  done()
              })
+        })
+    })
+
+    describe('Negative Test - Unauthorized user try to delete comment', ()=>{
+        it('should give an error message', (done)=>{
+            chai.request(app)
+               .post('/user/register')
+               .send({
+                   name: 'Another Guy',
+                   email: 'another@mail.com',
+                   password: 'another'
+               })
+               .end((err,res)=>{
+                   let otherToken = res.body.token
+                   expect(res).to.have.status(201)
+                   expect(res.body).to.have.property('token')
+                   
+                   // try to delete comment
+                   chai.request(app)
+                     .delete(`/comments/${commentIdTest}`)
+                     .set('token',otherToken)
+                     .end((err,res)=>{
+                         expect(res).to.have.status(403)
+                         expect(res.body.msg).to.equal('User is not authorized to delete comment')
+                         done()
+                     })   
+               })
         })
     })
 
