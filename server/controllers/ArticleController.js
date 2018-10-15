@@ -2,6 +2,7 @@
 
 const Article = require('../models/article')
 const User = require('../models/user')
+const Commentary = require('../models/comment')
 
 class ArticleController{
 
@@ -83,7 +84,7 @@ class ArticleController{
 
     // show lists of articles
     static getListArticles(req,res){
-        Article.find({}).populate('author')
+        Article.find({}).populate('author').populate('listcomments')
          .then(articles =>{
             res.status(200).json({
                 msg: 'List of articles',
@@ -133,19 +134,31 @@ class ArticleController{
                 })
                  .then(user=>{
 
-                    // completely remove article
-                    Article.findOneAndRemove({
-                        _id: req.params.id
+                    // update comment collections --> 
+                    // delete all comments related to this article
+                    Commentary.deleteMany({
+                        articleid: deleteArticle._id
                     })
-                      .then(deletedArticle =>{
-                        res.status(201).json({
-                            msg: 'Article Deleted',
-                            data: deletedArticle
-                        })
+                      .then(commentupdated =>{
+                          // completely remove article
+                          Article.findOneAndRemove({
+                              _id: req.params.id
+                          })
+                            .then(deletedArticle =>{
+                              res.status(201).json({
+                                  msg: 'Article Deleted',
+                                  data: deletedArticle
+                              })
+                            })
+                            .catch(error =>{
+                                res.status(500).json({
+                                    msg: 'ERROR Delete Article ',error
+                                })
+                            })  
                       })
                       .catch(error =>{
                           res.status(500).json({
-                              msg: 'ERROR Delete Article ',error
+                             msg:'ERROR Update Comment while delete article' 
                           })
                       })
                  })

@@ -40,6 +40,22 @@ class CommentController{
           })
     }
 
+    // get lists of all comments
+    static getListComments(req,res){
+        Commentary.find({})
+          .then(comments =>{
+              res.status(200).json({
+                  msg: 'List of comments',
+                  data: comments
+              })
+          })
+          .catch(error =>{
+              res.status(500).json({
+                  msg: 'ERROR Get list of comments'
+              })
+          })
+    }
+
     // delete comment 
     static deleteComment(req,res){
         
