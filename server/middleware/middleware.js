@@ -3,7 +3,6 @@ const jwt = require('jsonwebtoken')
 const Mongoose = require('mongoose');
 
 class Middleware {
-    //AUTHENTICATE
     static authenticate(req, res, next) {
         let token = req.headers.token
         if (token) {
@@ -11,8 +10,7 @@ class Middleware {
                 if (!err) {
                     User.findById(decoded.userId)
                         .then(function (user) {
-                            req.id = user._id
-                            req.dataUser = user
+                            req.userData = user
                             next()
                         })
                 } else {
@@ -29,16 +27,16 @@ class Middleware {
     }
 
     //IS OWNER
-    static isOwner(req,res,next){
-        const id = new Mongoose.Types.ObjectId(req.params.id)
+    // static isOwner(req,res,next){
+    //     const id = new Mongoose.Types.ObjectId(req.params.id)
 
-        User.find({'tablename' : {$in:id}})
-        .then(data =>{
-            if(data[0].id === req.id.toString()){
-                next()
-            }
-        })
-    }
+    //     User.find({'tablename' : {$in:id}})
+    //     .then(data =>{
+    //         if(data[0].id === req.id.toString()){
+    //             next()
+    //         }
+    //     })
+    // }
 }
 
 module.exports = Middleware;

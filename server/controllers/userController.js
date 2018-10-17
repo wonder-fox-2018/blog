@@ -3,7 +3,6 @@ const { encrypt } = require('../helpers')
 const jwt  = require('jsonwebtoken')
 require('dotenv').config()
 const bcrypt = require('bcrypt')
-const axios = require('axios')
 
 class Controller {
     static signup(req,res){
@@ -37,9 +36,7 @@ class Controller {
             email : req.body.email
         })
         .then(function(dataUser){
-            
             let decrypt = bcrypt.compareSync(req.body.password, dataUser.password); // true
-
             if(decrypt == true){
                 let token = jwt.sign({
                     userId : dataUser._id,
@@ -58,13 +55,26 @@ class Controller {
                     message : 'Invalid password'
                 })
             }
-            
         })
         .catch(function(){
             res.status(500).json({
                 message : `Invalid username`
             })
         })
+    }
+
+    static read(req,res){
+        User.find()
+            .then(function (allUser) {
+                res.status(201).json({
+                    allUser
+                })
+            })
+            .catch(function (err) {
+                res.status(500).json({
+                    err
+                })
+            })
     }
 }
 

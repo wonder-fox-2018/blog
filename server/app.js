@@ -3,6 +3,8 @@ const routes   = require('./routes')
 
 //ROUTES REQUIRE
 const userRoutes = require('./routes/users')
+const categoryRoutes = require('./routes/category')
+const articleRoutes = require('./routes/article')
 
 const mongoose = require('mongoose')
 const cors     = require('cors')
@@ -25,6 +27,8 @@ app.use(express.json())
 //ROUTES
 app.use('/', routes)
 app.use('/users',userRoutes)
+app.use('/categories',categoryRoutes)
+app.use('/articles',articleRoutes)
 
 app.listen(port, function(){
     console.log('Listening on port', port)
