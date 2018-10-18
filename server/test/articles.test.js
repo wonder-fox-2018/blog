@@ -292,45 +292,54 @@ describe('Article', function () {
         })
     })
 
-    // describe('DELETE /articles/', function () {
+    describe('DELETE /articles/', function () {
 
-    //     describe('without token / invalid token', function () {
+        describe('without token / invalid token', function () {
             
-    //         it('no token | should return error 500', function(done) {
-    //             chai
-    //             .request(app)
-    //             .delete(`/articles/${id}`)
-    //             .end((err, res) => {
-    //                 expect(res).to.have.status(500)
-    //             })
-    //         })
+            it('no token | should return error 500', function(done) {
+                chai
+                .request(app)
+                .delete(`/articles/${id}`)
+                .end((err, res) => {
+                    expect(res.body).to.have.property('message')
+                    expect(res.body.message).to.equal('Token Not Found')
+                    expect(res).to.have.status(500)
+                    done()
+                })
+            })
 
-    //         it('invalid token | should return error 500', function(done) {
-    //             chai
-    //             .request(app)
-    //             .delete(`/articles/${id}`)
-    //             .set({
-    //                 token: 'invalid'
-    //             })
-    //             .end((err, res) => {
-    //                 expect(res).to.have.status(500)
-    //             })
-    //         })
-    //     })
+            it('invalid token | should return error 500', function(done) {
+                chai
+                .request(app)
+                .delete(`/articles/${id}`)
+                .set({
+                    token: 'invalid'
+                })
+                .end((err, res) => {
+                    expect(res.body).to.have.property('message')
+                    expect(res.body.message).to.equal('Invalid Token')
+                    expect(res).to.have.status(500)
+                    done()
+                })
+            })
+        })
 
-    //     describe('valid token', function () {
+        describe('valid token', function () {
             
-    //         it('it should delete choosen article', function(done) {
-    //             chai
-    //             .request(app)
-    //             .delete(`/articles/${id}`)
-    //             .set({
-    //                 token: token
-    //             })
-    //             .end((err, res) => {
-    //                 expect(res).to.have.status(200)
-    //             })
-    //         })
-    //     })
-    // })
+            it('it should delete choosen article', function(done) {
+                chai
+                .request(app)
+                .delete(`/articles/${id}`)
+                .set({
+                    token: token
+                })
+                .end((err, res) => {
+                    expect(res.body).to.have.property('message')
+                    expect(res.body.message).to.equal('Article deleted successfully')
+                    expect(res).to.have.status(200)
+                    done()
+                })
+            })
+        })
+    })
 });

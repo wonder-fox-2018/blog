@@ -6,5 +6,7 @@ router.post('/create',middleware.authenticate,articleController.create)
 router.get('/',articleController.read)
 router.get('/search',articleController.search)
 router.get('/:id',articleController.readOne)
+// router.put('/:id',articleController.update)
+router.delete('/:id',middleware.authenticate,articleController.delete)
 
 module.exports = router

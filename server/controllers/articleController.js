@@ -83,6 +83,20 @@ class Controller {
         })
     }
 
+    static delete(req,res){
+        Article.findOneAndDelete(req.params.id)
+        .then((deleted)=>{
+            res.status(200).json({
+                message : 'Article deleted successfully'
+            })
+        })
+        .catch((err)=>{
+            res.status(500).json({
+                message : 'Delete article failed'
+            })
+        })
+    }
+
 }
 
 module.exports = Controller;
