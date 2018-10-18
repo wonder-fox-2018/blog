@@ -291,4 +291,46 @@ describe('Article', function () {
             })
         })
     })
+
+    // describe('DELETE /articles/', function () {
+
+    //     describe('without token / invalid token', function () {
+            
+    //         it('no token | should return error 500', function(done) {
+    //             chai
+    //             .request(app)
+    //             .delete(`/articles/${id}`)
+    //             .end((err, res) => {
+    //                 expect(res).to.have.status(500)
+    //             })
+    //         })
+
+    //         it('invalid token | should return error 500', function(done) {
+    //             chai
+    //             .request(app)
+    //             .delete(`/articles/${id}`)
+    //             .set({
+    //                 token: 'invalid'
+    //             })
+    //             .end((err, res) => {
+    //                 expect(res).to.have.status(500)
+    //             })
+    //         })
+    //     })
+
+    //     describe('valid token', function () {
+            
+    //         it('it should delete choosen article', function(done) {
+    //             chai
+    //             .request(app)
+    //             .delete(`/articles/${id}`)
+    //             .set({
+    //                 token: token
+    //             })
+    //             .end((err, res) => {
+    //                 expect(res).to.have.status(200)
+    //             })
+    //         })
+    //     })
+    // })
 });
