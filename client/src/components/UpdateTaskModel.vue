@@ -31,6 +31,7 @@
 <script>
 /* eslint-disable */
 export default {
+    name:'updatetaskmodal',
     props:['idTask','refreshContent'],
     data(){
         return {

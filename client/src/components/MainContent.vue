@@ -25,6 +25,7 @@
 <script>
 /* eslint-disable */
 export default {
+    name:'maincontent',
     props:['searchtxt','isLogin','dataArticle','iduser'],
     data(){
         return {
@@ -38,22 +39,20 @@ export default {
           return date
         },
         refreshArticle(){
-            let apptoken=localStorage.getItem('apptoken')
-            if(apptoken){
-                // this.$server.get(`/articles/byauthor`,{}, {
-                //     headers: { apptoken: apptoken }
-                // })
-                this.$server({
-                    url:  `/articles`,
-                    method: 'GET'
-                })
-                .then(({data}) => {
-                    this.articles=data.articles
-                })
-                .catch((err) => {
-                    console.log(err)
-                });
-            }
+            // this.$server.get(`/articles/byauthor`,{}, {
+            //     headers: { apptoken: apptoken }
+            // })
+            this.$server({
+                url:  `/articles`,
+                method: 'GET'
+            })
+            .then(({data}) => {
+                this.articles=data.articles
+            })
+            .catch((err) => {
+                console.log(err)
+            });
+            
         },
         doDelete(idArticle,index){
              let apptoken=localStorage.getItem('apptoken')

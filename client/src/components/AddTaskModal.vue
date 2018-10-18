@@ -31,6 +31,7 @@
 <script>
 /* eslint-disable */
 export default {
+    name:'addtask',
     data(){
         return {
             taskInputTitle: '',
@@ -40,6 +41,12 @@ export default {
         }
     },
     methods:{
+        clearTask(){
+            this.taskInputTitle= ''
+            this.taskInputDescription= ''
+            this.MsgTitleTask= ''
+            this.MsgDescTask= ''
+        },
         doAddTask(){
             let apptoken = localStorage.getItem('apptoken')
             this.$server({
@@ -55,6 +62,7 @@ export default {
             })
             .then(({data}) => {
                 this.$emit('to-parent-add-articles', data.articles )
+                this.clearTask()
                 $('#addTaskModal').modal('hide');
             })
             .catch((err) => {

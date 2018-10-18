@@ -31,6 +31,7 @@
 <script>
 /* eslint-disable */
 export default {
+    name:'profile',
     props:['changeStatusLogin','isLogin'],
     data() {
         return {

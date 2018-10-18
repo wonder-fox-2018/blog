@@ -45,6 +45,7 @@
 <script>
 /* eslint-disable */
 export default {
+    name:'registermodal',
     props: ['isLogin'],
     data() {
         return {

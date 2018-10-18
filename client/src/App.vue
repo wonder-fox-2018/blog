@@ -18,7 +18,7 @@ import registermodal from '@/components/RegisterModal.vue'
 import addtaskmodal from '@/components/AddTaskModal.vue'
 /* eslint-disable */
 export default {
-  name: 'home',
+  name: 'appvue',
   data () {
     return {
       iduser:'',

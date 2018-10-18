@@ -14,14 +14,15 @@
 
 <script>
 export default {
+  name: 'leftside',
   data () {
     return {
       searchtxt: ''
     }
   },
-  methods:{
-    clearsearch(){
-      this.searchtxt=''
+  methods: {
+    clearsearch () {
+      this.searchtxt = ''
     }
   },
   watch: {
