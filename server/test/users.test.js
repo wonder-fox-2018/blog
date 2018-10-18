@@ -255,10 +255,10 @@ describe('User Get Profile Data API Test', function() {
             .set('token', token)
             .end(function(err, res) {
                 expect(res).to.have.status(200);
-                // expect(res.body).to.have.property('_id');
-                // expect(res.body).to.have.property('username');
-                // expect(res.body).to.have.property('email');
-                // expect(res.body).to.have.property('password');
+                expect(res.body).to.have.property('_id');
+                expect(res.body).to.have.property('username');
+                expect(res.body).to.have.property('email');
+                expect(res.body).to.have.property('password');
                 done();
             });
     });
