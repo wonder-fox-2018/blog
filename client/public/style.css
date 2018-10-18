@@ -1,0 +1,259 @@
+.unselectable {
+    -webkit-user-select: none; /* Safari */        
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+/Edge */
+    user-select: none; /* Standard */
+    cursor: default;
+}
+
+::-webkit-scrollbar { 
+    display: none; 
+}
+
+html, body
+{
+    width: 100%;
+    margin: 0px;
+    padding: 0px;
+    overflow-x: hidden; 
+}
+
+#app {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align: center;
+}
+
+#nav {
+    padding: 30px;
+    background: white;
+    position: absolute;
+    width: 99vw;
+    height: 100vh;
+    margin-top: -100vh;
+    z-index: 9000;
+}
+
+#navlinks {
+    position: absolute;
+    margin-top: 27.5vh;
+    width: 100%;
+}
+
+#nav a {
+    text-decoration: none;
+    font-weight: bold;
+    color: #42b983;
+    font-size: 50px;
+    font-family: 'Monthoers', sans-serif;
+}
+
+#signinit {
+    font-family: 'Monthoers', sans-serif;
+}
+
+#signBackdrop {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: rgba(66, 185, 131, 0.9);
+    z-index: 10000;
+}
+
+#signModal {
+    position: fixed;
+    width: 20%;
+    top: 25%;
+    left: 40%;
+    background-color: transparent;
+    z-index: 11000;
+}
+
+#signModal input {
+    border: none;
+    margin: 1vh 0;
+    width: 100%;
+    background: transparent;
+    color: white;
+    font-size: 20px;
+    padding: 10px 20px;
+    font-family: 'Roboto', sans-serif;
+}
+
+#signModal input:focus, #signBtn button:focus, .signModalBtn:focus {
+    outline: none;
+}
+
+#signBtn {
+    margin-top: 3vh;
+    color: white;
+    font-size: 30px;
+}
+
+#signBtn button {
+    background: transparent;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+#phInput {
+    cursor: default;
+}
+
+.signModalBtn {
+    background: transparent;
+    border: none;
+    margin-top: 1vh;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+#notice {
+    color: white;
+    font-family: 'Roboto', sans-serif;
+}
+
+#main {
+    margin: 105vh 0 0 0;
+    width: 99vw;
+    height: 95vh;
+    overflow: hidden;
+}
+
+a {
+    color: black;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 700;
+}
+
+a:hover {
+    color: #42b983;
+}
+
+#aPLink a {
+    font-size: 25px;
+    letter-spacing: 5px;
+    font-family: 'Monthoers', sans-serif;
+}
+
+#postlist {
+    height: 95vh;
+    overflow: scroll
+}
+
+#postlarge {
+    height: 95vh;
+    overflow: scroll
+}
+
+.card-body {
+    font-family: 'Roboto', sans-serif;    
+}
+
+.card-title {
+    font-weight: 700;
+}
+
+.card-text {
+    font-weight: 400;
+}
+
+#addBtn {
+    border: transparent;
+    height: 50px;
+    width: 100%;
+    font-size: 20px;
+    padding: 15px 20px;
+    margin-bottom: 30px;
+    border-radius: 25px;
+    background: #42b983;
+    color: white;
+    cursor: pointer;
+    font-family: 'Monthoers', sans-serif;
+}
+
+#addBtn:hover {
+    background: white;
+    color: #42b983;
+    border: 3px solid #42b983;
+    padding: 12px 17px;
+}
+
+#addBtn:focus {
+    outline: none;
+}
+
+#addBackdrop {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 10000;
+}
+
+#addModal {
+    position: fixed;
+    width: 50%;
+    top: 15%;
+    left: 25%;
+    background-color: white;
+    z-index: 11000;
+    padding: 50px;
+    padding-bottom: 10px;
+    max-height: 70%;
+    overflow: auto;
+}
+
+#addModal input, #addModal textarea {
+    border: none;
+    margin: 1vh 0;
+    width: 100%;
+    background: transparent;
+    font-family: 'Roboto', sans-serif;
+}
+
+#addModal input:focus, #addModal textarea:focus {
+    outline: 2px solid #42b983;
+}
+
+#addModal input {
+    font-size: 20px;
+    font-weight: 700;
+    padding: 10px 20px;
+    text-transform: capitalize;
+}
+
+#addModal textarea {
+    font-size: 15px;
+    font-weight: 400;
+    padding: 15px 20px;
+}
+
+#addModal button {
+    border: transparent;
+    height: 45px;
+    font-size: 20px;
+    padding: 10px 30px 15px 30px;
+    margin: 20px;
+    border-radius: 22.5px;
+    background: #42b983;
+    color: white;
+    cursor: pointer;
+    font-family: 'Monthoers', sans-serif;
+}
+
+#addModal button:hover {
+    background: white;
+    color: #42b983;
+    border: 3px solid #42b983;
+    padding: 7px 27px 12px 27px;
+}
+
+#addModal button:focus {
+    outline: none;
+}

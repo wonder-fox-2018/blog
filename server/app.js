@@ -19,10 +19,9 @@ app.use(express.urlencoded({ extended: false }));
 
 if (process.env.STATUS === 'test') {
     mongoose.connect(`mongodb://localhost:27017/wonder-blog-server-test`, { useNewUrlParser: true });
+} else {
+    mongoose.connect(`mongodb://localhost:27017/wonder-blog-server`, { useNewUrlParser: true });
 }
-// else {
-//     mongoose.connect(`mongodb://blog-db-mlab-user:${process.env.MLAB_PASSWORD}@ds111913.mlab.com:11913/blog-db`, { useNewUrlParser: true });
-// }
 
 app.use('/articles', articlesRouter)
 app.use('/users', usersRouter)
