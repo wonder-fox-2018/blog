@@ -1,8 +1,8 @@
 <template>
 <div class="home">
   <div class="row">
-    <Profile :isLogin="isLogin"></Profile>
-    <Article :isLogin="isLogin"></Article>
+    <Profile :isLogin="isLogin" @updateUserId="updateUserId" @updateArticle="fetchNewArticle"></Profile>
+    <Article :isLogin="isLogin" :userId="userId" :updateArticle="updateArticle"></Article>
   </div>
 </div>
 </template>
@@ -18,9 +18,18 @@ export default {
     Profile,Article,
   },
   props: ['isLogin'],
-  watch: {
-    isLogin() {
-      console.log('masuk');
+  data() {
+    return {
+      userId: '',
+      updateArticle: '',
+    }
+  },
+  methods: {
+    updateUserId(val) {
+      this.userId = val;
+    },
+    fetchNewArticle(val) {
+      this.updateArticle = val;
     }
   }
 };

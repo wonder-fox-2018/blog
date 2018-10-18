@@ -12,15 +12,15 @@ module.exports = {
 
         newArticle.save()
             .then((result) => {
-                ServerResponse.success(res, 201, 'article has been submitted', {result});
+                res.status(201).json(result);
             }).catch((err) => {
                 ServerResponse.error(res, 400, 'invalid input');
             });
     },
 
     showAll: (req, res) => {
-        Article.find().populate('user').exec().then((article) => {
-            ServerResponse.success(res, 200, 'fetching all articles', {article});
+        Article.find().populate('author', '_id first_name last_name').exec().then((article) => {
+            res.status(200).json(article);
         }).catch((err) => {
             ServerResponse.error(res, 500, 'server is down');
         });
@@ -58,7 +58,7 @@ module.exports = {
 
     showUserArticle: (req, res) => {
         Article.find({author: req.params.id}).then((article) => {
-            ServerResponse.success(res, 200, 'fetching articles by user id', {article});
+            res.status(200).json(article);
         }).catch((err) => {
             ServerResponse.error(res, 500, 'server is down');
         });

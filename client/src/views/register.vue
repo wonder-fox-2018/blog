@@ -1,5 +1,5 @@
 <template>
-<div class="flex-column">
+<div class="flex-column border p-4">
   <form>
     <div v-if="failInput"><h4>invalid input</h4></div>
     <div class="form-group">

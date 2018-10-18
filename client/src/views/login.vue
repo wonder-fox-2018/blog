@@ -1,5 +1,5 @@
 <template>
-<div class="flex-column justify-content-md-center">
+<div class="flex-column justify-content-md-center border p-4">
   <form>
     <div v-if="failLogin">
       <h4>invalid email or password</h4>

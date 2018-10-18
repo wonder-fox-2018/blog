@@ -7,6 +7,8 @@ router.get('/', ArticleController.showAll);
 
 router.use(Middlewares.isLogin);
 
+router.get('/:id', ArticleController.showUserArticle);
+
 router.post('/', ArticleController.create);
 
 router.patch('/:id', ArticleController.update);
