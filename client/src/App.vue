@@ -4,9 +4,9 @@
       <router-link to="/about">About</router-link> -->
       <navbar :isLogin="isLogin" :changetoLogout="changetoLogout"></navbar>
       <addtaskmodal @to-parent-add-articles="addArticle"></addtaskmodal>
-      <loginmodal :isLogin="isLogin" :changeStatusLogin="changeStatusLogin"></loginmodal>
+      <loginmodal :isLogin="isLogin" :changeStatusLogin="changeStatusLogin" @parent-iduser="setiduser"></loginmodal>
       <registermodal></registermodal>
-      <router-view :isLogin="isLogin" :changeStatusLogin="changeStatusLogin" :dataArticle="dataArticle"/>
+      <router-view :isLogin="isLogin" :iduser="iduser" :changeStatusLogin="changeStatusLogin" :dataArticle="dataArticle" />
   </div>
 </template>
 
@@ -21,11 +21,16 @@ export default {
   name: 'home',
   data () {
     return {
+      iduser:'',
       isLogin: false,
       dataArticle:''
     }
   },
   methods:{
+    setiduser(data){
+      console.log(data)
+      this.iduser=data
+    },
     changetoLogout(){
       localStorage.removeItem('apptoken')
       this.isLogin=false
@@ -48,16 +53,17 @@ export default {
   created() {
     let apptoken=localStorage.getItem('apptoken')
     if(apptoken){
-        this.$server.get(`/users`, {
-            headers: { apptoken: apptoken }
-        })
-        .then(({data}) => {
-          console.log(data.user)
-          if(this.isLogin==false)
-              this.isLogin=true
-        }).catch((err) => {
-            console.log(err)
-        });
+      this.$server.get(`/users`, {
+          headers: { apptoken: apptoken }
+      })
+      .then(({data}) => {
+        this.iduser=data.user._id
+        if(this.isLogin==false)
+            this.isLogin=true
+      })
+      .catch((err) => {
+          console.log(err)
+      });
     }
   }
 }

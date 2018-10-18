@@ -10,7 +10,8 @@
             <div class="card-footer bg-transparent">
                 <div> <small>created at: {{ formatDate(article.createdAt) }}</small></div>
                 <div> <small>updated at: {{ formatDate(article.updatedAt) }}</small></div>
-                <span v-if=isLogin>
+                <!-- <div> <small> {{ article.author._id + 'id user ' + iduser  }}</small></div> -->
+                <span v-if="isLogin && iduser==article.author._id">
                     <a @click="doDelete(article._id,index)" href="#" class="card-link">Delete</a>
                     <a @click="doUpdate(article._id)" href="#" class="card-link" data-toggle="modal" data-target="#editTaskModal" >Update</a>
                 </span>
@@ -24,11 +25,10 @@
 <script>
 /* eslint-disable */
 export default {
-    props:['searchtxt','isLogin','dataArticle'],
+    props:['searchtxt','isLogin','dataArticle','iduser'],
     data(){
         return {
             articles:null,
-            idcurrentuser:''
         }
     },
     methods:{
@@ -44,11 +44,8 @@ export default {
                 //     headers: { apptoken: apptoken }
                 // })
                 this.$server({
-                    url:  `/articles/byauthor`,
-                    method: 'GET',
-                    headers: {
-                    apptoken: apptoken 
-                    }
+                    url:  `/articles`,
+                    method: 'GET'
                 })
                 .then(({data}) => {
                     this.articles=data.articles

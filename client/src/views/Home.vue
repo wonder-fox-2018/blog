@@ -3,7 +3,7 @@
     <div class="container">
       <div class="row" style="margin:20px auto">
         <leftside @searchtitle="searchtitle" v-if="isLogin" ></leftside>
-        <maincontent  ref="childcontent" :isLogin="isLogin" :dataArticle="dataArticle" :searchtxt="searchtxt" @parent-edit-task="edittask"></maincontent>
+        <maincontent  ref="childcontent" :isLogin="isLogin" :iduser="iduser" :dataArticle="dataArticle" :searchtxt="searchtxt" @parent-edit-task="edittask"></maincontent>
         <updatetaskmodel :idTask="idTask" :refreshContent="refreshContent"></updatetaskmodel>
       </div>
     </div>
@@ -17,7 +17,7 @@ import maincontent from '@/components/MainContent.vue'
 import updatetaskmodel from '@/components/UpdateTaskModel.vue'
 
 export default {
-  props:['isLogin','dataArticle'],
+  props:['isLogin','dataArticle','iduser'],
   name: 'home',
   data() {
     return {
@@ -33,15 +33,15 @@ export default {
   },
   methods: {
       refreshContent(){
-          console.log('coba parent')
-           this.$refs.childcontent.refreshArticle();
+        //console.log('coba parent')
+        this.$refs.childcontent.refreshArticle();
       },
       searchtitle(data){
-        console.log('parent',data)
+        //console.log('parent',data)
         this.searchtxt=data
       },
       edittask(data){
-        console.log('parent editid',data)
+        //console.log('parent editid',data)
         this.idTask=data
       }
   }      

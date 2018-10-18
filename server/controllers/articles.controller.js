@@ -5,8 +5,9 @@ const User = require('../models/UserModel');
 
 module.exports = {
     articleReadAll: (req, res) => {
+        //console.log('-----------')
         ModelArticle
-            .find({})
+            .find({}).populate('author')
             .then((response) => {
                 res.status(200).json({ articles:response });
             })

@@ -56,12 +56,14 @@ export default {
         password: this.loginInputPassword
         },{ headers: { apptoken: 'cobatoken' }})
       .then(({data}) => {
+          console.log(data.user.id)
           if(data.apptoken){
             localStorage.setItem('apptoken', data.apptoken)
-            this.isLogin=true
-            $('#loginModal').modal('hide');
+            this.$emit('parent-iduser',data.user.id)
+            this.isLogin=true         
             this.clearLogin()
             this.changeStatusLogin()
+            $('#loginModal').modal('hide');
             //this.isLogin = true
           }
       }).catch((err) => {
