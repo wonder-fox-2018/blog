@@ -2,6 +2,13 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import axios from 'axios'
+import wysiwyg from 'vue-wysiwyg'
+import 'vue-wysiwyg/dist/vueWysiwyg.css'
+
+Vue.use(wysiwyg, {
+  forcePlainTextOnPaste: true,
+  maxHeight: '500px'
+})
 
 Vue.config.productionTip = false
 

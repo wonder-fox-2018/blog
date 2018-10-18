@@ -13,7 +13,7 @@
           <span> <router-link to="/">Home</router-link> &nbsp;|&nbsp; </span>
           <span v-if='!isLogin'> <router-link to="/login" >Login</router-link> &nbsp;|&nbsp; </span>
           <span v-if='isLogin'> <router-link to="/article">Create Article</router-link> &nbsp;|&nbsp; </span>
-          <router-link to="/about">About</router-link> 
+          <span v-if='isLogin'> <router-link to="/profile">Profile</router-link> </span>
         </div>
       </div>
       <div >
@@ -25,7 +25,7 @@
     </nav>
   </div>
   <div class='container'>
-     <router-view :hasLoggedIn='hasLoggedIn' :isLogin='isLogin' />
+     <router-view :hasLoggedIn='hasLoggedIn' :isLogin='isLogin' :userId='userId' />
   </div>
     
   </div>
@@ -37,8 +37,8 @@
   data(){
     return{
       isLogin : false,
-      name: 'agung',
-      username: localStorage.getItem('username')
+      username: '',
+      userId: ''
     }    
   },
   components: {
@@ -50,6 +50,7 @@
     hasLoggedIn() {
       this.isLogin =true
       this.username = localStorage.getItem('username')
+      this.userId = localStorage.getItem('userId')
     },
      logout() {
       localStorage.removeItem('token')

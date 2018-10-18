@@ -21,10 +21,10 @@
 
     <div class="row">
       <div class="side-bar col-md-3">
-        <SideBar></SideBar>
+        <SideBar :isLogin='isLogin'></SideBar>
       </div>
       <div class="main-content col-md-9">
-        <MainContaint></MainContaint>
+        <MainContaint  :isLogin='isLogin'></MainContaint>
       </div>
     </div>
 

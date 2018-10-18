@@ -40,9 +40,9 @@ router.get('/:id', (req, res)=>{
 router.put('/:id', (req, res)=>{
   // console.log(req.params.id, req.body)
   Article.findByIdAndUpdate(req.params.id, {
-    author: req.body.author,
     title: req.body.title,
-    contents: req.body.contents
+    contents: req.body.contents,
+    image: req.body.image
   })
   .then((result) => {
     console.log('==========>', result)
@@ -53,7 +53,7 @@ router.put('/:id', (req, res)=>{
 })
 
 router.delete('/:id', (req, res)=>{
-  Article.findByIdAndRemove(req.params.id)
+  Article.findByIdAndDelete(req.params.id)
   .then((result) => {
     console.log('==========>', result)
     res.status(200).json(result)

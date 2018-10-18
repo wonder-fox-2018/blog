@@ -17,7 +17,9 @@
       <input class="form-control" type="text" name="title" id="" placeholder='Input Title here..' v-model='title' required>
     </div>
       <label for="contents">Insert Article Contents:</label>
-       <textarea class="form-control" id="exampleFormControlTextarea1" name='contents' rows="5" v-model='contents'></textarea>
+        <wysiwyg v-model='contents'/>
+       <!-- <textarea class="form-control" id="exampleFormControlTextarea1" name='contents' rows="5" v-model='contents'></textarea>-->
+      
       <button @click='createArticle'>Save Article</button>
     
   </div>
@@ -73,10 +75,6 @@ export default {
     }
   }
 }
-
-  $(function() {
-    $('#myEditor').froalaEditor({toolbarInline: false})
-  });
 </script>
 
 <style >
