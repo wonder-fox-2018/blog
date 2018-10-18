@@ -54,7 +54,7 @@ describe('Article', function () {
 
         describe('without token / invalid token', function () {
             
-            it('no token | should return error 500 & error message', function(done) {
+            it('no token | should return error 500 token not found', function(done) {
                 chai
                 .request(app)
                 .post('/articles/create')
@@ -70,7 +70,7 @@ describe('Article', function () {
                 })
             })
     
-            it('invalid token | should return error 500 & error message', function(done) {
+            it('invalid token | should return error 500 invalid token', function(done) {
                 chai
                 .request(app)
                 .post('/articles/create')
@@ -298,7 +298,7 @@ describe('Article', function () {
 
         describe('without token / invalid token', function () {
             
-            it('no token | should return error 500', function(done) {
+            it('no token | should return error 500 token not found', function(done) {
                 chai
                 .request(app)
                 .delete(`/articles/${id}`)
@@ -310,7 +310,7 @@ describe('Article', function () {
                 })
             })
 
-            it('invalid token | should return error 500', function(done) {
+            it('invalid token | should return error 500 invalid token', function(done) {
                 chai
                 .request(app)
                 .delete(`/articles/${id}`)
@@ -342,6 +342,72 @@ describe('Article', function () {
                     done()
                 })
             })
+        })
+    })
+
+    describe('PUT /articles/', function () {
+
+        describe('without token / invalid token' , function () {
+            it('no token | should return error 500 token not found', function(done) {
+                chai
+                .request(app)
+                .put(`/articles/${id}`)
+                .send({
+                    title : 'My life as predator',
+                    content : 'Lorem ipsum'
+                })
+                .end((err, res) => {
+                    expect(res.body).to.have.property('message')
+                    expect(res.body.message).to.equal('Token Not Found')
+                    expect(res).to.have.status(500)
+                    done()
+                })
+            })
+
+            it('invalid token | should return error 500 invalid token', function(done) {
+                chai
+                .request(app)
+                .put(`/articles/${id}`)
+                .send({
+                    title : 'My life as predator',
+                    content : 'Lorem ipsum'
+                })
+                .set({
+                    token: 'invalid'
+                })
+                .end((err, res) => {
+                    expect(res.body).to.have.property('message')
+                    expect(res.body.message).to.equal('Invalid Token')
+                    expect(res).to.have.status(500)
+                    done()
+                })
+            })
+        })
+
+        describe('valid token', function () {
+            console.log(id)
+            
+            it('valid update title & content should return updated content with status 201', function(done){
+                chai.request(app)
+                .put(`/articles/${id}`)
+                .send({
+                    title : 'My life as a chameleon',
+                    content : 'Lorem ipsum'
+                })
+                .set({
+                    token : token
+                })
+                .end((err,res)=>{
+                    console.log(res.body)
+                    expect(res.body).to.have.property('message')
+                    expect(res.body).to.have.property('updated')
+                    expect(res.body.message).to.equal('update success')
+                    // expect(res.body.updated.title).to.equal('My life as a chameleon')
+                    // expect(res.body.updated.content).to.equal('Lorem ipsum')
+                    done()
+                })
+            })
+
         })
     })
 });

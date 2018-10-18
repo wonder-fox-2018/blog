@@ -97,6 +97,29 @@ class Controller {
         })
     }
 
+    static update(req,res){
+        // console.log('req body di controller',req.body)
+        // console.log('req params id di controller',req.params.id)
+        Article.findOneAndUpdate({
+            _id : req.params.id
+        },{
+            title : req.body.title,
+            content : req.body.content
+        })
+        .then((change)=>{
+            console.log('updated article',change)
+            res.status(201).json({
+                message : 'update success',
+                updated : change
+            })
+        })
+        .catch((err)=>{
+            res.status(500).json({
+                message : 'update failed'
+            })
+        })
+    }
+
 }
 
 module.exports = Controller;
