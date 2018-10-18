@@ -1,9 +1,7 @@
 'use strict'
 
-const jwt = require('jsonwebtoken');
 const ModelArticle = require('../models/Article');
 const User = require('../models/UserModel');
-
 
 module.exports = {
     articleReadAll: (req, res) => {
@@ -16,11 +14,11 @@ module.exports = {
                 res.status(500).send(err);
             })
     },
-
-    articleReadByAuthor: (req, res) => {     
+    articleReadByAuthor: (req, res) => {    
         ModelArticle
             .find({author: req.currentuser._id})
             .populate('author')
+            .exec()
             .then((response) => {
                 res.status(200).json({ articles:response });
             })
@@ -28,19 +26,31 @@ module.exports = {
                 res.status(500).send(err);
             })
     },
-    articleReadById: (req, res) => {
+    articleSearch: (req, res) => {
         ModelArticle
-            .findById(req.params.id)
+        .find({title:new RegExp(req.body.search, 'i')})
+        .populate('author')
+        .exec()
+        .then(result=>{
+            res.status(200).json({articles:result}) 
+        })      
+        .catch(err=>{
+            res.status(500).json({message:err.message})
+        })   
+    },
+    articleReadById: (req, res) => {
+        console.log('read by',req.body.id )
+        ModelArticle
+            .findOne({_id: req.body.id})
             .populate('author')
             .exec()
-            .then((response) => {
-                res.status(200).json({ article:response });
+            .then((result) => {
+                res.status(200).json({ article:result });
             })
             .catch((err) => {
                 res.status(500).send(err);
             })
     },
-
     articleCreate: (req, res) => {  
         let newArticle = new ModelArticle({
             title: req.body.title,
@@ -71,10 +81,9 @@ module.exports = {
         );
         ModelArticle
             .findOneAndUpdate(
-                { _id:req.body.articleid, author: req.currentuser._id },
-                {updateValue})
+            { _id:req.body.articleid, author: req.currentuser._id },updateValue)
             .then((result) => {
-                res.status(200).json({message: "Article Updated"})
+                res.status(200).json({message: "Article Updated", article:result})
             }).catch((err) => {
                 res.status(500).json({message: 'Error!!', err });                                                   
             });      

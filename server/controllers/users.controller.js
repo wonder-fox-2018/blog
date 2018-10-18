@@ -64,15 +64,17 @@ module.exports = {
 
     userUpdate: (req, res) => {  
         let updateValue={}; 
+
         Object.assign(updateValue, 
             req.body.first_name ? { first_name : req.body.first_name } : null,
             req.body.last_name ? { last_name : req.body.last_name } : null,
+            req.body.email ? { email : req.body.email } : null,
             req.body.password ? { password: req.body.password } :null
         );
+        console.log(updateValue)
         ModelUser
             .findOneAndUpdate(
-                { _id: req.currentuser._id },
-                { updateValue })
+                { _id: req.currentuser._id },updateValue)
             .then((result) => {
                 return res.status(200).json({
                     message: "User Successfully Updated",

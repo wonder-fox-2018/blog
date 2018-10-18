@@ -32,7 +32,6 @@ let userid;
 
 describe('Article ', () => {
     before((done) => {
-        done()
         ModelUser.deleteMany()
         .then((result) => {
             done()
@@ -47,7 +46,7 @@ describe('Article ', () => {
         .type('form')
         .send(user)
         .end((err, res) => {
-            console.log(res.body)
+            //console.log(res.body)
             expect(res).to.have.status(201);            
             expect(res.body).to.ownProperty('message')
                 .to.be.a('string')
@@ -158,9 +157,7 @@ describe('Article ', () => {
         .set('apptoken', apptoken)
         .end((err, res) => {
             expect(res).to.have.status(200);
-            expect(res.body.message)
-                .to.be.a('string')
-                .eql('User successfully deleted');
+            expect(res.body.message).to.be.a('string').eql('User successfully deleted');
             done();
         })
     });

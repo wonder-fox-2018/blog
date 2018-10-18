@@ -10,8 +10,15 @@ const saltRounds = 10;
 module.exports = mongoose.model('User', schema({
     first_name: String,
     last_name: String,
-    email: String,
-    password: String,
+    email: { 
+        type:String,
+        unique: true,
+        required: true
+    },
+    password: { 
+        type:String,
+        required: true
+    },
     role: String
 })
 .pre('save', function() {

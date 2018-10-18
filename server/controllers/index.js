@@ -6,6 +6,8 @@ const bcrypt = require('bcrypt');
 
 module.exports = {
     login: (req, res) => {
+        // console.log(req.body)
+        // console.log(req.headers)
         User
             .findOne({email: req.body.email})
             .then((user) => {
