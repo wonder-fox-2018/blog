@@ -3,10 +3,10 @@
     <div class="row" id='main'>
       <div class="col-2"></div>
       <div class="col-3">
-        <postlist @posts='updatePost' :signedin='signedin'></postlist>
+        <postlist @posts='updatePost' :signedin='signedin' :reload='reload'></postlist>
       </div>
       <div class="col-5">
-        <postlarge :posts='posts'></postlarge>
+        <postlarge @reload='needReload' :posts='posts' :authuser='authuser'></postlarge>
       </div>
       <div class="col-2"></div>
     </div>
@@ -19,10 +19,11 @@ import postlist from '@/components/postList'
 
 export default {
   name: 'blog',
-  props: ['signedin'],
+  props: ['signedin', 'authuser'],
   data () {
     return {
-      posts: []
+      posts: [],
+      reload: false
     }
   },
   components: {
@@ -32,6 +33,12 @@ export default {
   methods: {
     updatePost (value) {
       this.posts = value
+    },
+    needReload () {
+      this.reload = true
+      setTimeout(() => {
+        this.reload = false
+      }, 1000)
     }
   }
 }

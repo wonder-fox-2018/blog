@@ -131,6 +131,7 @@ a {
 
 a:hover {
     color: #42b983;
+    text-decoration: none;
 }
 
 #aPLink a, #aPLink div {
@@ -148,6 +149,22 @@ a:hover {
 #postlarge {
     height: 95vh;
     overflow: scroll
+}
+
+.img-overlay {
+    height: 250px;
+    margin-top: -250px;
+    opacity: 0;
+    transition: 0.5s ease;
+    background-color: #42b983;
+}
+
+#postlarge a:hover .img-overlay {
+    opacity: 0.5;
+}
+
+.img-overlay:hover {
+    opacity: 0.5;
 }
 
 .card-body {
@@ -187,7 +204,7 @@ a:hover {
     outline: none;
 }
 
-#addBackdrop {
+#addBackdrop, #optBackdrop {
     position: fixed;
     width: 100%;
     height: 100%;
@@ -197,7 +214,7 @@ a:hover {
     z-index: 10000;
 }
 
-#addModal {
+#addModal, #editModal, #deleteModal {
     position: fixed;
     width: 50%;
     top: 15%;
@@ -210,7 +227,7 @@ a:hover {
     overflow: auto;
 }
 
-#addModal input, #addModal textarea {
+#addModal input, #addModal textarea, #editModal input, #editModal textarea {
     border: none;
     margin: 1vh 0;
     width: 100%;
@@ -218,24 +235,24 @@ a:hover {
     font-family: 'Roboto', sans-serif;
 }
 
-#addModal input:focus, #addModal textarea:focus {
+#addModal input:focus, #addModal textarea:focus, #editModal input:focus, #editModal textarea:focus {
     outline: 2px solid #42b983;
 }
 
-#addModal input {
+#addModal input, #editModal input {
     font-size: 20px;
     font-weight: 700;
     padding: 10px 20px;
     text-transform: capitalize;
 }
 
-#addModal textarea {
+#addModal textarea, #editModal textarea {
     font-size: 15px;
     font-weight: 400;
     padding: 15px 20px;
 }
 
-#addModal button {
+#addModal button, #editModal button, #deleteModal button {
     border: transparent;
     height: 45px;
     font-size: 20px;
@@ -248,15 +265,29 @@ a:hover {
     font-family: 'Monthoers', sans-serif;
 }
 
-#addModal button:hover {
+#addModal button:hover, #editModal button:hover, #deleteModal button:hover {
     background: white;
     color: #42b983;
     border: 3px solid #42b983;
     padding: 7px 27px 12px 27px;
 }
 
-#addModal button:focus {
+#addModal button:focus, #editModal button:focus, #deleteModal button:focus {
     outline: none;
+}
+
+#deleteModal h2 {
+    font-family: 'Monthoers', sans-serif;
+    font-size: 40px;
+}
+
+#deleteModal h2 span {
+    font-family: 'Cambria', sans-serif;
+    font-size: 45px;
+}
+
+#deleteModal h5 {
+    font-family: 'Roboto', sans-serif;
 }
 
 #searchBtn {
@@ -279,5 +310,28 @@ a:hover {
 
 #searchInput:focus {
     border-bottom: 2px solid #42b983;
+    outline: none;
+}
+
+.optBtn {
+    height: 40px;
+    margin: 0px 10px;
+}
+
+.optBtn button {
+    background: transparent;
+    border: none;
+    border-radius: 20px;
+    font-size: 15px;
+    color: #42b983;
+    padding: 5px 10px;
+    margin: 5px 2.5px;
+}
+
+.optBtn button:hover {
+    background: rgba(0, 0, 0, 0.1)
+}
+
+.optBtn button:focus {
     outline: none;
 }

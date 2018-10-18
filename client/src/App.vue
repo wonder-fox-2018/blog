@@ -3,10 +3,10 @@
     <div id="nav">
       <div id='navlinks'>
         <router-link to="/">THE BLOG</router-link>
-        <signform @usi='updateSignedIn'></signform>
+        <signform @usi='updateSignedIn' @uau='updateAuthUser'></signform>
       </div>
     </div>
-    <router-view :signedin='signedIn'/>
+    <router-view :signedin='signedIn' :authuser='authUser'/>
   </div>
 </template>
 
@@ -17,7 +17,8 @@ export default {
   name: 'app',
   data () {
     return {
-      signedIn: false
+      signedIn: false,
+      authUser: null
     }
   },
   components: {
@@ -26,6 +27,9 @@ export default {
   methods: {
     updateSignedIn (value) {
       this.signedIn = value
+    },
+    updateAuthUser (value) {
+      this.authUser = value
     }
   }
 }

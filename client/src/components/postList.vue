@@ -27,7 +27,7 @@ import axios from 'axios'
 
 export default {
   name: 'postlist',
-  props: ['signedin'],
+  props: ['signedin', 'reload'],
   data () {
     return {
       posts: [],
@@ -55,6 +55,7 @@ export default {
     },
     addModal () {
       this.openAddModal = !this.openAddModal
+      this.notice = ''
     },
     addPost () {
       axios({
@@ -71,6 +72,8 @@ export default {
         .then(() => {
           this.addModal()
           this.getPosts()
+          this.title = ''
+          this.content = ''
         })
         .catch(err => {
           this.notice = err.response.data.message
@@ -96,10 +99,20 @@ export default {
         axios({
           url: `http://localhost:3000/articles/search?keyword=${this.keyword}`
         })
-        .then(data => {
-          this.posts = data.data.data
-          this.$emit('posts', data.data.data)
-        })
+          .then(data => {
+            this.posts = data.data.data
+            this.$emit('posts', data.data.data)
+          })
+          .catch(err => {
+            console.log(err)
+          })
+      }
+    }
+  },
+  watch: {
+    reload () {
+      if (this.reload) {
+        this.getPosts()
       }
     }
   },

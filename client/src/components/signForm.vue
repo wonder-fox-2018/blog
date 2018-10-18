@@ -78,6 +78,7 @@ export default {
             localStorage.setItem('token', data.data.token)
             this.signedIn = true
             this.$emit('usi', true)
+            this.$emit('uau', data.data.userId)
             this.signModal()
           })
           .catch(err => {
@@ -115,6 +116,7 @@ export default {
       localStorage.clear()
       this.signedIn = false
       this.$emit('usi', false)
+      this.$emit('uau', null)
     },
     checkSignedIn () {
       axios({
@@ -127,6 +129,7 @@ export default {
         .then(data => {
           this.signedIn = true
           this.$emit('usi', true)
+          this.$emit('uau', data.data.userId)
         })
         // eslint-disable-next-line
         .catch(err => {

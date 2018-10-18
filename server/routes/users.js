@@ -4,7 +4,7 @@ const { login, register } = require('../controllers/userController')
 const isLogin = require('../middlewares/isLogin')
 
 router.post('/login', login)
-router.post('/checklogin', isLogin, (req, res) => {res.status(200).json({isLogin: true})})
+router.post('/checklogin', isLogin, (req, res) => {res.status(200).json({userId: req.userId})})
 router.post('/register', register)
 
 module.exports = router
