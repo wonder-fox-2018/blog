@@ -1,10 +1,12 @@
 <template>
   <div id="app">
-    <Navbar></Navbar>
+    <Navbar @userbasicinfo="getuserbasicinfo" @islogin="getislogin" ></Navbar>
     <div class="container-fluid" id="marginTopCustom">
       <div class="row">
         <div class="col-md-2">
-          <Sidebar :listarticles="listarticles" ></Sidebar>
+          <Sidebar :listarticles="listarticles"
+                :userbasicinfo="userbasicinfo"
+                @searcharticles="searcharticles"></Sidebar>
         </div>
         <div class="col-md-10">
           <h1>This is Article</h1>
@@ -24,28 +26,71 @@
 import axios from 'axios'
 import Navbar from '@/components/Navbar.vue'
 import Sidebar from '@/components/Sidebar.vue'
+import Article from '@/views/Article.vue'
 export default {
   components: {
-    Navbar, Sidebar
+    Navbar, Sidebar, Article
   },
   data () {
     return {
-      listarticles: []
+      listarticles: [],
+      islogin: false,
+      userbasicinfo: {},
+      keyword: ''
+    }
+  },
+  methods: {
+    getallarticle () {
+      let self = this
+      axios({
+        method: 'GET',
+        url: 'http://localhost:3009/articles/lists'
+      })
+        .then(articles => {
+          console.log('Result-----', articles.data.data)
+          self.listarticles = articles.data.data
+        })
+        .catch(error => {
+          console.log('ERROR Get List Articles ', error)
+        })
+    },
+    getislogin (val) {
+      this.islogin = val
+    },
+    getuserbasicinfo (val) {
+      this.userbasicinfo = val
+    },
+    searcharticles (val) {
+      this.keyword = val
+      let self = this
+      console.log('THis is keyword----', self.keyword)
+      // get selected data
+      axios({
+        method: 'POST',
+        url: 'http://localhost:3009/articles/search',
+        data: {
+          keyword: self.keyword
+        }
+      })
+        .then(articles => {
+          console.log('Result Search---', articles.data.data)
+          self.listarticles = articles.data.data
+          // empty the keyword
+          self.keyword = ''
+        })
+        .catch(error => {
+          console.log('ERROR Get Sorted Articles ', error)
+        })
     }
   },
   created () {
-    let self = this
-    axios({
-      method: 'GET',
-      url: 'http://localhost:3009/articles/lists'
-    })
-      .then(articles => {
-        console.log('Result-----', articles.data.data)
-        self.listarticles = articles.data.data
-      })
-      .catch(error => {
-        console.log('ERROR Get List Articles ', error)
-      })
+    this.getallarticle()
+  },
+  watch: {
+    islogin (val) {},
+    userbasicinfo (val) {},
+    keyword (val) {},
+    listarticles (val) {}
   }
 }
 </script>
