@@ -37,7 +37,6 @@ export default {
           return date
         },
         refreshArticle(){
-            console.log('child')
             let apptoken=localStorage.getItem('apptoken')
             if(apptoken){
                 // this.$server.get(`/articles/byauthor`,{}, {

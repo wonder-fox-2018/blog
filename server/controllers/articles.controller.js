@@ -39,7 +39,7 @@ module.exports = {
         })   
     },
     articleReadById: (req, res) => {
-        console.log('read by',req.body.id )
+        //console.log('read by',req.body.id )
         ModelArticle
             .findOne({_id: req.body.id})
             .populate('author')
