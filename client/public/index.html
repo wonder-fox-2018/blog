@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>BlogNyeleneh</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.1/dist/semantic.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Noto+Sans" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      font-family: 'Noto Sans', sans-serif;
+    }
+  </style>
+</head>
+
+<body>
+  <noscript>
+    <strong>We're sorry but client doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+  </noscript>
+  <div id="app"></div>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.1/dist/semantic.min.js"></script>
+  <script>
+    function login() {
+      $('.tiny.modal.modalLogin')
+        .modal({
+          transition: 'fade right'
+        }).modal('show');
+    }
+
+    function register() {
+      $('.tiny.modal.modalRegister').modal({
+        transition: 'fade left'
+      }).modal('show')
+    }
+
+    function updateArticle() {
+      $('.tiny.modal.modalUpdateArticle').modal({
+        transition: 'zoom'
+      }).modal('show')
+    }
+
+    function updateComment() {
+      $('.tiny.modal.modalUpdateComment').modal({
+        transition: 'zoom'
+      }).modal('show')
+    }
+
+    function closemodalupdatecomment() {
+      $('.tiny.modal.modalUpdateComment').modal({
+        transition: 'zoom'
+      }).modal('hide')
+    }
+
+    function closemodalupdate() {
+      $('.tiny.modal.modalUpdateArticle').modal({
+        transition: 'zoom'
+      }).modal('hide')
+    }
+
+    $('.ui.selection.dropdown.category')
+      .dropdown();
+  </script>
+  <!-- built files will be auto injected -->
+</body>
+
+</html>
