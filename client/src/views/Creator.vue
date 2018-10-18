@@ -16,7 +16,7 @@
   import axios from 'axios';
   export default  {
     name: 'creator',
-    props: ['user'],
+    props: ['user','getArticles'],
     components : {
       formRegister : VueFormGenerator.component
     },
@@ -34,6 +34,7 @@
     data() {
       return {
         model : {
+          authorName : this.user.firstName+' '+this.user.lastName, 
           author : this.user._id,
           title : '',
           content : '',
@@ -44,7 +45,7 @@
               type: "input",
               inputType: "text",
               label: "Author",
-              model: "author",
+              model: "authorName",
               readonly: true,
               disabled: true
 
@@ -78,6 +79,7 @@
               content: this.model.content,
             })
             .then(()=> {
+              this.getArticles()
               this.$router.push('/')
             })
             .catch(function (error) {

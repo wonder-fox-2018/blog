@@ -1,8 +1,8 @@
 <template>
   <div id="app">
     
-    <navbar :setUser="setUser" :setMessage="setMessage" :user='user' :articles="articles"></navbar>
-    <router-view :setUser="setUser" :setMessage="setMessage" :user='user' :articles="articles"></router-view>
+    <navbar :setUser="setUser" :setMessage="setMessage" :getArticles="getArticles" :user='user' :articles="articles"></navbar>
+    <router-view :setUser="setUser" :setMessage="setMessage" :getArticles="getArticles" :user='user' :articles="articles"></router-view>
     
   </div>
 </template>

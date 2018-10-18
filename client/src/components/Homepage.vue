@@ -1,8 +1,8 @@
 <template lang="html">
   <section class="homepage">
     
-    <sidebar/>
-    <articles :articles='articles'></articles>
+    <sidebar :user='user' :articles='articles'></sidebar>
+    <articles :user='user' :articles='articles'></articles>
 
   </section>
 </template>
@@ -36,6 +36,9 @@
 <style scoped lang="css">
   .homepage {
     display: grid;
-    grid-template-columns: 1fr 4fr;
+    grid-template-columns: 2fr 5fr;
+    /* background-color: rgba(251, 255, 227, 0.226); */
+    background: radial-gradient(circle, #ffffff, #ced3ce);
+    padding-top: 50px;
   }
 </style>

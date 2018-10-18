@@ -82,7 +82,7 @@
             })
             .then(()=> {
               
-              this.$router.push('/')
+              this.$router.push('/login')
             })
             .catch(function (error) {
               console.log(error);

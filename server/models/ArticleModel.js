@@ -16,7 +16,8 @@ var ArticleSchema = new Schema({
 	},
 	'comments': Array
 },{
-    versionKey: false
+    versionKey: false,
+    timestamps : true
 });
 
 module.exports = mongoose.model('Article', ArticleSchema);

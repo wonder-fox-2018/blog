@@ -1,20 +1,25 @@
 <template lang="html">
 
   <section class="sidebar">
-    <h3>dummy 1</h3>
-    <h3>dummy 2</h3>
-    <h3>dummy 3</h3>
-    <h3>dummy 4</h3>
-    <h3>dummy 5</h3>
-    <h3>dummy 6</h3>
+    <profileSec v-if="user" :user='user'></profileSec>
+
+    <div class="listarticle" v-for="article in articles" :key="article._id">
+      <li>  {{ article.title.slice(0,20) }} </li>
+    </div>
+    
   </section>
 
 </template>
 
 <script lang="js">
+
+  import profileSec from './Profile'
   export default  {
     name: 'sidebar',
-    props: [],
+    props: ['user','articles'],
+    components : {
+      profileSec
+    },
     mounted() {
 
     },
@@ -36,4 +41,10 @@
   .sidebar {
 
   }
+  .listarticle{
+    text-align: left;
+    padding: 10px;
+    margin-left: 3em;
+    font-size: 1.5em;
+  } 
 </style>

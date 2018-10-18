@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <Homepage :articles='articles' :user='user'></Homepage>
+    <Homepage :articles='articles' :getArticles="getArticles" :user='user'></Homepage>
 
   </div>
 </template>
@@ -10,7 +10,7 @@ import Homepage from '@/components/Homepage.vue'
 
 export default {
   name: 'home',
-  props : ['setUser','user','articles'],
+  props : ['setUser','user','articles','getArticles'],
   components: {
     Homepage
   }

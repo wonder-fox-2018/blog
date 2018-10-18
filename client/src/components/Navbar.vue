@@ -6,7 +6,7 @@
       
         <div class="linkBar">
           <div><router-link to="/forms">FORMS</router-link></div>
-          <div v-if="user"><router-link to="/creator">CREATE</router-link></div>
+          <div v-if="user"><router-link to="/creator" :getArticles="getArticles">CREATE</router-link></div>
           <div>HELP</div>
           <div v-if="user" v-on:click="signOut">SIGN OUT</div>
         </div>
@@ -14,7 +14,7 @@
         <div class="logoSect">H8 </div>
 
         <div class="linkBar">
-          <div><router-link to="/">HOME</router-link> </div>
+          <div><router-link to="/" :getArticles="getArticles">HOME</router-link> </div>
           <div><router-link to="/about">ABOUT</router-link> </div>
           <div><router-link to="/register" v-if="!user">SIGN UP</router-link></div>
           <div><router-link to="/login" v-if="!user" :setUser='setUser'>SIGN IN</router-link></div>
@@ -29,7 +29,7 @@
 <script lang="js">
   export default  {
     name: 'navbar',
-    props: ['setUser','setMessage','user','articles'],
+    props: ['setUser','setMessage','user','articles','getArticles'],
     data() {
       return {
        
@@ -63,7 +63,7 @@
 
 <style scoped lang="css">
   .navbar {
-
+    padding: 0px;
   }
   .navwrapper {
   min-height: 60px;
@@ -101,6 +101,7 @@ header div {
     font-size: 16px;
         align-items: center;
 }
+
 
 .linkBar div:hover {
     margin-top: -6px;

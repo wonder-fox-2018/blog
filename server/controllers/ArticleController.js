@@ -3,7 +3,7 @@ var ArticleModel = require('../models/ArticleModel.js');
 module.exports = {
 
     list: function (req, res) {
-        ArticleModel.find()
+        ArticleModel.find().populate('author').sort('-createdAt').exec()
             .then((Articles) => {
                 return res.json(Articles);
             }).catch((err) => {
