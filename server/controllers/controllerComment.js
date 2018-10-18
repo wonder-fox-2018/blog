@@ -35,6 +35,8 @@ class CommentController {
         userId: req.decoded.id
       }, {
         body: req.body.body
+      }, {
+        runValidators: true
       })
       .then(data => {
         if (data.nModified === 1) {
@@ -50,9 +52,36 @@ class CommentController {
         }
       })
       .catch(err => {
+        let msg = errCatcher(err.message)
         res.status(500).json({
           status: 'failed',
-          message: 'failed updating comment'
+          message: msg
+        })
+      })
+  }
+
+  static deleteComment(req, res) {
+    Comment.deleteOne({
+        _id: req.params.id,
+        userId: req.decoded.id
+      })
+      .then(data => {
+        if (data.n == 1) {
+          res.status(200).json({
+            status: 'success',
+            message: `success deleting comment with id ${req.params.id}`
+          })
+        } else {
+          res.status(500).json({
+            status: 'failed',
+            message: 'failed when deleting comment'
+          })
+        }
+      })
+      .catch(err => {
+        res.status(500).json({
+          status: 'failed',
+          message: err.message
         })
       })
   }

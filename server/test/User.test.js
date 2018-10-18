@@ -507,6 +507,6 @@ describe('Get current online user data', () => {
           expect(res.body.data).to.have.property('fname')
           done()
         })
-    }).timeout(500)
+    })
   })
 })
