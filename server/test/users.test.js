@@ -20,7 +20,7 @@ let admin = {
 let token;
 
 describe('User Register API Test', function() {
-    beforeEach(function(done) {
+    before(function(done) {
         User.deleteOne({email: 'zura@mail.com'})
             .then(function(result) {
                 done();
@@ -30,7 +30,7 @@ describe('User Register API Test', function() {
             });
     });
 
-    afterEach(function(done) {
+    after(function(done) {
         User.deleteOne({email: 'zura@mail.com'})
             .then(function(result) {
                 done();
@@ -100,7 +100,7 @@ describe('User Register API Test', function() {
 
 // register admin 
 describe('Admin Register API Test', function() {
-  beforeEach(function(done) {
+  before(function(done) {
       User.deleteOne({email: 'yuri@mail.com'})
           .then(function(result) {
               done();
@@ -110,7 +110,7 @@ describe('Admin Register API Test', function() {
           });
   });
 
-  afterEach(function(done) {
+  after(function(done) {
       User.deleteOne({email: 'yuri@mail.com'})
           .then(function(result) {
               done();
@@ -180,7 +180,7 @@ describe('Admin Register API Test', function() {
 //login test
 
 describe('User Login API Test', function() {
-    beforeEach(function(done) {
+    before(function(done) {
         User.create({
             username: 'zura',
             email: 'zura@mail.com',
@@ -194,15 +194,15 @@ describe('User Login API Test', function() {
             });
     });
 
-    // afterEach(function(done) {
-    //     User.deleteOne({email: 'zura@mail.com'})
-    //         .then(function(result) {
-    //             done();
-    //         })
-    //         .catch(function(err) {
-    //             console.log(err);
-    //         });
-    // });
+    after(function(done) {
+        User.deleteOne({email: 'zura@mail.com'})
+            .then(function(result) {
+                done();
+            })
+            .catch(function(err) {
+                console.log(err);
+            });
+    });
 
     it('should return status 200 and a token', function(done) {
         chai.request(app)
@@ -249,7 +249,46 @@ describe('User Login API Test', function() {
 });
 
 describe('User Get Profile Data API Test', function() {
-    it('should return status 201 and user profile data', function(done) {
+    before(function(done) {
+        User.create({
+            username: 'zura',
+            email: 'zura@mail.com',
+            password: 'zura'
+        })
+            .then(function(user) {
+                done();
+            })
+            .catch(function(err) {
+                console.log(err);
+            });
+    });
+
+    after(function(done) {
+        User.deleteOne({email: 'zura@mail.com'})
+            .then(function(result) {
+                done();
+            })
+            .catch(function(err) {
+                console.log(err);
+            });
+    });
+
+    it('should return status 200 and a token', function(done) {
+        chai.request(app)
+            .post('/users/login')
+            .send({
+                email: 'zura@mail.com',
+                password: 'zura'
+            })
+            .end(function(err, res) {
+                expect(res).to.have.status(200);
+                expect(res.body).to.have.property('token');
+                token = res.body.token;
+                done();
+            });
+    });
+
+    it('should return status 200 and user profile data', function(done) {
         chai.request(app)
             .get('/users/show/profile')
             .set('token', token)
