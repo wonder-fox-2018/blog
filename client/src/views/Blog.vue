@@ -6,7 +6,7 @@
         <postlist @posts='updatePost' :signedin='signedin' :reload='reload'></postlist>
       </div>
       <div class="col-5">
-        <postlarge @reload='needReload' :posts='posts' :authuser='authuser'></postlarge>
+        <postlarge @reload='needReload' :posts='posts' :authuser='authuser' :signedin='signedin'></postlarge>
       </div>
       <div class="col-2"></div>
     </div>

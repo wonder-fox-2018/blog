@@ -42,6 +42,13 @@
         <h5 style="margin-bottom: 75px">by {{ detail.author.name }}</h5>
         <p class="card-text">{{ detail.content }}</p>
       </div>
+      <div v-if="signedin" class="text-left" id='comment'>
+        <h5>Add your comments here . . .</h5>
+        <textarea rows="2" placeholder="Comment" onfocus='this.placeholder = ""' onblur='this.placeholder = "Comment"'></textarea>
+        <div class="text-center">
+          <button>+ New Comment</button>
+        </div>
+      </div>
     </div>
     <!-- MODALS -->
       <!-- BACKDROP -->
@@ -72,7 +79,7 @@ import axios from 'axios'
 
 export default {
   name: 'postlarge',
-  props: ['posts', 'authuser'],
+  props: ['posts', 'authuser', 'signedin'],
   data () {
     return {
       showAll: true,
