@@ -98,26 +98,34 @@ class Controller {
     }
 
     static update(req,res){
-        // console.log('req body di controller',req.body)
-        // console.log('req params id di controller',req.params.id)
-        Article.findOneAndUpdate({
-            _id : req.params.id
-        },{
-            title : req.body.title,
-            content : req.body.content
-        })
-        .then((change)=>{
-            console.log('updated article',change)
-            res.status(201).json({
-                message : 'update success',
-                updated : change
+        if ((!req.body.title && !req.body.content) || (req.body.title.length === 0 && req.body.content.length === 0)) {
+            res.status(500).json({message: 'An article need a content and title'})
+        } else if (!req.body.title || req.body.title.length === 0) {
+            res.status(500).json({message: 'An article need to be titled'})
+        } else if (!req.body.content || req.body.content.length === 0) {
+            res.status(500).json({message: 'An article need a content'})
+        } else {
+            Article.findOneAndUpdate({
+                _id : req.params.id
+            },{
+                title : req.body.title,
+                content : req.body.content,
+                picture : null,
+                category : null,
+                author : req.userData._id
             })
-        })
-        .catch((err)=>{
-            res.status(500).json({
-                message : 'update failed'
+            .then((change)=>{
+                res.status(201).json({
+                    message : 'update success',
+                    updated : change
+                })
             })
-        })
+            .catch((err)=>{
+                res.status(500).json({
+                    message : 'update failed'
+                })
+            })
+        }
     }
 
 }

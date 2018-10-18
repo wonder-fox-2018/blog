@@ -388,7 +388,8 @@ describe('Article', function () {
             console.log(id)
             
             it('valid update title & content should return updated content with status 201', function(done){
-                chai.request(app)
+                chai
+                .request(app)
                 .put(`/articles/${id}`)
                 .send({
                     title : 'My life as a chameleon',
@@ -398,7 +399,7 @@ describe('Article', function () {
                     token : token
                 })
                 .end((err,res)=>{
-                    console.log(res.body)
+                    // console.log(res.body)
                     expect(res.body).to.have.property('message')
                     expect(res.body).to.have.property('updated')
                     expect(res.body.message).to.equal('update success')
@@ -408,6 +409,43 @@ describe('Article', function () {
                 })
             })
 
+            it('no input title | should return error 500 an article need to be titled' , function(done) {
+                chai
+                .request(app)
+                .put(`/articles/${id}`)
+                .set({
+                    token: token
+                })
+                .send({
+                    title: '',
+                    content: 'Lorem ipsum'
+                })
+                .end((err, res) => {
+                    expect(res).to.have.status(500)
+                    expect(res.body).to.have.property('message')
+                    expect(res.body.message).to.equal('An article need to be titled')
+                    done()
+                })
+            })
+
+            it('no input content | should return error 500 an article need a content' , function(done) {
+                chai
+                .request(app)
+                .put(`/articles/${id}`)
+                .set({
+                    token: token
+                })
+                .send({
+                    title: 'My life as a chameleon',
+                    content: ''
+                })
+                .end((err, res) => {
+                    expect(res).to.have.status(500)
+                    expect(res.body).to.have.property('message')
+                    expect(res.body.message).to.equal('An article need a content')
+                    done()
+                })
+            })
         })
     })
 });
