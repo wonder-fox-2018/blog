@@ -1,4 +1,5 @@
 const Comment = require('../models/commentModel')
+const Article = require('../models/articleModel')
 const errCatcher = require('../helpers/errCatcherArticle')
 
 class CommentController {
@@ -62,15 +63,25 @@ class CommentController {
 
   static deleteComment(req, res) {
     Comment.deleteOne({
-        _id: req.params.id,
+        _id: req.params.idComment,
         userId: req.decoded.id
       })
       .then(data => {
         if (data.n == 1) {
-          res.status(200).json({
-            status: 'success',
-            message: `success deleting comment with id ${req.params.id}`
-          })
+          Article.updateOne({
+              _id: req.params.idArticle,
+              commentId: req.params.idComment
+            }, {
+              $pull: {
+                commentId: req.params.idComment
+              }
+            })
+            .then(data => {
+              res.status(200).json({
+                status: 'success',
+                message: `success deleting comment with id ${req.params.idComment}`
+              })
+            })
         } else {
           res.status(500).json({
             status: 'failed',

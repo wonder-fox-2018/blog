@@ -1,4 +1,5 @@
 const Article = require('../models/articleModel')
+const Comment = require('../models/commentModel')
 const errCatcher = require('../helpers/errCatcher')
 const errCatcherArticle = require('../helpers/errCatcherArticle')
 
@@ -75,10 +76,17 @@ class ArticleContrroller {
       })
       .then(data => {
         if (data.n == 1) {
-          res.status(200).json({
-            status: 'success',
-            message: `success deleting article with id ${req.params.id}`
-          })
+
+          Comment.deleteMany({
+              articleId: req.params.id
+            })
+            .then(data => {
+              res.status(200).json({
+                status: 'success',
+                message: `success deleting article with id ${req.params.id}`
+              })
+            })
+
         } else {
           res.status(403).json({
             status: 'failed',

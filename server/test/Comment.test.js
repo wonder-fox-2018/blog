@@ -575,7 +575,7 @@ describe('Comments', () => {
     it("should return msg 'failed when deleting comment' if user try to delete another user comment ", done => {
       chai
         .request(app)
-        .delete(`/comment/${commentId1}`)
+        .delete(`/comment/${articleId1}/${commentId1}`)
         .set({
           token: token2
         })
@@ -591,7 +591,7 @@ describe('Comments', () => {
     it("should return msg 'success when deleting comment with id <commentId>' if user try to delete another user comment ", done => {
       chai
         .request(app)
-        .delete(`/comment/${commentId1}`)
+        .delete(`/comment/${articleId1}/${commentId1}`)
         .set({
           token: token1
         })
@@ -607,13 +607,32 @@ describe('Comments', () => {
     it("should return status '404' if user try to delete without inserting commentId", done => {
       chai
         .request(app)
-        .delete(`/comment`)
+        .delete(`/comment/${articleId1}`)
         .set({
           token: token1
         })
         .end((err, res) => {
           expect(res).to.have.status(404)
           done()
+        })
+    })
+
+    it("should remove commentId on property Article commentId when comment got deleted", done => {
+      chai
+        .request(app)
+        .delete(`/comment/${articleId1}/${commentId1}`)
+        .set({
+          token: token1
+        })
+        .end((err, res) => {
+
+          chai
+            .request(app)
+            .get(`/article/${articleId1}`)
+            .end((err, res) => {
+              expect(res.body.data.commentId).to.have.lengthOf(1)
+              done()
+            })
         })
     })
   })

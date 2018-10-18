@@ -5,6 +5,6 @@ const CommentController = require('../controllers/controllerComment')
 route
   .post('/:id', isLogin, CommentController.createComment)
   .put('/:id', isLogin, CommentController.updateArticle)
-  .delete('/:id', isLogin, CommentController.deleteComment)
+  .delete('/:idArticle/:idComment', isLogin, CommentController.deleteComment)
 
 module.exports = route
