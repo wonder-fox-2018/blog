@@ -68,6 +68,7 @@ export default {
                 password: this.regInputPassword
             })
             .then(({data}) => {
+                $('#registerModal').modal('hide');
                 console.log('registered')
             }).catch((err) => {
                 this.regAlert= true;

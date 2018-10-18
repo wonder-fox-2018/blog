@@ -27,7 +27,8 @@ export default {
     props:['searchtxt','isLogin','dataArticle'],
     data(){
         return {
-            articles:null
+            articles:null,
+            idcurrentuser:''
         }
     },
     methods:{
@@ -89,6 +90,9 @@ export default {
         searchtxt(){
             let apptoken=localStorage.getItem('apptoken')
             if(apptoken){
+                if(this.searchtxt=='')
+                    this.refreshArticle()
+                else{
                 this.$server({
                     url:  `/articles/search`,
                     method: 'POST',
@@ -104,7 +108,7 @@ export default {
                 })
                 .catch((err) => {
                     console.log(err)
-                });
+                });}
             }
         },
         dataArticle(){

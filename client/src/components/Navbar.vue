@@ -38,7 +38,6 @@ export default {
   },
   methods: {
     doLogout(){
-
         this.changetoLogout();
     }
   },

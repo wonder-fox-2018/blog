@@ -55,6 +55,7 @@ export default {
             })
             .then(({data}) => {
                 this.$emit('to-parent-add-articles', data.articles )
+                $('#addTaskModal').modal('hide');
             })
             .catch((err) => {
                 console.log(err)
