@@ -14,14 +14,14 @@ class Middleware {
                             next()
                         })
                 } else {
-                    res.status(403).json({
-                        message: 'invalid token'
+                    res.status(500).json({
+                        message: 'Invalid Token'
                     })
                 }
             })
         } else {
-            res.status(403).json({
-                message: 'token not found'
+            res.status(500).json({
+                message: 'Token Not Found'
             })
         }
     }

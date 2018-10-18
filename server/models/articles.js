@@ -3,10 +3,12 @@ const Schema   = mongoose.Schema;
 
 const articleSchema = new Schema({
     title: {
-        type: String
+        type: String,
+        required: [true,'Error title is required']
     },
     content: {
-        type: String
+        type: String,
+        required: [true,'Error content is required']
     },
     picture: {
         type: String
