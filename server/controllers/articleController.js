@@ -34,6 +34,7 @@ class Controller {
         Article.find()
         .populate('category')
         .populate('author')
+        .populate('comments')
         .then((result)=>{
             res.status(201).json({
                 data : result

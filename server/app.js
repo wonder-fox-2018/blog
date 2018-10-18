@@ -5,6 +5,7 @@ const routes   = require('./routes')
 const userRoutes = require('./routes/users')
 const categoryRoutes = require('./routes/category')
 const articleRoutes = require('./routes/article')
+const commentRoutes = require('./routes/comment')
 
 const mongoose = require('mongoose')
 const cors     = require('cors')
@@ -29,6 +30,7 @@ app.use('/', routes)
 app.use('/users',userRoutes)
 app.use('/categories',categoryRoutes)
 app.use('/articles',articleRoutes)
+app.use('/comments',commentRoutes)
 
 app.listen(port, function(){
     console.log('Listening on port', port)

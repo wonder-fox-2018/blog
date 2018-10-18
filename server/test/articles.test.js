@@ -3,6 +3,8 @@ const chaiHttp = require('chai-http');
 const expect = chai.expect;
 const Article = require('../models/articles')
 const User = require('../models/users')
+const Comment = require('../models/comments')
+const Category = require('../models/category')
 const app = require('../app')
 
 chai.use(chaiHttp);
@@ -385,7 +387,6 @@ describe('Article', function () {
         })
 
         describe('valid token', function () {
-            console.log(id)
             
             it('valid update title & content should return updated content with status 201', function(done){
                 chai
@@ -443,6 +444,52 @@ describe('Article', function () {
                     expect(res).to.have.status(500)
                     expect(res.body).to.have.property('message')
                     expect(res.body.message).to.equal('An article need a content')
+                    done()
+                })
+            })
+        })
+    })
+
+    describe('POST /comments' , function () {
+
+        describe('valid token', function () {
+            
+            it('valid input comment | it should return.. ', function(done){
+                chai
+                .request(app)
+                .post(`/comments/${id}`)
+                .send({
+                    thecomment : 'just test comment'
+                })
+                .set({
+                    token : token
+                })
+                .end((err,res)=>{
+                    console.log('masuk ke siniiiiiiiiiii')
+                    
+                    // expect(res.body).to.have.property('message')
+                    // expect(res.body).to.have.property('updated')
+                    // expect(res.body.message).to.equal('update success')
+                    // expect(res.body.updated.title).to.equal('My life as a chameleon')
+                    // expect(res.body.updated.content).to.equal('Lorem ipsum')
+                    done()
+                })
+            })
+
+            it('comment without input | should return error 500 cannot post empty comment' , function(done) {
+                chai
+                .request(app)
+                .post(`/articles/${id}`)
+                .set({
+                    token: token
+                })
+                .send({
+                    thecomment: ''
+                })
+                .end((err, res) => {
+                    console.log(res.body)
+                    // expect(res.body).to.have.property('message')
+                    // expect(res.body.message).to.equal('Cannot post empty comment')
                     done()
                 })
             })
