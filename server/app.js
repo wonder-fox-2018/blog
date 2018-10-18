@@ -4,11 +4,14 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const mongoose = require('mongoose');
+const cors = require('cors');
 
 var indexRouter = require('./routes/index');
 
 
 var app = express();
+
+app.use(cors());
 
 mongoose.connect(process.env.DATABASE_URL, {useNewUrlParser: true});
 

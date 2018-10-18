@@ -6,9 +6,7 @@ const mongoose = require('mongoose')
 
 module.exports = {
     isLogin: (req, res, next) => {
-        //console.log('masuk');
         try {
-            console.log('masuk');
             let decoded = jwt.verify(req.headers['access-token'], process.env.JWT_KEY);
             
             req.decoded = decoded;
