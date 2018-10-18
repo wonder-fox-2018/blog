@@ -180,6 +180,29 @@ class ArticleController{
           })
     }
 
+    // search article
+    static searchArticleByName(req,res) {
+        Article.find({}).populate('author').populate('listcomments')
+         .then(articles => {
+            let regex = new RegExp(`${req.body.keyword}`,'i')
+            let sortedArr = []
+            articles.forEach(article =>{
+                if(regex.test(article.title)){
+                    sortedArr.push(article)
+                }
+            })
+            res.status(200).json({
+                msg: 'List of article by keyword',
+                data: sortedArr 
+             })
+         })
+         .catch(error => {
+            res.status(500).json({
+                msg: 'ERROR Get article by keyword ',error
+            }) 
+         })
+    }
+
 }
 
 module.exports = ArticleController
