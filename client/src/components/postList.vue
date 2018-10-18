@@ -1,7 +1,12 @@
 <template>
   <div id='postlist'>
+    <button id='searchBtn' disabled><i class="fas fa-search"></i></button>
+    <input id='searchInput' placeholder='Search' onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search'" @keyup='search' v-model='keyword'>
     <button id='addBtn' v-if='signedin' @click='addModal'>+ New Post</button>
-    <div id='aPLink' class="border-bottom pb-2"><router-link to='/'>All Posts</router-link></div><br>
+    <div id='aPLink' class="border-bottom pb-2" v-if='posts.length > 0'>
+      <router-link to='/' v-if='keyword.length === 0'>All Posts</router-link>
+      <div v-else>Search Result</div>
+    </div><br>
     <router-link :to='{name: "detail", params: {id: post._id}}' v-for='(post, index) in posts' :key='index'>{{ post.title }}<br></router-link>
     <!-- ADD MODAL -->
     <div id='addBackdrop' v-if='openAddModal'></div>
@@ -29,7 +34,10 @@ export default {
       openAddModal: false,
       title: '',
       content: '',
-      notice: ''
+      notice: '',
+      keyword: '',
+      savedUrl: '',
+      isSearching: false
     }
   },
   methods: {
@@ -67,6 +75,32 @@ export default {
         .catch(err => {
           this.notice = err.response.data.message
         })
+    },
+    search () {
+      if (this.keyword.length === 1) {
+        if (this.$route.params.id && !this.isSearching) {
+          this.savedUrl = this.$route.params.id
+        } else if (!this.isSearching) {
+          this.savedUrl = ''
+        }
+        if (!this.isSearching) {
+          this.isSearching = true
+        }
+        this.$router.push('/')
+      }
+      if (this.keyword.length === 0) {
+        this.$router.push(`/${this.savedUrl}`)
+        this.isSearching = false
+        this.getPosts()
+      } else {
+        axios({
+          url: `http://localhost:3000/articles/search?keyword=${this.keyword}`
+        })
+        .then(data => {
+          this.posts = data.data.data
+          this.$emit('posts', data.data.data)
+        })
+      }
     }
   },
   created () {

@@ -133,10 +133,11 @@ a:hover {
     color: #42b983;
 }
 
-#aPLink a {
-    font-size: 25px;
+#aPLink a, #aPLink div {
+    font-size: 30px;
     letter-spacing: 5px;
     font-family: 'Monthoers', sans-serif;
+    font-weight: normal;
 }
 
 #postlist {
@@ -255,5 +256,28 @@ a:hover {
 }
 
 #addModal button:focus {
+    outline: none;
+}
+
+#searchBtn {
+    width: 15%;
+    margin-bottom: 20px;
+    padding: 10px 0;
+    border: none;
+    background: transparent;
+    color: #42b983;
+    font-size: 20px;
+}
+
+#searchInput {
+    width: 70%;
+    margin-bottom: 20px;
+    padding: 10px 0px;
+    border: 2px solid transparent;
+    font-size: 20px;
+}
+
+#searchInput:focus {
+    border-bottom: 2px solid #42b983;
     outline: none;
 }
