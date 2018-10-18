@@ -64,6 +64,7 @@ describe('Article', function () {
                 })
                 .end((err, res) => {
                     expect(res.body).to.have.property('message')
+                    expect(res.body.message).to.equal('Token Not Found')
                     expect(res).to.have.status(500)
                     done()
                 })
@@ -82,6 +83,7 @@ describe('Article', function () {
                 })
                 .end((err, res) => {
                     expect(res.body).to.have.property('message')
+                    expect(res.body.message).to.equal('Invalid Token')
                     expect(res).to.have.status(500)
                     done()
                 })
