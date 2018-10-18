@@ -1,0 +1,92 @@
+<template>
+  <div id="app">
+    
+    <navbar :setUser="setUser" :setMessage="setMessage" :user='user' :articles="articles"></navbar>
+    <router-view :setUser="setUser" :setMessage="setMessage" :user='user' :articles="articles"></router-view>
+    
+  </div>
+</template>
+
+<script>
+  import navbar from '@/components/Navbar.vue'
+  import axios from 'axios'
+  export default {
+    components : {
+      navbar : navbar
+    },
+    name : 'granparent',
+    data(){
+      return {
+          user : '',
+          message : '',
+          articles : '',
+          token : localStorage.getItem('token') || ''
+      }
+    },
+    created() {
+      this.getArticles()
+      
+    },
+    mounted() {
+
+      if(this.token){
+        this.getUserByToken(this.token)
+      }
+
+    },
+    watch: { 
+      user: {
+        handler (val) {
+          this.user = val
+        },
+        immediate: true, 
+        deep: true,
+      },
+        
+    },
+    methods : {
+
+      setUser:function(val){
+        this.user = val
+      }, 
+
+      setMessage:function(val){
+        this.message = val
+      },
+
+      getArticles(){
+        axios.get('http://localhost:3000/articles', {  
+        })
+        .then((result)=> {
+          this.articles = result.data
+        })
+        .catch(function (error) {
+          console.log(error);
+        })
+      },
+
+      getUserByToken(token){
+        axios.get(`http://localhost:3000/users/verify/${token}`, {  
+        })
+        .then((result)=> {
+          this.user = result.data
+        })
+        .catch(function (error) {
+          console.log(error);
+        })
+      },
+
+    }
+  }
+</script>
+
+<style>
+#app {
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  box-sizing: border-box;
+}
+</style>
