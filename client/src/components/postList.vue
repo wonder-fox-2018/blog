@@ -3,9 +3,13 @@
     <button id='searchBtn' disabled><i class="fas fa-search"></i></button>
     <input id='searchInput' placeholder='Search' onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search'" @keyup='search' v-model='keyword'>
     <button id='addBtn' v-if='signedin' @click='addModal'>+ New Post</button>
-    <div id='aPLink' class="border-bottom pb-2" v-if='posts.length > 0'>
-      <router-link to='/' v-if='keyword.length === 0'>All Posts</router-link>
-      <div v-else>Search Result</div>
+    <div id='menuLink' class="border-bottom pb-2 text-center">
+      <button v-if='keyword.length === 0 && menuIndex === 1 && signedin' class="mr-2" @click='menuChange(0)'><i class="fas fa-caret-left"></i></button>
+      <button v-else-if='keyword.length === 0' disabled class="mr-2" @click='menuChange(0)'><i class="fas fa-caret-left"></i></button>
+      <router-link to='/' v-if='keyword.length === 0'>{{ menu[menuIndex] }}</router-link>
+      <button v-if='keyword.length === 0 && menuIndex === 0 && signedin' class="ml-2" @click='menuChange(1)'><i class="fas fa-caret-right"></i></button>
+      <button v-else-if='keyword.length === 0' disabled class="ml-2" @click='menuChange(1)'><i class="fas fa-caret-right"></i></button>
+      <div v-if='keyword.length !== 0'>Search Result</div>
     </div><br>
     <router-link :to='{name: "detail", params: {id: post._id}}' v-for='(post, index) in posts' :key='index'>{{ post.title }}<br></router-link>
     <!-- ADD MODAL -->
@@ -56,7 +60,9 @@ export default {
       isSearching: false,
       userLoc: '',
       detectedLoc: false,
-      shareLoc: false
+      shareLoc: false,
+      menu: ['All Posts', 'My Posts'],
+      menuIndex: 0
     }
   },
   methods: {
@@ -71,6 +77,24 @@ export default {
         .catch(err => {
           console.log(err)
         })
+    },
+    getMyPosts () {
+      axios({
+        url: 'http://localhost:3000/articles/self',
+        headers: {
+          token: localStorage.getItem('token')
+        }
+      })
+        .then(data => {
+          this.posts = data.data.data
+          this.$emit('posts', data.data.data)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    menuChange (index) {
+      this.menuIndex = index
     },
     addModal () {
       if (!this.openAddModal) {
@@ -119,9 +143,15 @@ export default {
         this.$router.push('/')
       }
       if (this.keyword.length === 0) {
-        this.$router.push(`/${this.savedUrl}`)
+        if (!this.$route.params.id) {
+          this.$router.push(`/${this.savedUrl}`)
+        }
         this.isSearching = false
-        this.getPosts()
+        if (this.menuIndex === 0) {
+          this.getPosts()
+        } else {
+          this.getMyPosts()
+        }
       } else {
         axios({
           url: `http://localhost:3000/articles/search?keyword=${this.keyword}`
@@ -155,6 +185,14 @@ export default {
     reload () {
       if (this.reload) {
         this.getPosts()
+      }
+    },
+    menuIndex () {
+      this.$router.push('/')
+      if (this.menuIndex === 0) {
+        this.getPosts()
+      } else {
+        this.getMyPosts()
       }
     }
   },

@@ -9,10 +9,6 @@ module.exports = {
             }
         })
         .populate('author')
-        .populate({
-            path: 'comments',
-            populate: {path: 'commenter'}
-        })
         .then(data => {
             res.status(200).json({data: data})
         })
@@ -39,6 +35,19 @@ module.exports = {
                 }
             }
         })
+        .then(data => {
+            res.status(200).json({data: data})
+        })
+        .catch(err => {
+            res.status(500).json({message: err})
+        })
+    },
+
+    showMine: function(req, res) {
+        Article.find({
+            author: req.userId
+        })
+        .populate('author')
         .then(data => {
             res.status(200).json({data: data})
         })

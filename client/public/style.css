@@ -136,11 +136,32 @@ a:hover {
     text-decoration: none;
 }
 
-#aPLink a, #aPLink div {
+#menuLink a, #menuLink div, #menuLink button {
     font-size: 30px;
     letter-spacing: 5px;
     font-family: 'Monthoers', sans-serif;
     font-weight: normal;
+    height: 45px;
+}
+
+#menuLink button {
+    background-color: transparent;
+    border: none;
+    color: gray;
+    cursor: pointer;
+}
+
+#menuLink button:hover {
+    color: #42b983;
+}
+
+#menuLink button[disabled] {
+    color: lightgray;
+    cursor: default;
+}
+
+#menuLink button:focus {
+    outline: none;
 }
 
 #postlist {
