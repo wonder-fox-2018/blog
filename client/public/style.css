@@ -91,6 +91,7 @@ html, body
     margin-top: 3vh;
     color: white;
     font-size: 30px;
+    font-family: 'Monthoers', sans-serif;
 }
 
 #signBtn button {
@@ -169,7 +170,7 @@ a:hover {
 }
 
 .card-body {
-    font-family: 'Roboto', sans-serif;    
+    font-family: 'Roboto', sans-serif;
 }
 
 .card-title {
@@ -178,6 +179,8 @@ a:hover {
 
 .card-text {
     font-weight: 400;
+    text-align: justify;
+    text-indent: 10%;
 }
 
 #addBtn {
@@ -215,7 +218,7 @@ a:hover {
     z-index: 10000;
 }
 
-#addModal, #editModal, #deleteModal {
+#addModal, #editModal, #deleteModal, #delComModal {
     position: fixed;
     width: 50%;
     top: 15%;
@@ -253,7 +256,7 @@ a:hover {
     padding: 15px 20px;
 }
 
-#addModal button, #editModal button, #deleteModal button, #comment button {
+#addModal button, #editModal button, #deleteModal button, #comment button, #delComModal button {
     border: transparent;
     height: 45px;
     font-size: 20px;
@@ -266,28 +269,28 @@ a:hover {
     font-family: 'Monthoers', sans-serif;
 }
 
-#addModal button:hover, #editModal button:hover, #deleteModal button:hover, #comment button:hover {
+#addModal button:hover, #editModal button:hover, #deleteModal button:hover, #comment button:hover, #delComModal button:hover {
     background: white;
     color: #42b983;
     border: 3px solid #42b983;
     padding: 7px 27px 12px 27px;
 }
 
-#addModal button:focus, #editModal button:focus, #deleteModal button:focus, #comment button:focus {
+#addModal button:focus, #editModal button:focus, #deleteModal button:focus, #comment button:focus, #delComModal button:focus {
     outline: none;
 }
 
-#deleteModal h2 {
+#deleteModal h2, #delComModal h2 {
     font-family: 'Monthoers', sans-serif;
     font-size: 40px;
 }
 
-#deleteModal h2 span {
+#deleteModal h2 span, #delComModal h2 span {
     font-family: 'Cambria', sans-serif;
     font-size: 45px;
 }
 
-#deleteModal h5 {
+#deleteModal h5, #delComModal h5 {
     font-family: 'Roboto', sans-serif;
 }
 
@@ -322,7 +325,7 @@ a:hover {
 .optBtn button {
     background: transparent;
     border: none;
-    border-radius: 20px;
+    border-radius: 10px;
     font-size: 15px;
     color: #42b983;
     padding: 5px 10px;
@@ -330,7 +333,7 @@ a:hover {
 }
 
 .optBtn button:hover {
-    background: rgba(0, 0, 0, 0.1)
+    background: rgba(0, 0, 0, 0.075)
 }
 
 .optBtn button:focus {
@@ -340,6 +343,7 @@ a:hover {
 #comment textarea {
     width: 100%;
     padding: 10px 15px;
+    font-size: 16px;
 }
 
 #comment textarea:focus {
@@ -353,7 +357,7 @@ a:hover {
 }
 
 .commenter {
-    font-size: 15px;
+    font-size: 14px;
     margin-bottom: 10px;
 }
 
@@ -365,7 +369,7 @@ a:hover {
 .replies textarea {
     width: 100%;
     border: 1px solid gainsboro;
-    font-size: 15px;
+    font-size: 16px;
     padding: 10px;
 }
 
@@ -391,5 +395,27 @@ a:hover {
 }
 
 .replyBtn button:focus {
+    outline: none;
+}
+
+.detail-body {
+    margin-bottom: 50px;
+}
+
+.comDelBtn {
+    background: transparent;
+    border: none;
+    border-radius: 10px;
+    font-size: 15px;
+    color: #42b983;
+    padding: 5px 10px;
+    margin: 5px 2.5px;
+}
+
+.comDelBtn:hover {
+    background: rgba(0, 0, 0, 0.075)
+}
+
+.comDelBtn:focus {
     outline: none;
 }

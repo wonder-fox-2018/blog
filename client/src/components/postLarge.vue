@@ -18,7 +18,7 @@
           <div class="img-overlay"></div>
           <div class="card-body">
             <h5 class="card-title border-bottom mb-4 pb-2"><strong>{{ post.title }}</strong></h5>
-            <p class="card-text">{{ post.content }}</p>
+            <p class="card-text">{{ post.content | contentSlice }}</p>
           </div>
         </router-link>
       </div>
@@ -37,7 +37,7 @@
       </div>
       <img class="card-img-top" :src="detail.image" style='height: 250px'>
       <div class="img-overlay"></div>
-      <div class="card-body">
+      <div class="card-body detail-body">
         <h4 class="card-title border-bottom mb-3 pb-2"><strong>{{ detail.title }}</strong></h4>
         <h5 style="margin-bottom: 75px">by {{ detail.author.name }}</h5>
         <p class="card-text">{{ detail.content }}</p>
@@ -53,30 +53,38 @@
       </div>
       <div class="comments border-top pt-4 mt-4">
         <div class="row pb-2 mb-4 border-bottom" v-for='(comment, index) in detail.comments' :key='index'>
-          <div class="col-10 text-left">
+          <div class="col-11 text-justify">
             <div class="commenter">
               <b>{{ comment.commenter.name }}</b> commented on {{ comment.createdAt.slice(0, 10) }}
             </div>
-            <h5>{{ comment.words }}</h5>
+            <h6>{{ comment.words }}</h6>
           </div>
-          <div class="col-1"></div>
-          <div class="col-1"></div>
-          <div class="col-11 mt-2 mb-1 replies">
-            <textarea rows="2" placeholder="Reply to this comment" v-model='reply[index]'></textarea>
+          <div class="col-1" v-if='comment.commenter._id === authuser'>
+            <button class='comDelBtn' @click='deleteCommentModal(comment._id)'><i class="far fa-trash-alt"></i></button>
           </div>
-          <div class="col-1 mt-2 mb-1 replyBtn">
-            <button @click='replyComment(comment._id, index)'><i class="fas fa-paper-plane"></i></button>
+          <div class="col-1" v-else></div>
+          <div v-if='signedin' class="row col-12 mt-4 pr-0">
+            <div class="col-11 mb-1 replies">
+              <textarea rows="2" placeholder="Reply to this comment"  onfocus='this.placeholder = ""' onblur='this.placeholder = "Reply to this comment"' v-model='reply[index]'></textarea>
+            </div>
+            <div class="col-1 mb-1 replyBtn">
+              <button @click='replyComment(comment._id, index)'><i class="fas fa-paper-plane"></i></button>
+            </div>
+            <div v-if='replyNotice[index].length > 0' class="col-12 mb-2" style='color: #42b983'>{{ replyNotice[index] }}</div>
+            <div v-else class="placeholder col-12 mb-2">placeholder</div>
           </div>
-          <div v-if='replyNotice[index].length > 0' class="col-12 mb-2" style='color: #42b983'>{{ replyNotice[index] }}</div>
-          <div v-else class="placeholder col-12 mb-2">placeholder</div>
           <div class="row col-12 m-0" v-for='(reply, index) in comment.comments' :key='index'>
             <div class="col-1"></div>
-            <div class="col-11 text-left border-top pt-3 pb-2">
+            <div class="col-10 text-justify border-top pt-3 pb-2">
               <div class="commenter">
                 <b>{{ reply.commenter.name }}</b> replied on {{ reply.createdAt.slice(0, 10) }}
               </div>
               <h6>{{ reply.words }}</h6>
             </div>
+            <div class="col-1 border-top pt-3 pb-2" v-if='reply.commenter._id === authuser'>
+              <button class='comDelBtn' @click='deleteCommentModal(reply._id)'><i class="far fa-trash-alt"></i></button>
+            </div>
+            <div class="col-1 border-top pt-3 pb-2" v-else></div>
           </div>
         </div>
       </div>
@@ -102,6 +110,14 @@
         <button @click='deleteModal'>No, sorry, that was a mistake</button>
         <button @click='deletePost'>Yeah, get rid of this shit</button>
       </div>
+      <!-- DELETE COMMENT MODAL -->
+      <div id='delComModal' v-if='openDelComModal'>
+        <button @click='deleteCommentModal' class="float-right" style="margin: -25px -25px 0 0; padding: 0; border: 0; background: transparent; color: #42b983"><i class="far fa-times-circle"></i></button>
+        <h2>Are you sure<span>?</span></h2><br>
+        <h5>The comment will be permanently deleted after this</h5><br>
+        <button @click='deleteCommentModal'>No, sorry, that was a mistake</button>
+        <button @click='deleteComment'>Yeah, get rid of this shit</button>
+      </div>
   </div>
 </template>
 
@@ -126,7 +142,9 @@ export default {
       comment: '',
       commentNotice: '',
       reply: [],
-      replyNotice: []
+      replyNotice: [],
+      openDelComModal: false,
+      delComId: ''
     }
   },
   methods: {
@@ -247,9 +265,46 @@ export default {
         this.replyNotice.splice(index, 1, '')
       })
       .catch(err => {
+        this.replyNotice = Array(this.replyNotice.length).fill('')
         this.replyNotice.splice(index, 1, err.response.data.message)
         this.commentNotice = ''        
       })
+    },
+    deleteCommentModal (id) {
+      if (id) {
+        this.delComId = id
+      }
+      this.optBackdrop = !this.optBackdrop
+      this.openDelComModal = !this.openDelComModal
+    },
+    deleteComment () {
+      axios({
+        url: `http://localhost:3000/comments/${this.delComId}`,
+        method: 'delete',
+        headers: {
+          token: localStorage.getItem('token')
+        }
+      })
+      .then(data => {
+        this.deleteCommentModal()
+        this.getDetail(this.$route.params.id)
+      })
+      .catch(err => {
+        console.log(err)
+      })
+    }
+  },
+  filters: {
+    contentSlice (value) {
+      if (value.length > 280) {
+        if (value[279] === ' ') {
+          return value.slice(0, 280) + '. . .'
+        } else {
+          return value.slice(0, 280) + ' . . .'
+        }
+      } else {
+        return value
+      }
     }
   },
   watch: {

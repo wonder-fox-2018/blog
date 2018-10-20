@@ -92,15 +92,35 @@ module.exports = {
     },
 
     remove: function(req, res) {
-        Comment.deleteOne({
+        Comment.findOne({
             _id: req.params.id,
             commenter: req.userId
         })
         .then(data => {
-            res.status(200).json({data: data})
-        })
-        .catch(err => {
-            res.status(500).json({message: err})
+            Comment.deleteOne({
+                _id: req.params.id,
+                commenter: req.userId
+            })
+            .then(() => {
+                if (data.level === 1) {
+                    Comment.deleteMany({
+                        _id: {
+                            $in: data.comments
+                        }
+                    })
+                    .then(() => {
+                        res.status(200).json({})
+                    })
+                    .catch(err => {
+                        res.status(500).json({message: err})
+                    })
+                } else {
+                    res.status(200).json({})
+                }
+            })
+            .catch(err => {
+                res.status(500).json({message: err})
+            })
         })
     }
 }
