@@ -1,22 +1,19 @@
 <template lang="html">
-
   <section class="form-register-component">
     <div class="panel-body">
       <form>
         <vue-form-generator :schema="schema" :model="model"></vue-form-generator>
         <input type=submit>
-        
+  
       </form>
     </div>
   </section>
-
-
 </template>
 
 <script lang="js">
   import VueFormGenerator from "vue-form-generator";
   import moment from 'moment'
-
+  
   export default {
     name: 'form-register-component',
     props: [],
@@ -24,24 +21,24 @@
       "vue-form-generator": VueFormGenerator.component
     },
     mounted() {
-
+  
     },
     data() {
       return {
-
+  
         model: {
           id: 1,
           name: "",
-          firstName : '',
-          lastname : '',
+          firstName: '',
+          lastname: '',
           email: "",
           password: "",
-          createdAt : "",
+          createdAt: "",
           skills: [],
           status: true,
           created: new Date().valueOf()
         },
-
+  
         schema: {
           groups: [{
               legend: "User Details",
@@ -52,7 +49,7 @@
                   model: "id",
                   readonly: true,
                   disabled: true
-
+  
                 },
                 {
                   type: "input",
@@ -63,7 +60,7 @@
                   placeholder: "Your name",
                   featured: true,
                   required: true,
-                  onChanged: function (model, newVal, oldVal) {
+                  onChanged: function(model, newVal, oldVal) {
                     console.log(`Model's name changed from ${oldVal} to ${newVal}. Model:`, model);
                   },
                 },
@@ -83,11 +80,11 @@
                   required: true,
                   hint: "Minimum 6 characters",
                   validator: VueFormGenerator.validators.string,
-                  onValidated: function (model, errors) {
+                  onValidated: function(model, errors) {
                     if (errors.length > 0)
                       console.warn("Validation error in Name field! Errors:", errors);
                   },
-                  visible: function (model) {
+                  visible: function(model) {
                     //visible if business is selected
                     return model.email.length > 1;
                   }
@@ -156,7 +153,7 @@
                   type: "label",
                   label: "Created",
                   model: "created",
-                  get: function (model) {
+                  get: function(model) {
                     return model && model.created ? moment(model.created).format("D-MMM-YYYY") : "-";
                   }
                 },
@@ -207,7 +204,7 @@
                   label: "Language",
                   model: "lang",
                   required: true,
-                  values: function () {
+                  values: function() {
                     return [{
                         id: "en-GB",
                         name: "English (GB)"
@@ -231,13 +228,13 @@
                     ]
                   }
                 },
-
-
-
+  
+  
+  
               ]
             }
           ],
-
+  
           formOptions: {
             validateAfterLoad: true,
             validateAfterChanged: true,
@@ -247,19 +244,17 @@
       }
     },
     methods: {
-
+  
     },
     computed: {
-
+  
     }
   }
 </script>
 
 <style scoped lang="css">
   .form-register-component {
-    
     max-width: 400px;
     margin: 90px auto 90px auto;
   }
-
 </style>

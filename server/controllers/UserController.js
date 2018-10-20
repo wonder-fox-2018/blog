@@ -50,8 +50,8 @@ const UserController = {
             });
     },
 
-    findOneById(req, res){
-        
+    findOneById(req, res) {
+
         var id = req.params.id
         UserModel.findById(id)
             .then((user) => {
@@ -70,17 +70,33 @@ const UserController = {
 
     },
 
-    verify(req, res){
+    verify(req, res) {
         var token = req.params.token
         let decoded = helpers.decodeToken(token)
         if (decoded.id) {
             req.params.id = decoded.id
-            UserController.findOneById(req,res)
+            UserController.findOneById(req, res)
         } else {
             res.status(300).json({
                 message: 'Invalid User Creditial'
             })
         }
+    },
+
+    update(req, res) {
+        UserModel.findByIdAndUpdate(req.params.id, {
+                firstName: req.body.firstName ? req.body.firstName : user.firstName,
+                lastName: req.body.lastName ? req.body.lastName : user.firstName,
+                email: req.body.email ? req.body.email : user.email
+            })
+            .then((result) => {
+                UserController.findOneById(req,res)
+            }).catch((err) => {
+                res.status(500).json({
+                    message: 'Update Failed',
+                    error: err
+                })
+            });
     }
 
 

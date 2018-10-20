@@ -1,7 +1,7 @@
 <template lang="html">
   <section class="homepage">
     
-    <sidebar :user='user' :articles='articles'></sidebar>
+    <sidebar :user='user' :articles='articles' :setUser='setUser'></sidebar>
     <articles :user='user' :articles='articles'></articles>
 
   </section>
@@ -10,25 +10,12 @@
 <script lang="js">
   import sidebar from './Sidebar.vue'
   import articles from './Articles.vue'
+
   export default  {
     name: 'homepage',
-    props: ['user','articles'],
+    props: ['user','articles','setUser'],
     components : {
       sidebar,articles
-    },
-    mounted() {
-
-    },
-    data() {
-      return {
-
-      }
-    },
-    methods: {
-
-    },
-    computed: {
-
     }
 }
 </script>
@@ -40,5 +27,6 @@
     /* background-color: rgba(251, 255, 227, 0.226); */
     background: radial-gradient(circle, #ffffff, #ced3ce);
     padding-top: 50px;
+    min-height: 650px;
   }
 </style>

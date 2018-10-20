@@ -9,5 +9,6 @@ router.post('/login',UserController.login)
 
 router.use('/users',require('./UserRoutes.js'))
 router.use('/articles',require('./ArticleRoutes.js'))
+router.use('/comments',require('./CommentRoutes.js'))
 
 module.exports = router;

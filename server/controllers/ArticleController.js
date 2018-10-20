@@ -3,8 +3,8 @@ var ArticleModel = require('../models/ArticleModel.js');
 module.exports = {
 
     list: function (req, res) {
-        ArticleModel.find().populate('author').sort('-createdAt').exec()
-            .then((Articles) => {
+        ArticleModel.find().populate('author','comments').exec()
+        .then((Articles) => {
                 return res.json(Articles);
             }).catch((err) => {
                 return res.status(500).json({
