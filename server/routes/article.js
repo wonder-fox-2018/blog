@@ -5,9 +5,13 @@ const Middlewares = require('../middlewares/index');
 
 router.get('/', ArticleController.showAll);
 
+router.get('/:id', ArticleController.findById);
+
 router.use(Middlewares.isLogin);
 
-router.get('/:id', ArticleController.showUserArticle);
+
+
+router.delete('/:id', ArticleController.delete);
 
 router.post('/', ArticleController.create);
 

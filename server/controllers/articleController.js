@@ -34,33 +34,41 @@ module.exports = {
                 article.content = req.body.content;
 
                 article.save().then((article) => {
-                    
-                    ServerResponse.success(res, 200, 'article has been updated', {article});
+                    res.status(200).json(article);
                 }).catch((err) => {
-                    ServerResponse.error(res, 400, 'invalid input');
+                    res.status(400).json(err.message);
                 });
             } else {
                 ServerResponse.error(res, 401, 'user is not authorized');
             }
         }).catch((err) => {
-            res.status(500).json(err);
+            res.status(500).json(err.message);
         });
      
     },
 
     delete: (req, res) => {
         Article.deleteOne({_id: req.params.id, author: req.decoded.id}).then((result) => {
-            ServerResponse.success(res, 200, 'article has been deleted', result);
+                res.status(200).json(result);
         }).catch((err) => {
             ServerResponse.error(res, 401, 'user is not authorized to delete this article')
         });
     },
 
     showUserArticle: (req, res) => {
-        Article.find({author: req.params.id}).then((article) => {
+        
+        Article.find({author: req.decoded.id}).then((article) => {
             res.status(200).json(article);
         }).catch((err) => {
             ServerResponse.error(res, 500, 'server is down');
+        });
+    },
+
+    findById: (req, res) => {
+        Article.findById(req.params.id).then((article) => {
+            res.status(200).json(article);
+        }).catch((err) => {
+            res.status(500).json(err.message);
         });
     }
 

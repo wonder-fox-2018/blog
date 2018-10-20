@@ -2,12 +2,12 @@
 <div class="flex-column">
   <div class="jumbotron jumbotron-fluid header">
     <div class="container">
-      <h1 class="display-2">Echo</h1>
+      <h1 class="display-2"><i class="fab fa-envira"></i>SwingFit</h1>
       <p class="lead">share your mind here</p>
     </div>
   </div>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" v-if="isLogin">Hello</a>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+    <a class="navbar-brand" v-if="isLogin"><i class="fab fa-envira"></i></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
       aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -70,11 +70,18 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
   .header {
-    margin-bottom: 0%;
+    margin-top: 0%;
+    background-color: #E7F4EB;
+    border-bottom: 1px solid;
   }
 
-  .navbar {
-    margin-bottom: 3%;
+  .navbar, a {
+    color: white !important;
+    background-color: #313F51 !important;
+  }
+
+  button:hover {
+    background-color: #22939A;
   }
 
 </style>
