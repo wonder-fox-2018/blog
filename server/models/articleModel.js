@@ -14,9 +14,7 @@ const articleSchema = new Schema({
       type: String,
       required: true
     },
-    location: {
-      type: String,
-    },
+    location: String,
     author: {
       type: Schema.Types.ObjectId,
       ref: 'User',

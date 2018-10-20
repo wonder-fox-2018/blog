@@ -13,7 +13,23 @@
     <div id='addModal' v-if='openAddModal'>
       <button @click='addModal' class="float-right" style="margin: -25px -25px 0 0; padding: 0; border: 0; background: transparent; color: #42b983"><i class="far fa-times-circle"></i></button>
       <input type="text" v-model='title' placeholder="Title"><br>
-      <textarea v-model='content' placeholder="Content" rows="10"></textarea><br>
+      <textarea v-model='content' placeholder="Content" rows="12"></textarea><br>
+      <div class='userloc border-top border-bottom'>
+        <div v-if='!shareLoc'>
+          <h6 v-if='detectedLoc'>We've detected that you're writing this from</h6>
+          <h6 v-else class="placeholder">placeholder</h6>
+          <input class="my-1" id='userLocInput' v-model='userLoc' @keyup='detectedLoc = false' :style="{ width: ((userLoc.length + 1) * 30) + 'px', 'max-width': '80%' }"><br>
+          <div style="font-size: 12px">( <b>Hint:</b> You can change the location manually )</div><br>
+          <button id='userLocBtn' v-on:click='shareLocToggle()'>Share that as my location in the post</button>
+        </div>
+        <div v-else>
+          <i class="fas fa-check-circle"></i>
+          <h4 class="mt-3 mb-2">{{ userLoc }}</h4>
+          <h6 class="mb-3">will be shared as your location in the post</h6>
+          <button id='userLocBtn' v-on:click='shareLocToggle()'>Cancel location sharing</button>
+        </div>
+      </div>
+      <br>
       <div v-if='notice.length > 0' style='color: #42b983'>{{ notice }}</div>
       <div v-else class="placeholder">placeholder</div>
       <button @click='addModal'>Maybe Later</button>
@@ -37,7 +53,10 @@ export default {
       notice: '',
       keyword: '',
       savedUrl: '',
-      isSearching: false
+      isSearching: false,
+      userLoc: '',
+      detectedLoc: false,
+      shareLoc: false
     }
   },
   methods: {
@@ -54,10 +73,17 @@ export default {
         })
     },
     addModal () {
+      if (!this.openAddModal) {
+        this.detectLoc()
+      }
       this.openAddModal = !this.openAddModal
       this.notice = ''
     },
     addPost () {
+      let loc = ''
+      if (this.shareLoc) {
+        loc = this.userLoc
+      }
       axios({
         url: 'http://localhost:3000/articles',
         method: 'post',
@@ -66,7 +92,8 @@ export default {
         },
         data: {
           title: this.title,
-          content: this.content
+          content: this.content,
+          loc: loc
         }
       })
         .then(() => {
@@ -107,6 +134,21 @@ export default {
             console.log(err)
           })
       }
+    },
+    shareLocToggle () {
+      this.shareLoc = !this.shareLoc
+    },
+    detectLoc () {
+      axios({
+        url: 'http://ip-api.com/json'
+      })
+        .then(data => {
+          this.userLoc = `${data.data.city}, ${data.data.country}`
+          this.detectedLoc = true
+        })
+        .catch(err => {
+          console.log(err)
+        })
     }
   },
   watch: {

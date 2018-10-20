@@ -39,7 +39,9 @@
       <div class="img-overlay"></div>
       <div class="card-body detail-body">
         <h4 class="card-title border-bottom mb-3 pb-2"><strong>{{ detail.title }}</strong></h4>
-        <h5 style="margin-bottom: 75px">by {{ detail.author.name }}</h5>
+        <h5>written by <b>{{ detail.author.name }}</b></h5>
+        <h6 v-if='detail.location.length > 0'  style="margin-bottom: 75px">in <a href='#' class='locLink'>{{ detail.location }}</a></h6>
+        <h6 v-else style="margin-bottom: 75px" class="placeholder">placeholder</h6>
         <p class="card-text">{{ detail.content }}</p>
       </div>
       <div v-if="signedin" class="text-left" id='comment'>
@@ -96,7 +98,7 @@
       <div id='editModal' v-if='openEditModal'>
         <button @click='editModal' class="float-right" style="margin: -25px -25px 0 0; padding: 0; border: 0; background: transparent; color: #42b983"><i class="far fa-times-circle"></i></button>
         <input type="text" v-model='title' placeholder="Title"><br>
-        <textarea v-model='content' placeholder="Content" rows="10"></textarea><br>
+        <textarea v-model='content' placeholder="Content" rows="15"></textarea><br>
         <div v-if='notice.length > 0' style='color: #42b983'>{{ notice }}</div>
         <div v-else class="placeholder">placeholder</div>
         <button @click='editModal'>Argh, no, it's perfect!</button>
@@ -237,15 +239,15 @@ export default {
           postId: id
         }
       })
-      .then(() => {
-        this.getDetail(this.$route.params.id)
-        this.comment = ''
-        this.commentNotice = ''
-      })
-      .catch(err => {
-        this.commentNotice = err.response.data.message
-        this.replyNotice = Array(this.replyNotice.length).fill('')
-      })
+        .then(() => {
+          this.getDetail(this.$route.params.id)
+          this.comment = ''
+          this.commentNotice = ''
+        })
+        .catch(err => {
+          this.commentNotice = err.response.data.message
+          this.replyNotice = Array(this.replyNotice.length).fill('')
+        })
     },
     replyComment (id, index) {
       axios({
@@ -259,16 +261,16 @@ export default {
           commentId: id
         }
       })
-      .then(() => {
-        this.getDetail(this.$route.params.id)
-        this.reply.splice(index, 1, '')
-        this.replyNotice.splice(index, 1, '')
-      })
-      .catch(err => {
-        this.replyNotice = Array(this.replyNotice.length).fill('')
-        this.replyNotice.splice(index, 1, err.response.data.message)
-        this.commentNotice = ''        
-      })
+        .then(() => {
+          this.getDetail(this.$route.params.id)
+          this.reply.splice(index, 1, '')
+          this.replyNotice.splice(index, 1, '')
+        })
+        .catch(err => {
+          this.replyNotice = Array(this.replyNotice.length).fill('')
+          this.replyNotice.splice(index, 1, err.response.data.message)
+          this.commentNotice = ''
+        })
     },
     deleteCommentModal (id) {
       if (id) {
@@ -285,13 +287,13 @@ export default {
           token: localStorage.getItem('token')
         }
       })
-      .then(data => {
-        this.deleteCommentModal()
-        this.getDetail(this.$route.params.id)
-      })
-      .catch(err => {
-        console.log(err)
-      })
+        .then(data => {
+          this.deleteCommentModal()
+          this.getDetail(this.$route.params.id)
+        })
+        .catch(err => {
+          console.log(err)
+        })
     }
   },
   filters: {

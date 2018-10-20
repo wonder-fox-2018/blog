@@ -59,7 +59,8 @@ module.exports = {
                 title: req.body.title,
                 content: req.body.content,
                 location: req.body.loc,
-                author: req.userId
+                author: req.userId,
+                location: req.body.loc
             })
             .then(data => {
                 res.status(201).json({data: data})

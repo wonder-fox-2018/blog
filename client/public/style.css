@@ -231,6 +231,11 @@ a:hover {
     overflow: auto;
 }
 
+#addModal {
+    top: 5%;
+    max-height: 90%;
+}
+
 #addModal input, #addModal textarea, #editModal input, #editModal textarea {
     border: none;
     margin: 1vh 0;
@@ -247,7 +252,6 @@ a:hover {
     font-size: 20px;
     font-weight: 700;
     padding: 10px 20px;
-    text-transform: capitalize;
 }
 
 #addModal textarea, #editModal textarea {
@@ -418,4 +422,46 @@ a:hover {
 
 .comDelBtn:focus {
     outline: none;
+}
+
+.userloc {
+    margin-top: 25px;
+    padding: 25px 0px;
+    min-height: 235px;
+    display: flex;
+}
+
+.userloc div {
+    margin: auto 0px;
+    width: 100%;
+}
+
+.fa-check-circle {
+    color: #42b983;
+    font-size: 30px;
+}
+
+#userLocInput {
+    text-align: center;
+    font-size: 24px !important;
+    font-weight: normal !important;
+    text-transform: capitalize;
+}
+
+#userLocInput:focus {
+    outline: none !important;
+    border-bottom: 2px solid #42b983;
+    padding-bottom: 8px;
+}
+
+#userLocBtn {
+    border-radius: 0;
+    padding: 3px 15px;
+    background-color: transparent;
+    margin: 0px !important;
+}
+
+#userLocBtn:hover {
+    background-color: white;
+    color: #42b983;
 }
