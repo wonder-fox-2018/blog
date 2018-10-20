@@ -18,7 +18,7 @@ export default {
   components: {
     HelloWorld,
     Article,
-    Sidebar
+    Sidebar,
   },
 };
-</script>
+</script>;

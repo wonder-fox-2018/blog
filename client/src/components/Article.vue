@@ -6,7 +6,7 @@
         </h1>
         <!-- Blog Post -->
         <div class="card mb-4">
-            <img class="card-img-top" src="https://initiate.alphacoders.com/images/949/cropped-1366-768-949653.png?2690"
+            <img class="card-img-top" src="https://gaminguardian.com/wp-content/uploads/2018/06/Q2TaMh0-800x445.png"
                 alt="Card image cap">
             <div class="card-body">
                 <h2 class="card-title">Slime</h2>
