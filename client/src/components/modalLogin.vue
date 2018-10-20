@@ -13,17 +13,17 @@
             <div class="form-row">
               <div class="form-group col-md-12">
                 <label for="inputEmailLogin">Email</label>
-                <input type="email" class="form-control" id="inputEmailLogin"  placeholder="Email">
+                <input type="email" class="form-control" id="inputEmailLogin" v-model="email" placeholder="Email">
               </div>
               <div class="form-group col-md-12">
                 <label for="inputPasswordLogin">Password</label>
-                <input type="password" class="form-control" id="inputPasswordEmail"  placeholder="Password">
+                <input type="password" class="form-control" id="inputPasswordLogin" v-model="password"  placeholder="Password">
               </div>
             </div>
           </form>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary"  data-dismiss="modal">Login</button>
+          <button type="button" class="btn btn-primary" @click="login" data-dismiss="modal">Login</button>
         </div>
       </div>
     </div>
@@ -32,7 +32,35 @@
 
 <script>
 export default {
-  
+  props : ['gettoken'],
+  data(){
+    return{
+      email : '',
+      password : ''
+    }
+  },
+  methods : {
+    login : function(){
+      self = this
+      axios({
+        method : 'POST',
+        url : 'http://localhost:3000/users/login',
+        data :{
+          email : self.email,
+          password : self.password
+        }
+      })
+      .then(response => {
+        this.email = ''
+        this.password = ''
+        localStorage.setItem('token', response.data.token)
+        this.gettoken()
+      })
+      .catch(err => {
+        console.log(err)
+      })
+    }
+  }
 }
 </script>
 

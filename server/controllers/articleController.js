@@ -6,6 +6,8 @@ class ArticleController{
         Article.create({
             title : req.body.title,
             article : req.body.article,
+            img : req.body.img,
+            username : req.login.username,
             user : req.login.id
         })
         .then(article => {
@@ -29,7 +31,10 @@ class ArticleController{
                 article.article = req.body.article
                 article.save()
                 .then(updated => {
-                    res.status(200).json(updated)
+                    res.status(200).json({
+                        updated,
+                        message : 'Article updated'
+                    })
                 })
             }
             res.status(200).json(article)
@@ -56,7 +61,28 @@ class ArticleController{
         .catch(err => {
             res.status(500).json(err)
         })
-        
+    }
+    static showArticleById(req, res){
+        Article.findOne({
+            _id : req.params.id
+        })
+        .then(article => {
+            res.status(200).json({article})
+        })
+        .catch(err => {
+            res.status(500).json(err)
+        })
+    }
+    static searchArticle(req, res){
+        Article.find({
+            title: new RegExp(req.params.keyword, 'i')
+        })
+        .then(data => {
+            res.status(200).json(data)
+        })
+        .catch(err => {
+            res.status(500).json({error: err.message})
+        })
     }
 }
 

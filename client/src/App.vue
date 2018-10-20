@@ -9,31 +9,37 @@
           </div>
         </div>
       </div>
-      <navbar :isLogin="isLogin"></navbar>
+      <navbar :isLogin="isLogin" :gettoken="getToken"></navbar>
 
-      <container :article="article"></container>
+      <bigcontainer @searchArticle="setSearch" :article="article" :isLogin="isLogin"></bigcontainer>
+      <!-- <container :article="article"></container> -->
       <footers></footers>
 
       <!-- modal components -->
       <modalRegister></modalRegister>
-      <modalLogin></modalLogin>
+      <modalLogin  :gettoken="getToken"></modalLogin>
+      <modalArticle :getarticle="getArticle"></modalArticle>
   </div>
 </template>
 
 <script>
   import navbar from '@/components/navbar.vue'
-  import container from '@/components/container.vue'
+  import bigcontainer from '@/components/bigContainer.vue'
+  // import container from '@/components/container.vue'
   import footers from '@/components/footers.vue'
   import modalRegister from '@/components/modalRegister.vue'
   import modalLogin from '@/components/modalLogin.vue'
+  import modalArticle from '@/components/modalArticle.vue'
 
   export default {
     components : {
       navbar,
-      container,
+      bigcontainer,
+      // container,
       footers,
       modalRegister,
-      modalLogin
+      modalLogin,
+      modalArticle
     },
     data : function(){
       return {
@@ -44,41 +50,63 @@
           id : '',
           email : ''
         },
-        article : {
-          articleID : '1', 
-          author : 'franshiro',
-          title : 'Tensei Shitara Slime Datta Ken',
-          category : 'manga',
-          img : 'https://www.manga-news.com/public/images/pix/dvd/3567/Tensei-shitara-slime-datta-ken-anime-visual.jpg',
-          articleContent : 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla? Quos cum ex quis soluta, a laboriosam. Dicta expedita corporis animi vero voluptate voluptatibus possimus, veniam magni quis!',
-          date : this.getDate()
-
-        }
+        article : [],
+        search : ''
       }
     },
     created : function(){
       this.getToken()
+      this.getArticle()
+    },
+    watch: {
+      search() {
+        if(this.search.length > 0){
+          console.log(this.search)
+          this.searchArticle()
+        }
+        else {
+          this.getArticle()
+        }
+      },
     },
     methods : {
-      getToken() {
-        this.isLogin = false
-        console.log(this.isLogin)
+      setSearch(value){
+        this.search = value
       },
-      getDate(){
-        let date = new Date()
-        let month = date.getMonth() + 1
-        let monthInWord = ''
-        let day = date.getDate()
-        let year = date.getFullYear()
-        switch (month) {
-          case 10:
-            monthInWord = 'Oktober'
-            break;
-
-          default:
-            break;
+      searchArticle(){
+        axios({
+          method : 'GET',
+          url : `http://localhost:3000/articles/search/${this.search}`
+        })
+        .then(response => {
+          console.log(response.data)
+          this.article = response.data
+        })
+        .catch(err => {
+          console.log(err)
+        })
+      },
+      getToken() {
+        let token = localStorage.getItem('token')
+        if(token){
+          this.isLogin = true
         }
-        return `${day},${monthInWord} ${year}`
+        else{
+          this.isLogin = false
+        }
+      },
+      getArticle : function(){
+        axios({
+          method : 'GET',
+          url : 'http://localhost:3000/articles/show',
+        })
+        .then(response => {
+          let article = response.data
+          this.article = response.data
+        })
+        .catch(err => {
+          console.log(err)
+        })
       }
     }
   }
@@ -86,6 +114,7 @@
 
 
 <style>
+@import "~vue-wysiwyg/dist/vueWysiwyg.css";
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

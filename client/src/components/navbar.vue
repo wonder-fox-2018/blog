@@ -8,13 +8,13 @@
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item active">
-                        <router-link class="nav-link" to='/'>home</router-link> |
+                        <router-link class="nav-link" to="/">home</router-link> |
                     </li>
                     <li class="nav-item">
-                        <router-link class="nav-link" to='/about'>about</router-link>
+                        <router-link class="nav-link" to= "/about">about</router-link>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Services</a>
+                    <li class="nav-item" v-if="isLogin">
+                        <router-link class="nav-link" to="/article">My Article</router-link>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Contact</a>
@@ -26,7 +26,7 @@
                             <form action="" class="form-inline">
                                 <button type="button" class="btn btn-success my-2 my-sm-0" v-if="!isLogin" data-toggle="modal" data-target="#modalRegister">Register</button>
                                 <button type="button" class="btn btn-success my-2 my-sm-0" v-if="!isLogin" data-toggle="modal" data-target="#modalLogin">Login</button>
-                                <button class="btn btn-success my-2 my-sm-0" type="button" v-if="isLogin">Logout</button>
+                                <button class="btn btn-success my-2 my-sm-0" type="button" @click="logout"  v-if="isLogin">Logout</button>
                             </form>
                         </div>
                     </div>
@@ -38,7 +38,15 @@
 
 <script>
 export default {
-    props : ['isLogin']
+    name : 'navbar',
+    props : ['isLogin', 'gettoken'],
+    methods : {
+        logout : function(){
+            localStorage.removeItem('token')
+            this.gettoken()
+
+        }
+    }
 }
 </script>
 
