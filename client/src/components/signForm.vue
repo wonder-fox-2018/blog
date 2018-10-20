@@ -19,7 +19,7 @@
       </div>
       <br>
       <div v-if="notice.length > 0" class='unselectable' id='notice'>{{ notice }}</div>
-      <div v-else class="unselectable" style="color: transparent">placeholder</div>
+      <div v-else class="placeholder">placeholder</div>
     </div>
   </div>
 </template>

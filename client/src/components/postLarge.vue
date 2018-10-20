@@ -44,9 +44,40 @@
       </div>
       <div v-if="signedin" class="text-left" id='comment'>
         <h5>Add your comments here . . .</h5>
-        <textarea rows="2" placeholder="Comment" onfocus='this.placeholder = ""' onblur='this.placeholder = "Comment"'></textarea>
+        <textarea rows="2" placeholder="Comment" onfocus='this.placeholder = ""' onblur='this.placeholder = "Comment"' v-model='comment'></textarea>
         <div class="text-center">
-          <button>+ New Comment</button>
+          <div v-if='commentNotice.length > 0' style='color: #42b983'>{{ commentNotice }}</div>
+          <div v-else class="placeholder">placeholder</div>
+          <button @click='addComment(detail._id)'>+ New Comment</button>
+        </div>
+      </div>
+      <div class="comments border-top pt-4 mt-4">
+        <div class="row pb-2 mb-4 border-bottom" v-for='(comment, index) in detail.comments' :key='index'>
+          <div class="col-10 text-left">
+            <div class="commenter">
+              <b>{{ comment.commenter.name }}</b> commented on {{ comment.createdAt.slice(0, 10) }}
+            </div>
+            <h5>{{ comment.words }}</h5>
+          </div>
+          <div class="col-1"></div>
+          <div class="col-1"></div>
+          <div class="col-11 mt-2 mb-1 replies">
+            <textarea rows="2" placeholder="Reply to this comment" v-model='reply[index]'></textarea>
+          </div>
+          <div class="col-1 mt-2 mb-1 replyBtn">
+            <button @click='replyComment(comment._id, index)'><i class="fas fa-paper-plane"></i></button>
+          </div>
+          <div v-if='replyNotice[index].length > 0' class="col-12 mb-2" style='color: #42b983'>{{ replyNotice[index] }}</div>
+          <div v-else class="placeholder col-12 mb-2">placeholder</div>
+          <div class="row col-12 m-0" v-for='(reply, index) in comment.comments' :key='index'>
+            <div class="col-1"></div>
+            <div class="col-11 text-left border-top pt-3 pb-2">
+              <div class="commenter">
+                <b>{{ reply.commenter.name }}</b> replied on {{ reply.createdAt.slice(0, 10) }}
+              </div>
+              <h6>{{ reply.words }}</h6>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -59,7 +90,7 @@
         <input type="text" v-model='title' placeholder="Title"><br>
         <textarea v-model='content' placeholder="Content" rows="10"></textarea><br>
         <div v-if='notice.length > 0' style='color: #42b983'>{{ notice }}</div>
-        <div v-else style='color: transparent'>placeholder</div>
+        <div v-else class="placeholder">placeholder</div>
         <button @click='editModal'>Argh, no, it's perfect!</button>
         <button @click='editPost'>Edit Post</button>
       </div>
@@ -91,7 +122,11 @@ export default {
       openEditModal: false,
       openDeleteModal: false,
       editId: '',
-      deleteId: ''
+      deleteId: '',
+      comment: '',
+      commentNotice: '',
+      reply: [],
+      replyNotice: []
     }
   },
   methods: {
@@ -102,6 +137,8 @@ export default {
         .then(data => {
           this.detail = data.data.data
           this.showAll = false
+          this.reply = Array(data.data.data.comments.length).fill('')
+          this.replyNotice = Array(data.data.data.comments.length).fill('')
         })
         .catch(err => {
           console.log(err)
@@ -169,6 +206,50 @@ export default {
         .catch(err => {
           this.notice = err.response.data.message
         })
+    },
+    addComment (id) {
+      axios({
+        url: 'http://localhost:3000/comments',
+        method: 'post',
+        headers: {
+          token: localStorage.getItem('token')
+        },
+        data: {
+          words: this.comment,
+          postId: id
+        }
+      })
+      .then(() => {
+        this.getDetail(this.$route.params.id)
+        this.comment = ''
+        this.commentNotice = ''
+      })
+      .catch(err => {
+        this.commentNotice = err.response.data.message
+        this.replyNotice = Array(this.replyNotice.length).fill('')
+      })
+    },
+    replyComment (id, index) {
+      axios({
+        url: 'http://localhost:3000/comments/stack',
+        method: 'post',
+        headers: {
+          token: localStorage.getItem('token')
+        },
+        data: {
+          words: this.reply[index],
+          commentId: id
+        }
+      })
+      .then(() => {
+        this.getDetail(this.$route.params.id)
+        this.reply.splice(index, 1, '')
+        this.replyNotice.splice(index, 1, '')
+      })
+      .catch(err => {
+        this.replyNotice.splice(index, 1, err.response.data.message)
+        this.commentNotice = ''        
+      })
     }
   },
   watch: {

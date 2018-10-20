@@ -56,7 +56,7 @@ module.exports = {
         if (!req.body.commentId || req.body.commentId.length === 0) {
             res.status(500).json({message: 'If you get this message, you must have changed something on the client side, please reload the page and try again.'})
         } else if (!req.body.words || req.body.words.length === 0) {
-            res.status(500).json({message: 'A comment has to have a content'})
+            res.status(500).json({message: 'A reply has to have a content'})
         } else {
             Comment.findById(req.body.commentId)
             .then(parentComment => {

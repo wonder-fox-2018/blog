@@ -26,7 +26,18 @@ module.exports = {
         .populate('author')
         .populate({
             path: 'comments',
-            populate: {path: 'commenter'}
+            populate: {
+                path: 'commenter'
+            }
+        })
+        .populate({
+            path: 'comments',
+            populate: {
+                path: 'comments',
+                populate: {
+                    path: 'commenter'
+                }
+            }
         })
         .then(data => {
             res.status(200).json({data: data})

@@ -15,7 +15,7 @@
       <input type="text" v-model='title' placeholder="Title"><br>
       <textarea v-model='content' placeholder="Content" rows="10"></textarea><br>
       <div v-if='notice.length > 0' style='color: #42b983'>{{ notice }}</div>
-      <div v-else style='color: transparent'>placeholder</div>
+      <div v-else class="placeholder">placeholder</div>
       <button @click='addModal'>Maybe Later</button>
       <button @click='addPost'>+ Add Post</button>
     </div>

@@ -1,9 +1,10 @@
-.unselectable {
+.placeholder {
     -webkit-user-select: none; /* Safari */        
     -moz-user-select: none; /* Firefox */
     -ms-user-select: none; /* IE10+/Edge */
     user-select: none; /* Standard */
     cursor: default;
+    color: transparent;
 }
 
 ::-webkit-scrollbar { 
@@ -252,7 +253,7 @@ a:hover {
     padding: 15px 20px;
 }
 
-#addModal button, #editModal button, #deleteModal button {
+#addModal button, #editModal button, #deleteModal button, #comment button {
     border: transparent;
     height: 45px;
     font-size: 20px;
@@ -265,14 +266,14 @@ a:hover {
     font-family: 'Monthoers', sans-serif;
 }
 
-#addModal button:hover, #editModal button:hover, #deleteModal button:hover {
+#addModal button:hover, #editModal button:hover, #deleteModal button:hover, #comment button:hover {
     background: white;
     color: #42b983;
     border: 3px solid #42b983;
     padding: 7px 27px 12px 27px;
 }
 
-#addModal button:focus, #editModal button:focus, #deleteModal button:focus {
+#addModal button:focus, #editModal button:focus, #deleteModal button:focus, #comment button:focus {
     outline: none;
 }
 
@@ -343,4 +344,52 @@ a:hover {
 
 #comment textarea:focus {
     outline: 2px solid #42b983
+}
+
+.comments {
+    margin: 0;
+    margin-bottom: 100px;
+    padding: 0;
+}
+
+.commenter {
+    font-size: 15px;
+    margin-bottom: 10px;
+}
+
+.replies {
+    padding-right: 0px;
+    height: 75px !important;
+}
+
+.replies textarea {
+    width: 100%;
+    border: 1px solid gainsboro;
+    font-size: 15px;
+    padding: 10px;
+}
+
+.replies textarea:focus {
+    outline: 2px solid #42b983
+}
+
+.replyBtn {
+    height: 75px !important;
+    padding: 0px;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
+.replyBtn button {
+    background: transparent;
+    border: none;
+    font-size: 20px;
+    padding: 5px 10px;
+    color: #42b983;
+    cursor: pointer;
+}
+
+.replyBtn button:focus {
+    outline: none;
 }
