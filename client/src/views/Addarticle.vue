@@ -24,7 +24,7 @@
 import axios from 'axios'
 export default {
   name: 'Addarticle',
-  props: ['islogin', 'userbasicinfo', 'listarticles', 'getallarticle'],
+  props: ['islogin', 'userbasicinfo', 'listarticles', 'getallarticle', 'token'],
   data () {
     return {
       articletitle: '',
@@ -38,7 +38,7 @@ export default {
         method: 'POST',
         url: 'http://localhost:3009/articles/',
         headers: {
-          token: localStorage.getItem('blogtoken')
+          token: self.token
         },
         data: {
           title: self.articletitle,
@@ -46,7 +46,7 @@ export default {
         }
       })
         .then(article => {
-          console.log('Article Created ----', article.data)
+          // console.log('Article Created ----', article.data)
           this.$router.push({ name: 'home' })
         })
         .catch(error => {
@@ -57,7 +57,8 @@ export default {
   watch: {
     islogin (val) {},
     userbasicinfo (val) {},
-    listarticles (val) {}
+    listarticles (val) {},
+    token (val) {}
   }
 }
 </script>

@@ -133,12 +133,13 @@ export default {
         }
       })
         .then(user => {
+          self.token = user.data.token
+          localStorage.setItem('blogtoken', self.token)
+          this.$emit('token', self.token)
           self.entryemail = ''
           self.entrypassword = ''
           self.islogin = true
           this.$emit('islogin', self.islogin)
-          self.token = user.data.token
-          localStorage.setItem('blogtoken', self.token)
           self.getcredentials()
           this.$router.push({ name: 'home' })
           // eslint-disable-next-line
@@ -162,13 +163,14 @@ export default {
         }
       })
         .then(user => {
+          self.token = user.data.token
+          localStorage.setItem('blogtoken', self.token)
+          this.$emit('token', self.token)
           self.entryname = ''
           self.entryemail = ''
           self.entrypassword = ''
           self.islogin = true
           this.$emit('islogin', self.islogin)
-          self.token = user.data.token
-          localStorage.setItem('blogtoken', self.token)
           self.getcredentials()
           this.$router.push({ name: 'home' })
           // eslint-disable-next-line
@@ -185,6 +187,7 @@ export default {
       this.token = ''
       this.islogin = false
       this.userbasicinfo = {}
+      this.$emit('token', this.token)
       this.$emit('islogin', this.islogin)
       this.$emit('userbasicinfo', this.userbasicinfo)
       localStorage.removeItem('blogtoken')
@@ -203,6 +206,7 @@ export default {
       }
     },
     userbasicinfo (val) {
+      console.log('Name Lengkap', val)
       this.namelengkap = val.name
     }
   }

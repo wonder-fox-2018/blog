@@ -3,7 +3,7 @@
         <nav id="sidebar">
             <br>
             <div class="sidebar-header"
-              v-if= "islogin === true">
+              v-if= "token !== null & token !== '' ">
               <router-link :to="{name: 'addarticle'}">
                 <button type="button" class="btn btn-success">
                   Add Article</button>
@@ -34,11 +34,10 @@
 <script>
 export default {
   name: 'Sidebar',
-  props: ['listarticles', 'userbasicinfo', 'islogin', 'getallarticle'],
+  props: ['listarticles', 'userbasicinfo', 'islogin', 'getallarticle', 'token'],
   data () {
     return {
-      keyword: '',
-      token: ''
+      keyword: ''
     }
   },
   methods: {
@@ -48,7 +47,8 @@ export default {
   },
   watch: {
     userbasicinfo (val) {},
-    listarticles (val) {}
+    listarticles (val) {},
+    token (val) {}
   }
 }
 </script>

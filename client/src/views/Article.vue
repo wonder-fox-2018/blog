@@ -1,6 +1,7 @@
 <template>
    <div id="marginleftcustom">
      <router-view
+     :token="token"
      :getallarticle="getallarticle"
      :islogin="islogin"
      :userbasicinfo="userbasicinfo"
@@ -13,7 +14,7 @@ import Detailarticle from '@/views/Detailarticle.vue'
 import Addarticle from '@/views/Addarticle.vue'
 export default {
   name: 'Article',
-  props: ['islogin', 'userbasicinfo', 'listarticles', 'getallarticle'],
+  props: ['islogin', 'userbasicinfo', 'listarticles', 'getallarticle', 'token'],
   components: {
     Allarticles, Detailarticle, Addarticle
   },

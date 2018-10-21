@@ -1,11 +1,13 @@
 <template>
   <div id="app">
     <Navbar @userbasicinfo="getuserbasicinfo"
-       @islogin="getislogin" ></Navbar>
+       @islogin="getislogin"
+       @token="gettoken" ></Navbar>
     <div class="container-fluid" id="marginTopCustom">
       <div class="row">
         <div class="col-md-2">
           <Sidebar
+                :token="token"
                 :getallarticle="getallarticle"
                 :islogin ="islogin"
                 :listarticles="listarticles"
@@ -13,7 +15,9 @@
                 @searcharticles="searcharticles"></Sidebar>
         </div>
         <div class="col-md-10">
-          <router-view :islogin="islogin"
+          <router-view
+          :token="token"
+          :islogin="islogin"
           :getallarticle="getallarticle"
           :userbasicinfo="userbasicinfo"
           :listarticles="listarticles"></router-view>
@@ -42,6 +46,7 @@ export default {
     return {
       listarticles: [],
       islogin: false,
+      token: '',
       userbasicinfo: {},
       keyword: ''
     }
@@ -54,12 +59,15 @@ export default {
         url: 'http://localhost:3009/articles/lists'
       })
         .then(articles => {
-          console.log('Result-----', articles.data.data)
+          // console.log('Result-----', articles.data.data)
           self.listarticles = articles.data.data
         })
         .catch(error => {
           console.log('ERROR Get List Articles ', error)
         })
+    },
+    gettoken (val) {
+      this.token = val
     },
     getislogin (val) {
       this.islogin = val
