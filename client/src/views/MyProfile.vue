@@ -6,13 +6,13 @@
                     alt="" class="img-rounded">
                 <br>
                 <br>
-                <b>Avatar</b>
-                <center><input type="file" class="mt-3"></center>
+                <b>Avatar URL : </b>
+                <center><input type="text" class="mt-3" v-model="profile_avatar"></center>
             </div>
             <div class="col-md-6 details">
                 <blockquote>
-                    <h5>Fiona Gallagher</h5>
-                    <small><cite title="Source Title">Chicago, United States of America <i class="icon-map-marker"></i></cite></small>
+                    <!-- <h5>{{profile_name}}</h5> -->
+                    <!-- <small><cite title="Source Title">Chicago, United States of America <i class="icon-map-marker"></i></cite></small> -->
                 </blockquote>
                 <p>
                     name<br> 
@@ -20,10 +20,10 @@
                     email<br>
                     <input type="text" v-model="profile_email"> <br>
                     age<br> 
-                    <input type="number" v-model="age"> <br>
+                    <input type="number" v-model="profile_age"> <br>
                     bio<br>
                     <textarea type="text" v-model="profile_bio"></textarea> <br>
-                    <button class="btn btn-success mt-3">Update Profile</button>
+                    <button class="btn btn-success mt-3" @click="updateProfile()">Update Profile</button>
                 </p>
             </div>
         </div>
@@ -69,6 +69,32 @@ export default {
                 self.profile_bio = response.data.bio
                 self.profile_avatar = response.data.avatar
                 
+            })
+            .catch((err)=>{
+                console.log(err)
+            })
+        },
+        updateProfile(){
+            let self = this
+
+            let data = {
+                name : self.profile_name,
+                email : self.profile_email,
+                age : self.profile_age,
+                bio : self.profile_bio,
+                avatar : self.profile_avatar
+            }
+
+            axios({
+                method : 'PUT',
+                url : `${config.port}/users/update`,
+                headers : {
+                    token : localStorage.getItem('token')
+                },
+                data
+            })
+            .then((response)=>{
+                console.log(response)
             })
             .catch((err)=>{
                 console.log(err)

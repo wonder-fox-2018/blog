@@ -94,7 +94,25 @@ class Controller {
     }
 
     static update(req,res){
-        
+        User.findOneAndUpdate({
+            _id : req.userData._id
+        }, {
+            name : req.body.name,
+            email : req.body.email,
+            age : req.body.age,
+            avatar : req.body.avatar,
+            bio : req.body.bio
+        })
+        .then(function (task) {
+            res.status(200).json({
+                message: `update completed...`
+            })
+        })
+        .catch(function (err) {
+            res.status(500).json({
+                message : 'update failed'
+            })
+        })
     }
 }
 

@@ -151,10 +151,12 @@ export default {
         checkToken(){
             let token = localStorage.getItem('token')
             if(token){
+                this.currentuser = localStorage.getItem('currentuser')
                 this.token = token
                 this.islogin = true
             }else{
                 this.islogin = false
+                this.currentuser = ''
             }
         }
     },
