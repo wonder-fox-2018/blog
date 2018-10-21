@@ -64,12 +64,15 @@ module.exports = {
         } else if (!req.body.content || req.body.content.length === 0) {
             res.status(500).json({message: 'An article has to have a content'})
         } else {
+            if (!req.body.image || req.body.image.length === 0) {
+                req.body.image = 'https://via.placeholder.com/700x250'
+            }
             Article.create({
                 title: req.body.title,
                 content: req.body.content,
                 location: req.body.loc,
                 author: req.userId,
-                location: req.body.loc
+                image: req.body.image
             })
             .then(data => {
                 res.status(201).json({data: data})

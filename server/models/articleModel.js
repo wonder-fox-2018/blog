@@ -2,10 +2,7 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const articleSchema = new Schema({
-    image: {
-      type: String,
-      default: 'https://via.placeholder.com/600x200'
-    },
+    image: String,
     title: {
       type: String,
       required: true

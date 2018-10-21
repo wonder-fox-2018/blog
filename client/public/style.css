@@ -253,8 +253,8 @@ a:hover {
 }
 
 #addModal {
-    top: 5%;
-    max-height: 90%;
+    top: 1%;
+    max-height: 98%;
 }
 
 #addModal input, #addModal textarea, #editModal input, #editModal textarea {

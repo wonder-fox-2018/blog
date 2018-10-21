@@ -18,6 +18,8 @@
     <!-- ADD MODAL -->
     <div id='addModal' v-if='openAddModal'>
       <button @click='addModal' class="float-right" style="margin: -25px -25px 0 0; padding: 0; border: 0; background: transparent; color: #42b983"><i class="far fa-times-circle"></i></button>
+      <h6>You can upload an image here if you want to (<b>max. 3 MB</b>)</h6>
+      <input type="file" accept="image/png, image/jpeg" @change='imgChange' style='width: auto; font-size: 14px; border: 2px solid #42b983'><br>
       <input type="text" v-model='title' placeholder="Title"><br>
       <textarea v-model='content' placeholder="Content" rows="12"></textarea><br>
       <div class='userloc border-top border-bottom'>
@@ -57,6 +59,7 @@ export default {
       openAddModal: false,
       title: '',
       content: '',
+      image: '',
       notice: '',
       keyword: '',
       savedUrl: '',
@@ -112,27 +115,71 @@ export default {
       if (this.shareLoc) {
         loc = this.userLoc
       }
-      axios({
-        url: 'http://localhost:3000/articles',
-        method: 'post',
-        headers: {
-          token: localStorage.getItem('token')
-        },
-        data: {
-          title: this.title,
-          content: this.content,
-          loc: loc
-        }
-      })
-        .then(() => {
-          this.addModal()
-          this.getPosts()
-          this.title = ''
-          this.content = ''
+
+      if (this.image !== '') {
+        let formData = new FormData()
+        formData.append('image', this.image)
+
+        axios({
+          url: 'http://localhost:3000/upload',
+          method: 'post',
+          data: formData,
+          headers: {
+              'Content-Type': 'multipart/form-data',
+              token: localStorage.getItem('token')
+          }
         })
-        .catch(err => {
-          this.notice = err.response.data.message
+          .then(image => {
+            axios({
+              url: 'http://localhost:3000/articles',
+              method: 'post',
+              headers: {
+                token: localStorage.getItem('token')
+              },
+              data: {
+                title: this.title,
+                content: this.content,
+                loc: loc,
+                image: image.data.link
+              }
+            })
+              .then(() => {
+                this.addModal()
+                this.getPosts()
+                this.title = ''
+                this.content = ''
+                this.image = ''
+              })
+              .catch(err => {
+                this.notice = err.response.data.message
+              })
+          })
+          .catch(err => {
+            this.notice = 'Sorry, but the image file is too large'
+          })
+      } else {
+        axios({
+          url: 'http://localhost:3000/articles',
+          method: 'post',
+          headers: {
+            token: localStorage.getItem('token')
+          },
+          data: {
+            title: this.title,
+            content: this.content,
+            loc: loc,
+          }
         })
+          .then(() => {
+            this.addModal()
+            this.getPosts()
+            this.title = ''
+            this.content = ''
+          })
+          .catch(err => {
+            this.notice = err.response.data.message
+          })
+      }
     },
     search () {
       if (this.keyword.length === 1) {
@@ -183,6 +230,9 @@ export default {
         .catch(err => {
           console.log(err)
         })
+    },
+    imgChange(event) {
+      this.image = event.target.files[0]
     }
   },
   watch: {
