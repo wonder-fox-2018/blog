@@ -78,7 +78,7 @@ export default {
     searcharticles (val) {
       this.keyword = val
       let self = this
-      console.log('THis is keyword----', self.keyword)
+      // console.log('THis is keyword----', self.keyword)
       // get selected data
       axios({
         method: 'POST',

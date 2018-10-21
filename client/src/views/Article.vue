@@ -12,11 +12,12 @@
 import Allarticles from '@/views/Allarticles.vue'
 import Detailarticle from '@/views/Detailarticle.vue'
 import Addarticle from '@/views/Addarticle.vue'
+import Editarticle from '@/views/Editarticle.vue'
 export default {
   name: 'Article',
   props: ['islogin', 'userbasicinfo', 'listarticles', 'getallarticle', 'token'],
   components: {
-    Allarticles, Detailarticle, Addarticle
+    Allarticles, Detailarticle, Addarticle, Editarticle
   },
   watch: {
     islogin (val) {},

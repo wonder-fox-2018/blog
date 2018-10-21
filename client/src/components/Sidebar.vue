@@ -4,6 +4,7 @@
             <br>
             <div class="sidebar-header"
               v-if= "token !== null & token !== '' ">
+              <p>Welcome {{ userbasicinfo.name }}</p>
               <router-link :to="{name: 'addarticle'}">
                 <button type="button" class="btn btn-success">
                   Add Article</button>

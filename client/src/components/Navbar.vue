@@ -8,9 +8,6 @@
 
         <div class="collapse navbar-collapse" id="navbarsExampleDefault">
             <ul class="navbar-nav mr-auto">
-            <li class="nav-item active" v-if = "token !== null && token !== '' ">
-                <label class="nav-link"> Welcome {{ namelengkap }}! <span class="sr-only">(current)</span></label>
-            </li>
             </ul>
             <div v-if= "token === null || token === '' " >
                <button class="btn btn-info my-2 my-sm-0" data-toggle="modal" data-target="#loginModal" type="button">Login</button>
@@ -97,8 +94,7 @@ export default {
       entrypassword: '',
       token: localStorage.getItem('blogtoken'),
       islogin: false,
-      userbasicinfo: {},
-      namelengkap: ''
+      userbasicinfo: {}
     }
   },
   methods: {
@@ -108,7 +104,7 @@ export default {
         method: 'GET',
         url: 'http://localhost:3009/users/credentials',
         headers: {
-          token: self.token
+          token: localStorage.getItem('blogtoken')
         }
       })
         .then(user => {
@@ -191,6 +187,7 @@ export default {
       this.$emit('islogin', this.islogin)
       this.$emit('userbasicinfo', this.userbasicinfo)
       localStorage.removeItem('blogtoken')
+      this.$router.push({ name: 'home' })
     }
   },
   created () {
@@ -205,10 +202,7 @@ export default {
         this.islogin = true
       }
     },
-    userbasicinfo (val) {
-      console.log('Name Lengkap', val)
-      this.namelengkap = val.name
-    }
+    userbasicinfo (val) {}
   }
 }
 </script>

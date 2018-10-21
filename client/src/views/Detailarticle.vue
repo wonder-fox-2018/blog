@@ -6,6 +6,18 @@
                 <div class="card-body">
                     <button type="button" class="btn btn-primary">{{ detailarticle.title }}</button>
                     <br>
+                    <hr>
+                    <div v-if="token !== null && token !== '' && detailarticle.author._id === userbasicinfo.userid">
+                        <router-link :to="{name: 'editarticle', params: {id: id }}">
+                          <button type="button" class="btn btn-warning">
+                          Edit</button>
+                        </router-link>
+                        <button type="button" class="btn btn-danger"
+                          v-on:click="deletearticle()">
+                          Delete</button>
+                    </div>
+                    <br>
+                    <hr>
                     <br>
                     <p class="card-text">Author: {{ authorname }}</p>
                     <hr>
@@ -27,7 +39,7 @@
 import axios from 'axios'
 export default {
   name: 'Detailarticle',
-  props: ['id', 'islogin', 'userbasicinfo'],
+  props: ['id', 'islogin', 'userbasicinfo', 'listarticles', 'getallarticle', 'token'],
   data () {
     return {
       detailarticle: {},
@@ -49,6 +61,22 @@ export default {
         })
         .catch(error => {
           console.log('ERROR Getting Detail Article ', error)
+        })
+    },
+    deletearticle () {
+      let self = this
+      axios({
+        method: 'DELETE',
+        url: `http://localhost:3009/articles/${self.id}`,
+        headers: {
+          token: self.token
+        }
+      })
+        .then(article => {
+          this.$router.push({ name: 'home' })
+        })
+        .catch(error => {
+          console.log('ERROR Delete Article ', error)
         })
     }
   },

@@ -5,6 +5,7 @@ import Article from './views/Article.vue'
 import Allarticles from './views/Allarticles.vue'
 import Detailarticle from './views/Detailarticle.vue'
 import Addarticle from './views/Addarticle.vue'
+import Editarticle from './views/Editarticle.vue'
 
 Vue.use(Router)
 
@@ -45,6 +46,12 @@ export default new Router({
         path: ':id',
         name: 'id',
         component: Detailarticle,
+        props: true
+      },
+      {
+        path: 'edit/:id',
+        name: 'editarticle',
+        component: Editarticle,
         props: true
       }]
     }
