@@ -9,7 +9,8 @@
                 <router-link :to="`/article/${article._id}`" class="btn btn-primary">Read More &rarr;</router-link>
             </div>
             <div class="card-footer text-muted">
-                Posted on January 1, 2017 by
+                <div v-html="'Posted on ' + article.createdAt.slice(0, 10)"></div>
+                by
                 <a href="#">{{article.author.name}}</a>
             </div>
         </div>
