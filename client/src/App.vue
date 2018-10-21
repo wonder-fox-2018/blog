@@ -3,7 +3,7 @@
     <!-- Navigation -->
     <navbar @trigger-change="triggerChange" @islogin-data="isLogin" @isadmin-data="isAdmin"></navbar>
     <!-- Content -->
-    <router-view/>
+    <router-view :islogin="islogin"></router-view>
   </div>
 </template>
 

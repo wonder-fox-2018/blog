@@ -31,7 +31,7 @@
                 <a class="nav-link" href="#">Login</a>
                 </li>
                 <li class="nav-item" v-if="islogin === true">
-                <a class="nav-link" @click="signout()" href="#">Logout</a>
+                <a class="nav-link" @click="signout()">Logout</a>
                 </li>
             </ul>
             </div>

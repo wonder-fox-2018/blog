@@ -34,7 +34,7 @@
           <hr>
 
           <!-- Comments Form -->
-          <div class="card my-4" v-if="commentform === true">
+          <div class="card my-4" v-if="islogin === true">
             <h5 class="card-header">Leave a Comment:</h5>
             <div class="card-body">
                 <div class="form-group">
@@ -76,6 +76,7 @@ export default {
     components : {
         Sidebar
     },
+    props : ['islogin'],
     data () {
         return {
             article : '',
@@ -130,7 +131,7 @@ export default {
             let token = localStorage.getItem('token')
             if(token){
                 this.token = token
-                this.commentform = true
+                this.islogin = true
             }
 
         }
@@ -146,12 +147,8 @@ export default {
         triggerevent : function(val) {
             this.getArticle(this.$route.params.articleId)
         },
-        token : function(val) {
-            if(token === null){
-                this.commentform = false
-            }else{
-                this.commentform = true
-            }
+        islogin : function(val) {
+            this.checkToken()
         }
     }
 }
