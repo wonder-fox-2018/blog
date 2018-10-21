@@ -133,8 +133,8 @@ class Controller {
             },{
                 title : req.body.title,
                 content : req.body.content,
-                picture : null,
-                category : null,
+                picture : req.body.picture,
+                category : req.body.category,
                 author : req.userData._id
             })
             .then((change)=>{
