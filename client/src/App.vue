@@ -43,7 +43,7 @@ export default {
       isLogin: false,
       me: [],
       chat: false,
-      baseurl: 'http://localhost:3000'
+      baseurl: 'https://quill-server.hanabc.xyz'
     }
   },
   methods: {

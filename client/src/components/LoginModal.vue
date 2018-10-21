@@ -47,7 +47,7 @@ export default {
       password: '',
       email: '',
       notif: '',
-      baseurl: 'http://localhost:3000'
+      baseurl: 'https://quill-server.hanabc.xyz'
     }
   },
   methods: {

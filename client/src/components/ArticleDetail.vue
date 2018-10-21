@@ -17,7 +17,7 @@
           <li>
             <a href="#"><i class="fa fa-comment"></i> {{article[0].commentlist.length}} Comments</a>
           </li>
-          <li><social-sharing :url="`http://localhost:8080${this.$route.fullPath}`" inline-template>
+          <li><social-sharing :url="`https://quill.hanabc.xyz${this.$route.fullPath}`" inline-template>
             <div>
               <network network="facebook" class="ui teal button" style="width:120px; padding: 10px 0;">
                 <i class="fa fa-fw fa-facebook"></i> Facebook
@@ -71,7 +71,7 @@ export default {
       article: [],
       url: undefined,
       type: '',
-      baseurl: 'http://localhost:3000'
+      baseurl: 'https://quill-server.hanabc.xyz'
     }
   },
   methods: {

@@ -58,7 +58,7 @@ export default {
       articles: [],
       search: '',
       addModal: false,
-      baseurl: 'http://localhost:3000'
+      baseurl: 'https://quill-server.hanabc.xyz'
     }
   },
   methods: {

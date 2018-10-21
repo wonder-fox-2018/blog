@@ -39,7 +39,7 @@ export default {
       user: '',
       message: '',
       messages: [],
-      socket: io('localhost:3000')
+      socket: io('https://quill-server.hanabc.xyz')
     }
   },
   methods: {
