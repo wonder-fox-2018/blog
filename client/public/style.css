@@ -491,8 +491,9 @@ a:hover {
     color: #42b983;
 }
 
-#menu {
-    max-height: 70vh;
+#postLink {
+    height: 15vh;
+    overflow: auto;
 }
 
 #mapContainer {
@@ -552,7 +553,7 @@ a:hover {
 
 #chatbox {
     border: 1px solid black;
-    height: 50vh;
+    height: 40vh;
     overflow: auto;
 }
 

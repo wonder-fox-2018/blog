@@ -12,8 +12,11 @@
         <button v-else-if='keyword.length === 0' disabled class="ml-2" @click='menuChange(1)'><i class="fas fa-caret-right"></i></button>
         <div v-if='keyword.length !== 0'>Search Result</div>
       </div><br>
-      <router-link :to='{name: "detail", params: {id: post._id}}' v-for='(post, index) in posts' :key='index'>{{ post.title }}<br></router-link>
+      <div id="postLink">
+        <router-link :to='{name: "detail", params: {id: post._id}}' v-for='(post, index) in posts' :key='index'>{{ post.title }}<br></router-link>
+      </div>
     </div>
+    <livechat></livechat>
     <div id='listBackdrop' v-if='openListBackdrop'></div>
     <!-- ADD MODAL -->
     <div id='addModal' v-if='openAddModal'>
@@ -48,6 +51,7 @@
 
 <script>
 import axios from 'axios'
+import livechat from '@/components/liveChat'
 
 export default {
   name: 'postlist',
@@ -68,8 +72,11 @@ export default {
       detectedLoc: false,
       shareLoc: false,
       menu: ['All Posts', 'My Posts'],
-      menuIndex: 0,
+      menuIndex: 0
     }
+  },
+  components: {
+    livechat
   },
   methods: {
     getPosts () {
@@ -125,8 +132,8 @@ export default {
           method: 'post',
           data: formData,
           headers: {
-              'Content-Type': 'multipart/form-data',
-              token: localStorage.getItem('token')
+            'Content-Type': 'multipart/form-data',
+            token: localStorage.getItem('token')
           }
         })
           .then(image => {
@@ -154,6 +161,7 @@ export default {
                 this.notice = err.response.data.message
               })
           })
+          // eslint-disable-next-line
           .catch(err => {
             this.notice = 'Sorry, but the image file is too large'
           })
@@ -167,7 +175,7 @@ export default {
           data: {
             title: this.title,
             content: this.content,
-            loc: loc,
+            loc: loc
           }
         })
           .then(() => {
@@ -231,7 +239,7 @@ export default {
           console.log(err)
         })
     },
-    imgChange(event) {
+    imgChange (event) {
       this.image = event.target.files[0]
     }
   },
