@@ -11,7 +11,7 @@
             <div class="card-footer text-muted">
                 <div v-html="'Posted on ' + article.createdAt.slice(0, 10)"></div>
                 by
-                <a href="#">{{article.author.name}}</a>
+                <router-link :to="`/author/${article.author._id}`" >{{article.author.name}}</router-link>
             </div>
         </div>
     </div>
