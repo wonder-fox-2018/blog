@@ -49,7 +49,12 @@ export default {
   watch: {
     userbasicinfo (val) {},
     listarticles (val) {},
-    token (val) {}
+    token (val) {},
+    islogin (val) {
+      if (!val) {
+        this.keyword = ''
+      }
+    }
   }
 }
 </script>

@@ -2,7 +2,7 @@
     <div>
         <h1>Detail Article</h1>
         <div>
-            <div style="width: 40rem;" class="card">
+            <div style="width: 52rem;" class="card">
                 <div class="card-body">
                     <button type="button" class="btn btn-primary">{{ detailarticle.title }}</button>
                     <br>

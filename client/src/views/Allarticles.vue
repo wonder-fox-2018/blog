@@ -2,7 +2,7 @@
     <div>
         <h1>List Articles</h1>
         <div v-for="(article,index) in listarticles" :key="index">
-            <div style="width: 40rem;" class="card">
+            <div style="width: 52rem;" class="card">
                 <div class="card-body">
                     <button type="button" class="btn btn-primary">{{ article.title }}</button>
                     <br>
