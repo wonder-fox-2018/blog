@@ -10,6 +10,7 @@
   "dependencies": {
     "@google/maps": "^0.5.5",
     "axios": "^0.18.0",
+    "firebase": "^5.5.5",
     "google-maps": "^3.3.0",
     "vue": "^2.5.17",
     "vue-fullpage.js": "0.0.7",

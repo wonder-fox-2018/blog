@@ -10,12 +10,21 @@
       </div>
       <div class="col-2"></div>
     </div>
+    <div class="row" v-if='signedin' id="livechat">
+      <div class="container col-12">
+        <div id='lcdiv'>
+          <h1>Global Live Chat</h1>
+          <livechat></livechat>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import postlarge from '@/components/postLarge'
 import postlist from '@/components/postList'
+import livechat from '@/components/liveChat'
 
 export default {
   name: 'blog',
@@ -29,7 +38,8 @@ export default {
   },
   components: {
     postlarge,
-    postlist
+    postlist,
+    livechat
   },
   methods: {
     updatePost (value) {

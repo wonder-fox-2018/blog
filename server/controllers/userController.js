@@ -53,7 +53,11 @@ module.exports = {
                 if(user) {
                     let passwordValid = bcrypt.compareSync(req.body.password.toString(), user.password)
                     if(passwordValid) {
-                        let token = jwt.sign({ id: user._id }, process.env.JWT_KEY);
+                        let token = jwt.sign({
+                            id: user._id,
+                            email: user.email,
+                            name: user.name
+                        }, process.env.JWT_KEY);
                         res.status(200).json({token: token, userId: user._id})
                     } else {
                         res.status(500).json({message: 'Wrong password'})
