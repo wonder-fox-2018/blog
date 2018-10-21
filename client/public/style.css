@@ -499,8 +499,12 @@ a:hover {
 }
 
 #postLink {
-    height: 15vh;
+    height: 12.5vh;
     overflow: auto;
+}
+
+#postLink a {
+    height: 2.5vh;
 }
 
 #mapContainer {

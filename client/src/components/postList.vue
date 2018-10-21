@@ -6,17 +6,18 @@
     <div id='menu' class="border-bottom mb-4 pb-4">
       <div id='menuLink' class="border-bottom pb-2 text-center">
         <button v-if='keyword.length === 0 && menuIndex === 1 && signedin' class="mr-2" @click='menuChange(0)' title="All Posts"><i class="fas fa-caret-left"></i></button>
-        <button v-else-if='keyword.length === 0' disabled class="mr-2" @click='menuChange(0)'><i class="fas fa-caret-left"></i></button>
+        <button v-else-if='keyword.length === 0 && signedin' disabled class="mr-2" @click='menuChange(0)'><i class="fas fa-caret-left"></i></button>
         <router-link to='/' v-if='keyword.length === 0'>{{ menu[menuIndex] }}</router-link>
         <button v-if='keyword.length === 0 && menuIndex === 0 && signedin' class="ml-2" @click='menuChange(1)' title="My Posts"><i class="fas fa-caret-right"></i></button>
-        <button v-else-if='keyword.length === 0' disabled class="ml-2" @click='menuChange(1)'><i class="fas fa-caret-right"></i></button>
+        <button v-else-if='keyword.length === 0 && signedin' disabled class="ml-2" @click='menuChange(1)'><i class="fas fa-caret-right"></i></button>
         <div v-if='keyword.length !== 0'>Search Result</div>
       </div><br>
-      <div id="postLink">
+      <div id="postLink" >
         <router-link :to='{name: "detail", params: {id: post._id}}' v-for='(post, index) in posts' :key='index'>{{ post.title }}<br></router-link>
       </div>
+      <div v-if='posts.length > 5'><b>( Scroll down for more )</b></div>
     </div>
-    <livechat></livechat>
+    <livechat v-if='signedin'></livechat>
     <div id='listBackdrop' v-if='openListBackdrop'></div>
     <!-- ADD MODAL -->
     <div id='addModal' v-if='openAddModal'>

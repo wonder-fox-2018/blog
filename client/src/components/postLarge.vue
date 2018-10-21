@@ -39,8 +39,8 @@
       <div class="img-overlay"></div>
       <div class="card-body detail-body">
         <h4 class="card-title border-bottom mb-3 pb-2"><strong>{{ detail.title }}</strong></h4>
-        <h5>written by <b>{{ detail.author.name }}</b></h5>
-        <h6 v-if='detail.location.length > 0'  style="margin-bottom: 75px">in <span class='writeLoc' @click='geocode'><b>{{ detail.location }}</b></span></h6>
+        <h5> <b>{{ detail.author.name }}</b></h5>
+        <h6 v-if='detail.location.length > 0'  style="margin-bottom: 75px"><span class='writeLoc' @click='geocode'><b><i class="fas fa-map-marker-alt pr-1"></i> {{ detail.location }}</b></span></h6>
         <h6 v-else style="margin-bottom: 75px" class="placeholder">placeholder</h6>
         <p class="card-text">{{ detail.content }}</p>
       </div>
