@@ -4,14 +4,12 @@
       <div id="nav">
   
         <div class="linkBar">
-          <div>
-            ELSE
+          <div class='searchbar'>
+            <searcbar :schema='schema' :model='model'></searcbar>
           </div>
           <div v-if="user">
             <router-link to="/creator" :getArticles="getArticles">CREATE</router-link>
           </div>
-          <div>HELP</div>
-          <div>ELSE</div>
         </div>
   
         <div class="logoSect">H8 </div>
@@ -38,14 +36,54 @@
 </template>
 
 <script lang="js">
+  import $ from "jquery";
+  import VueForm from 'vue-form-generator';
+  
   export default {
     name: 'navbar',
     props: ['setUser', 'setMessage', 'user', 'articles', 'getArticles'],
+    components: {
+      "searcbar": VueForm.component
+    },
+    data() {
+      return {
+        model: {
+          searchinput: ''
+        },
+  
+        schema: {
+          fields: [{
+            type: 'input',
+            inputType: 'text',
+            model: 'searchinput',
+            placeholder: 'search ...',
+            buttons: [{
+              classes: 'btn',
+              label: 'Search',
+              onclick: function(model) {
+                console.log(model);
+              }
+            }]
+          }]
+        }
+      }
+    },
+  
     methods: {
       signOut() {
         localStorage.clear()
         this.setUser('')
       }
+    },
+    created() {
+      $(window).scroll(function() {
+        if ($(window).scrollTop() >= 100) {
+          $('#nav').css('background-image', 'linear-gradient(-60deg, #ebebeb, rgba(246, 246, 246, 0.4))');
+        } else {
+          $('#nav').css('background-image', 'linear-gradient(-60deg, #ebebeb, #fafafa)');
+        }
+      });
+  
     }
   }
 </script>
@@ -70,6 +108,7 @@
     height: 60px;
     grid-gap: 10px;
     text-shadow: 0 0 2px rgb(175, 210, 255);
+    /* background-color: rgba(246, 246, 246, 0.5); */
     box-shadow: 0 0 10px #525252;
     top: 0;
     left: 0;
@@ -109,4 +148,14 @@
   #nav a.router-link-exact-active {
     color: #42b983;
   }
+  
+  .searchbar {
+    grid-column: 1/4;
+    margin: 15px 10px 0 10px;
+  }
+
+  .linkBar .searchbar:hover {
+    margin: 15px 10px 0 10px;
+  }
+
 </style>

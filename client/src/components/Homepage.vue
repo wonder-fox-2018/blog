@@ -28,5 +28,6 @@
     background: radial-gradient(circle, #ffffff, #ced3ce);
     padding-top: 50px;
     min-height: 650px;
+    padding-bottom: 200px;
   }
 </style>

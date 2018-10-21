@@ -19,7 +19,7 @@
       <div class="cardfooter">
         <div> Like </div>
         <div> Unlike </div>
-        <div @click="$router.push({name: 'articledetail',params: {id: article._id}})" > Comment ( {{comments.length}} ) </div>
+        <div id="cmtbtn" @click="$router.push({name: 'articledetail',params: {id: article._id}})" > Comment ( {{comments.length}} ) </div>
         <div v-if="article.author._id == user._id" > Edit </div>
         <div v-if="article.author._id == user._id"> Delete </div>
       </div>
@@ -43,6 +43,7 @@
 <script>
   import VueForm from "vue-form-generator";
   import axios from 'axios';
+  import $ from 'jquery';
 
   export default {
     name: 'articlecard',
@@ -52,6 +53,15 @@
     },
     created() {
       this.getComments()
+    },
+    mounted(){
+      $(document).ready(function () {
+        $('#cmtbtn').click(function () { 
+          setInterval(()=>{
+            $('#comment').focus();
+          },100)
+        });
+      });
     },
     data() {
       return {
@@ -136,7 +146,9 @@
     padding-top: 20px;
   }
   
-  .articlecard {}
+  .articlecard {
+    transition: .5s;
+  }
   
   * {
     box-sizing: border-box;

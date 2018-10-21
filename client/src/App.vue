@@ -2,8 +2,10 @@
   <div id="app">
   
     <navbar :setUser="setUser" :setMessage="setMessage" :getArticles="getArticles" :user='user' :articles="articles"></navbar>
-    <router-view :setUser="setUser" :user='user'  :articles="articles" :getArticles="getArticles"></router-view>
-    <chatcomponent :setUser="setUser" ></chatcomponent>
+    <transition name="fade" mode="out-in">
+      <router-view :setUser="setUser" :user='user' :articles="articles" :getArticles="getArticles"></router-view>
+    </transition>
+    <chatcomponent :setUser="setUser"></chatcomponent>
   </div>
 </template>
 
@@ -14,7 +16,8 @@
   
   export default {
     components: {
-      navbar,chatcomponent
+      navbar,
+      chatcomponent
     },
     name: 'granparent',
     data() {
@@ -73,5 +76,17 @@
     text-align: center;
     color: #2c3e50;
     box-sizing: border-box;
+  }
+  
+  .fade-enter-active,
+  .fade-leave-active {
+    transition-duration: 0.15s;
+    transition-property: opacity;
+    transition-timing-function: ease;
+  }
+  
+  .fade-enter,
+  .fade-leave-active {
+    opacity: 0
   }
 </style>

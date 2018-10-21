@@ -25,32 +25,112 @@
       "chatform": VueForm.component
     },
     mounted() {
-      jQuery(document).ready(function ($) {
-        $("#chatdisplay").scrollTop(function() { return this.scrollHeight; });
-
+      jQuery(document).ready(function($) {
+        $("#chatdisplay").scrollTop(function() {
+          return this.scrollHeight;
+        });
+  
         setTimeout(() => {
-          $("#chatdisplay").fadeOut( "slow" )
+          $("#chatdisplay").fadeOut("slow")
         }, 1500);
-      });
 
+        $('.chat').mouseleave(function() {
+          $("#chatdisplay").fadeOut("fast")
+        });
+
+        $('.chat').mouseenter(function () { 
+          $("#chatdisplay").fadeIn("slow")
+        });
+      });
+  
+  
     },
     data() {
       return {
-        chats : [
-          {id: 1,user:'adit',content:'kasjdklasdjlalj',createdAt: moment(new Date()).format('hh:mm:ss')},
-          {id: 2,user:'adit',content:'kasjdklasdjlalj',createdAt: moment(new Date()).format('hh:mm:ss')},
-          {id: 3,user:'adit',content:'kasjdklasdjlalj',createdAt: moment(new Date()).format('hh:mm:ss')},
-          {id: 4,user:'adit',content:'kasjdklasdjlalj',createdAt: moment(new Date()).format('hh:mm:ss')},
-          {id: 5,user:'adit',content:'kasjdklasdjlalj',createdAt: moment(new Date()).format('hh:mm:ss')},
-          {id: 6,user:'adit',content:'kasjdklasdjlalj',createdAt: moment(new Date()).format('hh:mm:ss')},
-          {id: 7,user:'adit',content:'kasjdklasdjlalj',createdAt: moment(new Date()).format('hh:mm:ss')},
-          {id: 8,user:'adit',content:'kasjdklasdjlalj',createdAt: moment(new Date()).format('hh:mm:ss')},
-          {id: 9,user:'adit',content:'kasjdklasdjlalj',createdAt: moment(new Date()).format('hh:mm:ss')},
-          {id: 10,user:'adit',content:'kasjdklasdjlalj',createdAt: moment(new Date()).format('hh:mm:ss')},
-          {id: 11,user:'adit',content:'kasjdklasdjlalj',createdAt: moment(new Date()).format('hh:mm:ss')},
-          {id: 12,user:'adit',content:'kasjdklasdjlalj',createdAt: moment(new Date()).format('hh:mm:ss')},
-          {id: 13,user:'adit',content:'kasjdklasdjlalj',createdAt: moment(new Date()).format('hh:mm:ss')},
-          {id: 14,user:'adit',content:'kasjdklasdjlalj',createdAt: moment(new Date()).format('hh:mm:ss')},
+        chats: [{
+            id: 1,
+            user: 'adit',
+            content: 'kasjdklasdjlalj',
+            createdAt: moment(new Date()).format('hh:mm:ss')
+          },
+          {
+            id: 2,
+            user: 'adit',
+            content: 'kasjdklasdjlalj',
+            createdAt: moment(new Date()).format('hh:mm:ss')
+          },
+          {
+            id: 3,
+            user: 'adit',
+            content: 'kasjdklasdjlalj',
+            createdAt: moment(new Date()).format('hh:mm:ss')
+          },
+          {
+            id: 4,
+            user: 'adit',
+            content: 'kasjdklasdjlalj',
+            createdAt: moment(new Date()).format('hh:mm:ss')
+          },
+          {
+            id: 5,
+            user: 'adit',
+            content: 'kasjdklasdjlalj',
+            createdAt: moment(new Date()).format('hh:mm:ss')
+          },
+          {
+            id: 6,
+            user: 'adit',
+            content: 'kasjdklasdjlalj',
+            createdAt: moment(new Date()).format('hh:mm:ss')
+          },
+          {
+            id: 7,
+            user: 'adit',
+            content: 'kasjdklasdjlalj',
+            createdAt: moment(new Date()).format('hh:mm:ss')
+          },
+          {
+            id: 8,
+            user: 'adit',
+            content: 'kasjdklasdjlalj',
+            createdAt: moment(new Date()).format('hh:mm:ss')
+          },
+          {
+            id: 9,
+            user: 'adit',
+            content: 'kasjdklasdjlalj',
+            createdAt: moment(new Date()).format('hh:mm:ss')
+          },
+          {
+            id: 10,
+            user: 'adit',
+            content: 'kasjdklasdjlalj',
+            createdAt: moment(new Date()).format('hh:mm:ss')
+          },
+          {
+            id: 11,
+            user: 'adit',
+            content: 'kasjdklasdjlalj',
+            createdAt: moment(new Date()).format('hh:mm:ss')
+          },
+          {
+            id: 12,
+            user: 'adit',
+            content: 'kasjdklasdjlalj',
+            createdAt: moment(new Date()).format('hh:mm:ss')
+          },
+          {
+            id: 13,
+            user: 'adit',
+            content: 'kasjdklasdjlalj',
+            createdAt: moment(new Date()).format('hh:mm:ss')
+          },
+          {
+            id: 14,
+            user: 'adit',
+            content: 'kasjdklasdjlalj',
+            createdAt: moment(new Date()).format('hh:mm:ss')
+          },
         ],
         model: {
           id: '',
@@ -59,38 +139,37 @@
         },
   
         schema: {
-          fields : [{
-            type : 'input',
-            inputType : 'text',
-            model : 'chatinput',
-            placeholder : 'type chat ...',
-            buttons : [{
-              classes: 'btn',
-              label: 'Send',
-              onclick : function(model){
-                console.log(model);
+          fields: [{
+            type: 'input',
+            inputType: 'text',
+            model: 'chatinput',
+            placeholder: 'type chat ...',
+            buttons: [{
+                classes: 'btn',
+                label: 'Send',
+                onclick: function(model) {
+                  console.log(model);
+                }
+              },
+              {
+                classes: 'btn',
+                label: '[ ]',
+                onclick: function() {
+                  jQuery('.chatdisplay').toggle('fast');
+                }
               }
-            },
-            {
-              classes: 'btn',
-              label: '[ ]',
-              onclick : function(){
-                jQuery('.chatdisplay').toggle('fast');
-              }
-            }]
+            ]
           }]
         }
       }
     },
     methods: {
-      
+  
     },
     computed: {
   
     }
   }
-  
-
 </script>
 
 <style scoped>
@@ -105,22 +184,22 @@
     max-height: 400px;
     border-radius: 10px 10px 0 0;
     box-shadow: 0 0 5px 2px rgb(202, 202, 202);
-    
   }
+  
   .chatdisplay {
     max-height: 300px;
     overflow: hidden;
     margin-bottom: 15px;
     overflow: auto;
-   
   }
+  
   .chatitem {
     display: grid;
     grid-template-columns: 1fr 5fr 1fr;
     text-align: left;
   }
-
-  ::-webkit-scrollbar {
+  
+   ::-webkit-scrollbar {
     display: none;
   }
 </style>
