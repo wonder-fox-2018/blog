@@ -44,7 +44,8 @@ export default {
   },
   watch: {
     userbasicinfo (val) {},
-    listarticles (val) {}
+    listarticles (val) {
+    }
   }
 }
 </script>

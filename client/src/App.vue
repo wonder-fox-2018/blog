@@ -9,7 +9,9 @@
                 @searcharticles="searcharticles"></Sidebar>
         </div>
         <div class="col-md-10">
-          <h1>This is Article</h1>
+          <router-view :islogin="islogin"
+          :userbasicinfo="userbasicinfo"
+          :listarticles="listarticles"></router-view>
         </div>
       </div>
     </div>
