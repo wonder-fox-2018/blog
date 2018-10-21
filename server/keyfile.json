@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "fake-commerce-219404",
+  "private_key_id": "6dae17bf8907ca562c0af00f8db58863b4400b8a",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCyYCErbb4JD2JX\nbEFXlerP3eBeIwO+cPGbLnO1poJyR7c0AA3utrLey5GJnqseALJuZbgUrY/Kqy6u\nPfah5CrmQaX75KNQhQmDAHa6mPTXX1A/jO5rciAmT5El3ZbyqLrsWFZq0JrMfvog\nKevmH4KLk3NR39ogkGxhIVpgegyrQz50jMDhz6kJ7bnRvF+3BALCAriWn5AZsJ1Q\nems4pLjU6KQEsnLf/sr7ExGtngY5VasJy9gpxwv5AKP5W+kFjwVYyx8aTYgNWMXr\nxhz8WSC8JaC/+IUH8s1up/wNeEpcHfq18qSj42g/YkDWKw1FEHTptX6KhtRhrsRW\n+VocT04pAgMBAAECggEAAqRpwDpLJNh/tRFiF9TULK456xsPiBC3zcUqKugsu8fq\n43SpCVD7pONeEge7BL1mC8687K19NJLXSWR2S5YL3qJLBxGKmXurlS9oW/iHWINf\n20trx0T0uWNpoDjASinDQVxIMtokogRqEWF5BQP+nfqH0NlOPe7RKwdyzqEwMrYV\nvVLVTq5/fNygu8JN+Q3IRGhIyBXg2pCZheodNrgXFgrf6dLyKN+v7sgqpJv+uys1\n/4xEz3MiX7ACUJ1VO5y+2STrHCBr54BqNfSHIlNgThP2tFfStytocXMd1mah0Utv\nBUnLd5gRxPrFsVb3BS0R27zjiOJx7n+pSzCwxDouSwKBgQDbLyiPgEkTzWdb/EXc\n3yddh7fwCdGgeu7OWnMtL29IZ6SgoaqNinm/DX1v4OXfWF8A0zKfYvXqTemn2Tkx\n3/BfRmn89zRAIeXNnLWKlrT/rbfQZ4UdK8HIK9oj6wf8Th484Y1B1P1jqe4QDJny\nZRVqLe1kZH56GmNsTh5b8nsqRwKBgQDQVjYpLvIl+LQhuGhl96Cf51MnPDg0tOuj\nilNX9ep3fjWnK4BzVGRqy1VTsHxG0a8Zv49Z9ut5HURNumatoWC+xqnsiW0rFVAM\nbBp5knfUgAiIl/ozEJRZxyYb/vqA5L0JE9PsbziJZv5Jz0n/lQIr9FZkiQCVjSa+\naOKwd7+MDwKBgQC4Cnf/TpON6hoQtdofpMzUDyKWjlgTbUXZxT8SwNKrNEOakUS5\nRn4FuxkJeQjrqbNT6QKHrLuaesNoKdCJnWSjS2exfgzEkPH53Mzeyr6+NSqz9khi\nfxxerNuk7zOsWhevvSA0F9iP996qYTpeuxvpJRlBA9TjSAcVqN57DDb4/wKBgCCE\nZD23Uxo0IEFnG/xWUx7CJ0tnbcpkNqc27t06x9bQvyUReCIIGQhGJlJCqJMRJUha\nitBa5tPnioKrRl1xY71DGsCNjpl74RufP96bytJDDZHsTqPrwYvltoAGIyk9CnhB\nPQGZNnTTu3rfvMgEhOtBXr6gV5QADP0JN+CdQCtnAoGAPlS2/FzTSK3lPEzbptJR\nu/PLk4lxAAIXzfncZf29I3Hbh4XSOFVRKr3y3pUtJQxkDkkmaoHJQkLSjHjoO/n8\nAK+itoGaHV8/guJfP3fT/oFbAQc4ANkxuge/L9mRu/Otx9eVTFF2RZX5D5/DDUiq\n+UuH/aM3PKCZ9aWf+HOSDMY=\n-----END PRIVATE KEY-----\n",
+  "client_email": "megaloshop@fake-commerce-219404.iam.gserviceaccount.com",
+  "client_id": "104874210269824336364",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/megaloshop%40fake-commerce-219404.iam.gserviceaccount.com"
+}
