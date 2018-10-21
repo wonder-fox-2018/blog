@@ -54,7 +54,11 @@ export default {
         this.email = ''
         this.password = ''
         localStorage.setItem('token', response.data.token)
+        localStorage.setItem('username', response.data.username)
         this.gettoken()
+        this.$router.push({
+          name : 'home'
+        })
       })
       .catch(err => {
         console.log(err)

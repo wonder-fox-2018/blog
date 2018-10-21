@@ -15,7 +15,7 @@
                 <p class="card-text">by {{value.username}}</p>
                 <button class="btn btn-primary"  @click="detailArticle(value._id)">Read More</button>
                 </div>
-                <div class="py-3">
+                <div class="py-3" v-if="username == value.username && username != ''">
                   <button type="button" class="btn btn-secondary my-2 my-sm-0" data-toggle="modal" data-target="#modalEdit">Edit</button>
                   <button class="btn btn-secondary" @click="deleteArticle(value._id)">Delete</button>
                 </div>
@@ -36,12 +36,14 @@ export default {
   props : ['article', 'category', 'updatecomponent'],
   data() {
     return {
-      myArticle : ''
+      myArticle : '',
+      username : '',
     }
   },
   watch: {
     category() {
-      console.log(this.category)
+      this.username = localStorage.getItem('username')
+      console.log(this.username)
       if(this.category === 'all'){
         this.getMyList()
       }
@@ -51,6 +53,7 @@ export default {
     },
   },
   created : function(){
+    this.username  = localStorage.getItem('username')
     if(this.category === 'all'){
       this.getMyList()
     }

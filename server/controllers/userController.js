@@ -46,7 +46,6 @@ class UserController{
         .then(login => {
             let passIsValid = bcrypt.compareSync(req.body.password, login.password)
             if(passIsValid){
-                console.log(login)
                 let token = jwt.sign({
                     id : login._id,
                     email : login.email,
@@ -56,6 +55,7 @@ class UserController{
 
                 res.status(200).json({
                     token : token,
+                    username : login.username,
                     message : "login Success"
                 })
             }else {

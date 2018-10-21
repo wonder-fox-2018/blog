@@ -43,8 +43,11 @@ export default {
     methods : {
         logout : function(){
             localStorage.removeItem('token')
+            localStorage.removeItem('username')
             this.gettoken()
-
+            this.$router.push({
+                name : 'home',
+            })
         }
     }
 }
