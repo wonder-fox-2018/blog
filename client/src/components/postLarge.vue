@@ -137,7 +137,7 @@ GoogleMapsLoader.VERSION = 'weekly'
 
 const googleMapsClient = googleMaps.createClient({
   key: 'AIzaSyD-_4BGxBeMuyPyfI_kgmz4YsfpwgjkXNA'
-});
+})
 
 export default {
   name: 'postlarge',
@@ -160,7 +160,8 @@ export default {
       reply: [],
       replyNotice: [],
       openDelComModal: false,
-      delComId: ''
+      delComId: '',
+      google: ''
     }
   },
   methods: {
@@ -310,12 +311,19 @@ export default {
         })
     },
     mapLoc (lat, lng, zoom) {
-      GoogleMapsLoader.load(google => {
+      if (this.google === '') {
+        GoogleMapsLoader.load(google => {
+          this.google = google
+        })
+      }
+      setTimeout(() => {
+        let google = this.google
+        // eslint-disable-next-line
         let map = new google.maps.Map(document.getElementById('map'), {
-          center: {lat: lat, lng: lng},
+          center: { lat: lat, lng: lng },
           zoom: zoom
-        });
-      })
+        })
+      }, 500)
     },
     geocode () {
       googleMapsClient.geocode({
@@ -329,7 +337,7 @@ export default {
         } else {
           console.log('GEOCODE ERROR ==> ', err)
         }
-      });
+      })
     },
     mapModal () {
       this.optBackdrop = !this.optBackdrop
