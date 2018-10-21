@@ -23,7 +23,8 @@ export default {
   data () {
     return {
       posts: [],
-      reload: false
+      reload: false,
+      address: ''
     }
   },
   components: {
@@ -39,6 +40,9 @@ export default {
       setTimeout(() => {
         this.reload = false
       }, 1000)
+    },
+    updateAddress (value) {
+      this.address = value
     }
   }
 }

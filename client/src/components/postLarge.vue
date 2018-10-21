@@ -40,7 +40,7 @@
       <div class="card-body detail-body">
         <h4 class="card-title border-bottom mb-3 pb-2"><strong>{{ detail.title }}</strong></h4>
         <h5>written by <b>{{ detail.author.name }}</b></h5>
-        <h6 v-if='detail.location.length > 0'  style="margin-bottom: 75px">in <a href='#' class='locLink'>{{ detail.location }}</a></h6>
+        <h6 v-if='detail.location.length > 0'  style="margin-bottom: 75px">in <span class='writeLoc' @click='geocode'><b>{{ detail.location }}</b></span></h6>
         <h6 v-else style="margin-bottom: 75px" class="placeholder">placeholder</h6>
         <p class="card-text">{{ detail.content }}</p>
       </div>
@@ -120,11 +120,24 @@
         <button @click='deleteCommentModal'>No, sorry, that was a mistake</button>
         <button @click='deleteComment'>Yeah, get rid of this shit</button>
       </div>
+      <!-- MAP MODAL -->
+      <div id='mapContainer' v-if='openMap'>
+        <button @click='mapModal' class="float-right" style="margin: -25px -25px 0 0; padding: 0; border: 0; background: transparent; color: #42b983"><i class="far fa-times-circle"></i></button>
+        <div id="map"></div>
+      </div>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
+import googleMaps from '@google/maps'
+import GoogleMapsLoader from 'google-maps'
+GoogleMapsLoader.KEY = 'AIzaSyD-_4BGxBeMuyPyfI_kgmz4YsfpwgjkXNA'
+GoogleMapsLoader.VERSION = 'weekly'
+
+const googleMapsClient = googleMaps.createClient({
+  key: 'AIzaSyD-_4BGxBeMuyPyfI_kgmz4YsfpwgjkXNA'
+});
 
 export default {
   name: 'postlarge',
@@ -139,6 +152,7 @@ export default {
       optBackdrop: false,
       openEditModal: false,
       openDeleteModal: false,
+      openMap: false,
       editId: '',
       deleteId: '',
       comment: '',
@@ -294,6 +308,32 @@ export default {
         .catch(err => {
           console.log(err)
         })
+    },
+    mapLoc (lat, lng, zoom) {
+      GoogleMapsLoader.load(google => {
+        let map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: lat, lng: lng},
+          zoom: zoom
+        });
+      })
+    },
+    geocode () {
+      googleMapsClient.geocode({
+        address: this.detail.location
+      }, (err, response) => {
+        if (!err) {
+          let lat = response.json.results[0].geometry.location.lat
+          let lng = response.json.results[0].geometry.location.lng
+          this.mapModal()
+          this.mapLoc(lat, lng, 19)
+        } else {
+          console.log('GEOCODE ERROR ==> ', err)
+        }
+      });
+    },
+    mapModal () {
+      this.optBackdrop = !this.optBackdrop
+      this.openMap = !this.openMap
     }
   },
   filters: {

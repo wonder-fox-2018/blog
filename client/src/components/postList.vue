@@ -3,17 +3,19 @@
     <button id='searchBtn' disabled><i class="fas fa-search"></i></button>
     <input id='searchInput' placeholder='Search' onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search'" @keyup='search' v-model='keyword'>
     <button id='addBtn' v-if='signedin' @click='addModal'>+ New Post</button>
-    <div id='menuLink' class="border-bottom pb-2 text-center">
-      <button v-if='keyword.length === 0 && menuIndex === 1 && signedin' class="mr-2" @click='menuChange(0)'><i class="fas fa-caret-left"></i></button>
-      <button v-else-if='keyword.length === 0' disabled class="mr-2" @click='menuChange(0)'><i class="fas fa-caret-left"></i></button>
-      <router-link to='/' v-if='keyword.length === 0'>{{ menu[menuIndex] }}</router-link>
-      <button v-if='keyword.length === 0 && menuIndex === 0 && signedin' class="ml-2" @click='menuChange(1)'><i class="fas fa-caret-right"></i></button>
-      <button v-else-if='keyword.length === 0' disabled class="ml-2" @click='menuChange(1)'><i class="fas fa-caret-right"></i></button>
-      <div v-if='keyword.length !== 0'>Search Result</div>
-    </div><br>
-    <router-link :to='{name: "detail", params: {id: post._id}}' v-for='(post, index) in posts' :key='index'>{{ post.title }}<br></router-link>
+    <div id='menu' class="border-bottom mb-4 pb-4">
+      <div id='menuLink' class="border-bottom pb-2 text-center">
+        <button v-if='keyword.length === 0 && menuIndex === 1 && signedin' class="mr-2" @click='menuChange(0)' title="All Posts"><i class="fas fa-caret-left"></i></button>
+        <button v-else-if='keyword.length === 0' disabled class="mr-2" @click='menuChange(0)'><i class="fas fa-caret-left"></i></button>
+        <router-link to='/' v-if='keyword.length === 0'>{{ menu[menuIndex] }}</router-link>
+        <button v-if='keyword.length === 0 && menuIndex === 0 && signedin' class="ml-2" @click='menuChange(1)' title="My Posts"><i class="fas fa-caret-right"></i></button>
+        <button v-else-if='keyword.length === 0' disabled class="ml-2" @click='menuChange(1)'><i class="fas fa-caret-right"></i></button>
+        <div v-if='keyword.length !== 0'>Search Result</div>
+      </div><br>
+      <router-link :to='{name: "detail", params: {id: post._id}}' v-for='(post, index) in posts' :key='index'>{{ post.title }}<br></router-link>
+    </div>
+    <div id='listBackdrop' v-if='openListBackdrop'></div>
     <!-- ADD MODAL -->
-    <div id='addBackdrop' v-if='openAddModal'></div>
     <div id='addModal' v-if='openAddModal'>
       <button @click='addModal' class="float-right" style="margin: -25px -25px 0 0; padding: 0; border: 0; background: transparent; color: #42b983"><i class="far fa-times-circle"></i></button>
       <input type="text" v-model='title' placeholder="Title"><br>
@@ -51,6 +53,7 @@ export default {
   data () {
     return {
       posts: [],
+      openListBackdrop: false,
       openAddModal: false,
       title: '',
       content: '',
@@ -62,7 +65,7 @@ export default {
       detectedLoc: false,
       shareLoc: false,
       menu: ['All Posts', 'My Posts'],
-      menuIndex: 0
+      menuIndex: 0,
     }
   },
   methods: {
@@ -101,6 +104,7 @@ export default {
         this.detectLoc()
       }
       this.openAddModal = !this.openAddModal
+      this.openListBackdrop = !this.openListBackdrop
       this.notice = ''
     },
     addPost () {
