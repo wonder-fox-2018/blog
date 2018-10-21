@@ -22,9 +22,10 @@ import config from '@/config.js'
 
 export default {
     name : 'AllArticle',
+    props : ['searchresult'],
     data () {
         return {
-            allArticle : ''
+            allArticle : '',
         }
     },
     methods : {
@@ -45,6 +46,14 @@ export default {
     },
     created() {
         this.getAllArticle()
+    },
+    mounted() {
+        this.getAllArticle()
+    },
+    watch : {
+        searchresult : function(val) {
+            this.allArticle.data = this.searchresult
+        }
     }
 }
 </script>

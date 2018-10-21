@@ -6,9 +6,9 @@
             <h5 class="card-header">Search</h5>
             <div class="card-body">
                 <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search for...">
+                    <input type="text" class="form-control" v-model="input_search" placeholder="Search for...">
                     <span class="input-group-btn">
-                        <button class="btn btn-secondary" type="button">Go!</button>
+                        <button class="btn btn-secondary" type="button" @click="runSearch()">Go!</button>
                     </span>
                 </div>
             </div>
@@ -62,9 +62,32 @@
 </template>
 
 <script>
-    export default {
-        name: 'Sidebar'
+import config from '@/config.js'    
+
+export default {
+    name: 'Sidebar',
+    data () {
+        return {
+            input_search : ''
+        }
+    },
+    methods : {
+        runSearch() {
+            let self = this
+            axios({
+                method : 'GET',
+                url : `${config.port}/articles/search?keyword=${self.input_search}`,
+            })
+            .then((response)=>{
+                self.$emit('search-result',response.data.data)
+                console.log(response.data.data)
+            })
+            .catch((err)=>{
+                console.log(err)
+            })
+        }
     }
+}
 </script>
 
 <style>
