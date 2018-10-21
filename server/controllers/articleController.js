@@ -51,6 +51,7 @@ class Controller {
         Article.findById(req.params.id)
         .populate('category')
         .populate('author')
+        .populate({ path: "comments", populate: { path: "user" } })
         .then((result)=>{
             res.status(200).json({
                 data : result

@@ -8,7 +8,7 @@ class Controller {
         }else{
             myComment.create({
                 thecomment : req.body.thecomment,
-                author : req.userData._id //ini diambil dari hasil cek token di middleware
+                user : req.userData._id //ini diambil dari hasil cek token di middleware
             })
             .then((result)=>{
                 Article.findOneAndUpdate({
