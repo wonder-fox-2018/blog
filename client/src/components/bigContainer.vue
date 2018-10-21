@@ -1,12 +1,12 @@
 <template>
     <div>
-        <router-view @searchArticle="searchArticle" :article="article" :isLogin="isLogin"></router-view>
+        <router-view @searchArticle="searchArticle" :updatecomponent="updatecomponent" :article="article" :isLogin="isLogin"></router-view>
     </div>
 </template>
 
 <script>
 export default {
-    props : ['article', 'isLogin'],
+    props : ['article', 'isLogin', 'updatecomponent'],
     methods: {
         searchArticle(value) {
             this.$emit('searchArticle', value)

@@ -6,26 +6,27 @@
             <div class="col-lg-6">
             <ul class="list-unstyled mb-0">
                 <li>
-                <a href="#">Manga</a>
+                <!-- <a href="#">Manga</a> -->
+                <router-link :to="{name : 'myList', params:{category : 'Manga'}}" >Manga</router-link>
                 </li>
                 <li>
-                <a href="#">Manwa</a>
+                <router-link :to="{name : 'myList', params:{category : 'Manwa'}}" >manwa</router-link>
                 </li>
                 <li>
-                <a href="#">Manhua</a>
+                <router-link :to="{name : 'myList', params:{category : 'Manhua'}}" >manhua</router-link>
                 </li>
             </ul>
             </div>
             <div class="col-lg-6">
             <ul class="list-unstyled mb-0">
                 <li>
-                <a href="#">Anime</a>
+                 <router-link :to="{name : 'myList', params:{category : 'Anime'}}" >anime</router-link>
                 </li>
                 <li>
-                <a href="#">Gunpla</a>
+                 <router-link :to="{name : 'myList', params:{category : 'Gunpla'}}" >gunpla</router-link>
                 </li>
                 <li>
-                <a href="#">Figure</a>
+                 <router-link :to="{name : 'myList', params:{category : 'Figure'}}" >figure</router-link>
                 </li>
             </ul>
             </div>

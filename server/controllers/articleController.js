@@ -1,11 +1,13 @@
 const Article = require('../models/article')
 const User = require('../models/user')
+const mongoose = require('mongoose')
 
 class ArticleController{
     static createArticle(req, res){
         Article.create({
             title : req.body.title,
             article : req.body.article,
+            category : req.body.category,
             img : req.body.img,
             username : req.login.username,
             user : req.login.id
@@ -66,6 +68,7 @@ class ArticleController{
         Article.findOne({
             _id : req.params.id
         })
+        .populate('comments')
         .then(article => {
             res.status(200).json({article})
         })
@@ -79,6 +82,19 @@ class ArticleController{
         })
         .then(data => {
             res.status(200).json(data)
+        })
+        .catch(err => {
+            res.status(500).json({error: err.message})
+        })
+    }
+    static showUserArticle(req, res){
+        const userId = new mongoose.Types.ObjectId(req.login.id);
+        Article.find({}).populate('user')
+        .then(article => {
+            const result = article.filter(function (datum) {
+                return userId.equals(datum.user._id);
+            });
+            res.status(200).json(result)
         })
         .catch(err => {
             res.status(500).json({error: err.message})

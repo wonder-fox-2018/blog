@@ -20,6 +20,17 @@
                 <!-- <textarea class="form-control" rows="8" v-model="content"></textarea> -->
                 <wysiwyg v-model="content" />
               </div>
+              <div class="form-group">
+                <label for="sel1">Select list:</label>
+                <select class="form-control" v-model="category" id="sel1">
+                  <option>Manga</option>
+                  <option>Manwa</option>
+                  <option>Manhua</option>
+                  <option>Anime</option>
+                  <option>Gunpla</option>
+                  <option>Figure</option>
+                </select>
+              </div>
               <div class="form-group col-md-12">
                 <label for="inputImgUrl">Image</label>
                 <input type="text" class="form-control" v-model="img"  placeholder="Img-url ... ">
@@ -37,11 +48,12 @@
 
 <script>
 export default {
-  props : ['getarticle'],
+  props : ['getarticle', 'updatecomponent'],
   data(){
     return {
       title : '',
       content : '',
+      category : '',
       img : ''
     }
   },
@@ -57,12 +69,14 @@ export default {
         data :{
           title : self.title,
           article : self.content,
+          category : self.category,
           img : self.img
         }
       })
       .then(response => {
         console.log(response)
         this.getarticle()
+        this.updatecomponent()
       })
       .catch(err => {
         console.log(err)

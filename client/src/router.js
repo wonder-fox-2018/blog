@@ -31,6 +31,12 @@ export default new Router({
           name : 'detailArticle',
           props : true,
           component : () => import('./components/detailArticle.vue')
+        },
+        {
+          path : '/article/myList/:category',
+          name : 'myList',
+          props : true,
+          component : () => import('./components/myList.vue')
         }
       ]
     }

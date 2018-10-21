@@ -11,14 +11,14 @@
       </div>
       <navbar :isLogin="isLogin" :gettoken="getToken"></navbar>
 
-      <bigcontainer @searchArticle="setSearch" :article="article" :isLogin="isLogin"></bigcontainer>
+      <bigcontainer v-if="show" @searchArticle="setSearch" :updatecomponent="updateComponent" :article="article" :isLogin="isLogin"></bigcontainer>
       <!-- <container :article="article"></container> -->
       <footers></footers>
 
       <!-- modal components -->
       <modalRegister></modalRegister>
       <modalLogin  :gettoken="getToken"></modalLogin>
-      <modalArticle :getarticle="getArticle"></modalArticle>
+      <modalArticle :getarticle="getArticle" :updatecomponent="updateComponent"></modalArticle>
   </div>
 </template>
 
@@ -43,6 +43,7 @@
     },
     data : function(){
       return {
+        show : true,
         isLogin : false ,
         user : {
           username : '',
@@ -70,6 +71,15 @@
       },
     },
     methods : {
+      updateComponent() {
+      this.show = false
+
+      this.$nextTick(function() {
+        this.show = true
+      })
+      this.getArticle()
+      console.log('refresh')
+    },
       setSearch(value){
         this.search = value
       },

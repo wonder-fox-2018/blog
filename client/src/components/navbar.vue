@@ -11,10 +11,10 @@
                         <router-link class="nav-link" to="/">home</router-link> |
                     </li>
                     <li class="nav-item">
-                        <router-link class="nav-link" to= "/about">about</router-link>
+                        <router-link class="nav-link" to= "/article/">about</router-link>
                     </li>
                     <li class="nav-item" v-if="isLogin">
-                        <router-link class="nav-link" to="/article">My Article</router-link>
+                        <router-link class="nav-link" :to="{name : 'myList', params:{category : 'all'}}" >My Article</router-link>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Contact</a>

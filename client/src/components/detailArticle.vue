@@ -11,6 +11,28 @@
         <p class="card-text" v-html="detail.article"></p>
     </div>
     <div class="card-footer text-muted">
+    <div class="col-sm-12">
+        <div class="panel panel-white post panel-shadow">
+            <div class="post-footer">
+                <div class="input-group"> 
+                    <input class="form-control" v-model="comment" placeholder="Add a comment" type="text">
+                    <span class="input-group-addon">
+                       <button class="btn btn-primary" @click="addComment">add comment</button> 
+                    </span>
+                </div>
+                <ul class="comments-list" v-for="(list,index) in detail.comments" :key="index">
+                    <li class="comment">
+                        <div class="comment-body">
+                            <div class="comment-heading">
+                                <h4 class="user">{{list.user}}</h4>
+                            </div>
+                            <p>{{list.comment}}</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
     </div>
   </div>
 </template>
@@ -20,7 +42,8 @@ export default {
     data(){
       return{
         detail : '',
-        show : true
+        show : true, 
+        comment : ''
       }
     },
     props : ['id'],
@@ -33,6 +56,25 @@ export default {
       }
     },
     methods: {
+      addComment : function(){
+        axios({
+          method : 'POST',
+          url : 'http://localhost:3000/comments/add',
+          headers : {
+            token : localStorage.getItem('token'),
+          },
+          data : {
+            comment : this.comment,
+            articleId : this.id
+          }
+        })
+        .then(response => {
+          this.getDetailArticle()
+        })
+        .catch(err => {
+          console.log(err)
+        })
+      },
       getDetailArticle() {
         // self = this
         axios({
