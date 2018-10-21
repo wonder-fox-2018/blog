@@ -3,9 +3,10 @@
     <sidebar :articles='articles' :user='user'></sidebar>
     <transition name="fade">
       <div id="delly">
-        <articlecard class="classcard" :article='article' :articles='articles' :detail='detail' :user='user'></articlecard>
+        <articlecard class="classcard" :article='article' :articles='articles' :detail='detail' :user='user' :getArticles='getArticles'></articlecard>
       </div>
     </transition>
+    <router-view/>
   </section>
 </template>
 
@@ -18,7 +19,7 @@
   
   export default {
     name: 'articledetail',
-    props: ['articles', 'user'],
+    props: ['articles', 'user','getArticles'],
     components: {
       sidebar,
       articlecard

@@ -17,11 +17,11 @@
         </article>
       </a>
       <div class="cardfooter">
-        <div> Like </div>
-        <div> Unlike </div>
+        <div> </div>
+        <div></div>
         <div id="cmtbtn" @click="$router.push({name: 'articledetail',params: {id: article._id}}); goComment()" > Comment ( {{comments.length}} ) </div>
-        <div v-if="article.author._id == user._id"> Edit </div>
-        <div v-if="article.author._id == user._id"> Delete </div>
+        <div v-if="article.author._id == user._id">  </div>
+        <div v-if="article.author._id == user._id" @click="deleteArticle()"> Delete </div>
       </div>
       <div v-if="detail" class="commentbar">
         <div class='articlecomments'>
@@ -49,15 +49,12 @@
   
   export default {
     name: 'articlecard',
-    props: ['article', 'articles', 'detail', 'user'],
+    props: ['article', 'articles', 'detail', 'user','getArticles'],
     components: {
       VueForm: VueForm.component
     },
     created() {
       this.getComments()
-    },
-    mounted() {
-  
     },
     data() {
       return {
@@ -81,6 +78,15 @@
       }
     },
     methods: {
+      deleteArticle(){
+        axios.delete(`http://localhost:3000/articles/${this.article._id}`)
+        .then(() => {
+          this.getArticles()
+          this.$router.push('/')
+        }).catch((err) => {
+          console.log(err);
+        });
+      },
       postComment() {
         axios.post(`http://localhost:3000/comments/${this.article._id}`, {
             user: this.user._id,
@@ -118,9 +124,6 @@
         this.getComments()
       },
     },
-    computed: {
-  
-    }
   }
 </script>
 

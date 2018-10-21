@@ -3,12 +3,13 @@
     <div class="chatdisplay" id="chatdisplay">
       <div class="chatitem" v-for="chat in chats" :key="chat.id">
         <div>{{chat.user}}</div>
-        <div>: {{chat.content}}</div>
+        <div>: {{chat.chatinput}}</div>
         <div>{{chat.createdAt}}</div>
       </div>
     </div>
     <div class="chatinput">
-      <chatform :schema='schema' :model='model'></chatform>
+      <p v-if="!user"> please login to join chat </p>
+      <chatform v-if="user" :schema='schema' :model='model'></chatform>
     </div>
   </section>
 </template>
@@ -17,12 +18,17 @@
   import VueForm from 'vue-form-generator';
   import moment from 'moment'
   import jQuery from 'jquery'
+  import firebaseApp from '../assets/config'
+  const db = firebaseApp.database()
   
   export default {
     name: 'chat',
     props: ['user'],
     components: {
       "chatform": VueForm.component
+    },
+    created() {
+      this.getChats()
     },
     mounted() {
       jQuery(document).ready(function($) {
@@ -32,123 +38,37 @@
   
         setTimeout(() => {
           $("#chatdisplay").fadeOut("slow")
-        }, 1500);
-
+        }, 5000);
+  
         $('.chat').mouseleave(function() {
           $("#chatdisplay").fadeOut("fast")
         });
-
-        $('.chat').mouseenter(function () { 
+  
+        $('.chat').mouseenter(function() {
           $("#chatdisplay").fadeIn("slow")
         });
       });
-  
-  
     },
     data() {
       return {
-        chats: [{
-            id: 1,
-            user: 'adit',
-            content: 'kasjdklasdjlalj',
-            createdAt: moment(new Date()).format('hh:mm:ss')
-          },
-          {
-            id: 2,
-            user: 'adit',
-            content: 'kasjdklasdjlalj',
-            createdAt: moment(new Date()).format('hh:mm:ss')
-          },
-          {
-            id: 3,
-            user: 'adit',
-            content: 'kasjdklasdjlalj',
-            createdAt: moment(new Date()).format('hh:mm:ss')
-          },
-          {
-            id: 4,
-            user: 'adit',
-            content: 'kasjdklasdjlalj',
-            createdAt: moment(new Date()).format('hh:mm:ss')
-          },
-          {
-            id: 5,
-            user: 'adit',
-            content: 'kasjdklasdjlalj',
-            createdAt: moment(new Date()).format('hh:mm:ss')
-          },
-          {
-            id: 6,
-            user: 'adit',
-            content: 'kasjdklasdjlalj',
-            createdAt: moment(new Date()).format('hh:mm:ss')
-          },
-          {
-            id: 7,
-            user: 'adit',
-            content: 'kasjdklasdjlalj',
-            createdAt: moment(new Date()).format('hh:mm:ss')
-          },
-          {
-            id: 8,
-            user: 'adit',
-            content: 'kasjdklasdjlalj',
-            createdAt: moment(new Date()).format('hh:mm:ss')
-          },
-          {
-            id: 9,
-            user: 'adit',
-            content: 'kasjdklasdjlalj',
-            createdAt: moment(new Date()).format('hh:mm:ss')
-          },
-          {
-            id: 10,
-            user: 'adit',
-            content: 'kasjdklasdjlalj',
-            createdAt: moment(new Date()).format('hh:mm:ss')
-          },
-          {
-            id: 11,
-            user: 'adit',
-            content: 'kasjdklasdjlalj',
-            createdAt: moment(new Date()).format('hh:mm:ss')
-          },
-          {
-            id: 12,
-            user: 'adit',
-            content: 'kasjdklasdjlalj',
-            createdAt: moment(new Date()).format('hh:mm:ss')
-          },
-          {
-            id: 13,
-            user: 'adit',
-            content: 'kasjdklasdjlalj',
-            createdAt: moment(new Date()).format('hh:mm:ss')
-          },
-          {
-            id: 14,
-            user: 'adit',
-            content: 'kasjdklasdjlalj',
-            createdAt: moment(new Date()).format('hh:mm:ss')
-          },
-        ],
+        chats: [],
         model: {
-          id: '',
+          user: this.user.firstName,
           chatinput: '',
-          createdAt: moment(new Date()).format('hh:mm:ss')
+          createdAt: moment(new Date()).format('DD-MMM hh:mm')
         },
-  
         schema: {
           fields: [{
             type: 'input',
             inputType: 'text',
             model: 'chatinput',
             placeholder: 'type chat ...',
+            maxlength: 50,
             buttons: [{
                 classes: 'btn',
                 label: 'Send',
-                onclick: function(model) {
-                  console.log(model);
+                onclick: () => {
+                  this.submitChat()
                 }
               },
               {
@@ -164,10 +84,25 @@
       }
     },
     methods: {
-  
-    },
-    computed: {
-  
+      getChats() {
+        db.ref('/db/globalChat').on('value', snapshot => {
+          if (snapshot.val()) {
+            this.chats = Object.values(snapshot.val())
+          }
+        })
+      },
+      submitChat() {
+        try {
+          db.ref(`/db/globalChat/`).push({
+            user: this.user.firstName,
+            chatinput: this.model.chatinput,
+            createdAt: moment(new Date()).format('DD-MMM-YY hh:mm')
+          })
+        } catch (error) {
+          console.log(error)
+        }
+        this.model.chatinput = ''
+      }
     }
   }
 </script>
@@ -178,7 +113,7 @@
     position: fixed;
     bottom: 0px;
     right: 10%;
-    width: 400px;
+    width: 500px;
     background-color: rgb(255, 255, 255);
     padding: 10px 10px 0 10px;
     max-height: 400px;
@@ -195,7 +130,7 @@
   
   .chatitem {
     display: grid;
-    grid-template-columns: 1fr 5fr 1fr;
+    grid-template-columns: 1fr 5fr 2fr;
     text-align: left;
   }
   

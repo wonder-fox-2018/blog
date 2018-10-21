@@ -7,9 +7,8 @@ Vue.use(Router)
 export default new Router({
   mode: 'history',
   base: process.env.BASE_URL,
-  props : ['setUser'],
-  routes: [
-    {
+  props: ['setUser'],
+  routes: [{
       path: '/',
       name: 'home',
       component: Home
@@ -22,29 +21,34 @@ export default new Router({
     {
       path: '/register',
       name: 'register',
-      component: () =>  import('./views/Register.vue')
+      component: () => import('./views/Register.vue')
     },
     {
       path: '/login',
       name: 'login',
-      component: () =>  import('./views/Login.vue')
+      component: () => import('./views/Login.vue')
     },
-    { 
+    {
       path: '/articles',
       components: {
-        sidebar: () =>  import('./components/Sidebar.vue'),
-        articles: () =>  import('./components/Articles.vue')
-      }
+        sidebar: () => import('./components/Sidebar.vue'),
+        articles: () => import('./components/Articles.vue')
+      },
+      // children : [{
+      //   path : ':id',
+      //   name : 'articledetail',
+      //   component : () => import('./views/articledetail.vue')
+      // }]
+    },
+    {
+      path: '/articles/:id',
+      name: 'articledetail',
+      component: () => import('./views/articledetail.vue')
     },
     {
       path: '/creator',
       name: 'creator',
-      component: () =>  import('./views/Creator.vue')
+      component: () => import('./views/Creator.vue')
     },
-    {
-      path : '/articles/:id',
-      name : 'articledetail',
-      component : () => import('./views/articledetail.vue')
-    }
   ]
 })

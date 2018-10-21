@@ -2,7 +2,7 @@
   <section class="homepage">
     
     <sidebar :user='user' :articles='articles' :setUser='setUser'></sidebar>
-    <articles :user='user' :articles='articles'></articles>
+    <articles :user='user' :articles='articles' :getArticles='getArticles'></articles>
 
   </section>
 </template>
@@ -13,7 +13,7 @@
 
   export default  {
     name: 'homepage',
-    props: ['user','articles','setUser'],
+    props: ['user','articles','setUser','getArticles'],
     components : {
       sidebar,articles
     }

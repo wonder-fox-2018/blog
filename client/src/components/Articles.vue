@@ -3,7 +3,7 @@
   
     <div id="maincontainer">
       <div v-for="article in articles" :key="article._id">
-        <articlecard :article='article' :detail='detail' :user='user'></articlecard><br>
+        <articlecard :article='article' :detail='detail' :user='user' :getArticles='getArticles'></articlecard><br>
       </div>
     </div>
   </section>
@@ -15,7 +15,7 @@
 
   export default {
     name: 'articles',
-    props: ['articles','user'],
+    props: ['articles','user','getArticles'],
     components: {
       sidebar, articlecard
     },

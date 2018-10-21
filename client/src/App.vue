@@ -5,7 +5,7 @@
     <transition name="fade" mode="out-in">
       <router-view :setUser="setUser" :user='user' :articles="articles" :getArticles="getArticles"></router-view>
     </transition>
-    <chatcomponent :setUser="setUser"></chatcomponent>
+    <chatcomponent :setUser="setUser" :user='user'></chatcomponent>
   </div>
 </template>
 

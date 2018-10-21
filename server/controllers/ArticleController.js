@@ -74,50 +74,22 @@ module.exports = {
     },
 
     update: function (req, res) {
-        var id = req.params.id;
-        ArticleModel.findOne({
-            _id: id
-        }, function (err, Article) {
-            if (err) {
-                return res.status(500).json({
-                    message: 'Error when getting Article',
-                    error: err
-                });
-            }
-            if (!Article) {
-                return res.status(404).json({
-                    message: 'No such Article'
-                });
-            }
-
-            Article.title = req.body.title ? req.body.title : Article.title;
-            Article.content = req.body.content ? req.body.content : Article.content;
-            Article.author = req.body.author ? req.body.author : Article.author;
-            Article.comments = req.body.comments ? req.body.comments : Article.comments;
-
-            Article.save(function (err, Article) {
-                if (err) {
-                    return res.status(500).json({
-                        message: 'Error when updating Article.',
-                        error: err
-                    });
-                }
-
-                return res.json(Article);
-            });
-        });
+        console.log('masuk udate');
+        res.json({message : 'under construction'})
     },
 
     remove: function (req, res) {
         var id = req.params.id;
-        ArticleModel.findByIdAndRemove(id, function (err, Article) {
+        ArticleModel.findByIdAndDelete(id, function (err, Article) {
             if (err) {
                 return res.status(500).json({
                     message: 'Error when deleting the Article.',
                     error: err
                 });
             }
-            return res.status(204).json();
+            return res.status(204).json({
+                message : 'Delete article success'
+            });
         });
     }
 };
