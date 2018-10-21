@@ -11,7 +11,7 @@
             <router-link to="/creator" :getArticles="getArticles">CREATE</router-link>
           </div>
           <div>HELP</div>
-          <div v-if="user" v-on:click="signOut">SIGN OUT</div>
+          <div>ELSE</div>
         </div>
   
         <div class="logoSect">H8 </div>
@@ -28,6 +28,7 @@
           </div>
           <div>
             <router-link to="/login" v-if="!user" :setUser='setUser'>SIGN IN</router-link>
+            <div v-if="user" v-on:click="signOut">SIGN OUT</div>
           </div>
         </div>
   

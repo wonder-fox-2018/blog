@@ -12,7 +12,7 @@
     <br>
     <ul class="rolldown-list" id="myList">
       <div class="listarticle" v-for="article in articles" :key="article._id">
-        <li @click="goToDetail(article._id)"> {{ article.title.slice(0,20) }} </li>
+        <li :class="{ 'liactive' : $route.params.id == article._id}" @click="goToDetail(article._id)"> {{ article.title.slice(0,20) }} </li>
       </div>
     </ul>
   </section>
@@ -25,6 +25,9 @@
     props: ['user', 'articles','setUser'],
     components: {
       profileSec
+    },
+    created(){
+      // console.log(this.$route);
     },
     methods: {
       goToDetail(artilceId) {
@@ -40,7 +43,16 @@
 </script>
 
 <style scoped lang="css">
-  .sidebar {}
+  .sidebar {
+    padding-left: 15px;
+  }
+
+  .liactive {
+    margin-left: 20px;
+    margin-right: -20px;
+    background-color: rgb(24, 24, 24) !important;
+    color: white;
+  }
   
   .listarticle {
     font: 1.2em/1.4 'Oswald', sans-serif;

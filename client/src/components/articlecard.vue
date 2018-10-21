@@ -21,7 +21,7 @@
         <div> Unlike </div>
         <div @click="$router.push({name: 'articledetail',params: {id: article._id}})" > Comment ( {{comments.length}} ) </div>
         <div v-if="article.author._id == user._id" > Edit </div>
-        <div> Delete </div>
+        <div v-if="article.author._id == user._id"> Delete </div>
       </div>
       <div v-if="detail" class="commentbar">
         <div class='articlecomments'>
@@ -46,7 +46,7 @@
 
   export default {
     name: 'articlecard',
-    props: ['article', 'detail','user'],
+    props: ['article','articles', 'detail','user'],
     components : {
       VueForm : VueForm.component
     },
@@ -99,7 +99,6 @@
     },
     watch : {
       '$route.params.id': function(newVal) {
-        console.log(newVal)
         this.param = newVal
         this.article = this.articles.filter(item => {
           return item._id == this.param
@@ -184,7 +183,7 @@
     flex-direction: row;
     background: #fff;
     box-shadow: 0 -0.2875rem 1.5rem rgba(0, 0, 0, 0.2);
-    /* border-radius: 0.375rem; */
+    border-radius: 0.375rem;
     overflow: hidden;
     transition: .1s;
   }

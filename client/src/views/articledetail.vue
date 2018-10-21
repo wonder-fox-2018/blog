@@ -1,7 +1,7 @@
 <template>
   <section class="articledetail">
     <sidebar :articles='articles' :user='user'></sidebar>
-    <articlecard :article='article' :detail='detail' :user='user'></articlecard>
+    <articlecard :article='article' :articles='articles' :detail='detail' :user='user'></articlecard>
   </section>
 </template>
 
@@ -35,10 +35,9 @@
       '$route.params.id': function(newVal) {
         this.param = newVal
         this.article = this.articles.filter(item => {
-          return item._id == this.param.id
+          return item._id == this.param
         })[0]
       },
-  
     },
     methods: {
       getArticle() {

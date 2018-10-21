@@ -3,16 +3,18 @@
   
     <navbar :setUser="setUser" :setMessage="setMessage" :getArticles="getArticles" :user='user' :articles="articles"></navbar>
     <router-view :setUser="setUser" :user='user'  :articles="articles" :getArticles="getArticles"></router-view>
-  
+    <chatcomponent :setUser="setUser" ></chatcomponent>
   </div>
 </template>
 
 <script>
-  import navbar from '@/components/Navbar.vue'
   import axios from 'axios'
+  import navbar from '@/components/Navbar.vue'
+  import chatcomponent from '@/components/Chat.vue'
+  
   export default {
     components: {
-      navbar: navbar
+      navbar,chatcomponent
     },
     name: 'granparent',
     data() {
