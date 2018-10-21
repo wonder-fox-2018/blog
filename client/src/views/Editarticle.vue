@@ -31,7 +31,8 @@ export default {
       detailarticletitle: '',
       detailarticleauthor: '',
       detailarticledescription: '',
-      updatedlistarticles: []
+      updatedlistarticles: [],
+      url: 'https://blogapi.efratsadeli.tech'
     }
   },
   methods: {
@@ -39,7 +40,7 @@ export default {
       let self = this
       axios({
         method: 'GET',
-        url: 'http://localhost:3009/articles/lists'
+        url: `${self.url}/articles/lists`
       })
         .then(articles => {
           self.updatedlistarticles = articles.data.data
@@ -52,7 +53,7 @@ export default {
       let self = this
       axios({
         method: 'GET',
-        url: `http://localhost:3009/articles/${self.id}`
+        url: `${self.url}/articles/${self.id}`
       })
         .then(article => {
           let detailarticle = article.data.data
@@ -65,11 +66,10 @@ export default {
         })
     },
     editarticle () {
-      // console.log('EDIT-------------', this.id)
       let self = this
       axios({
         method: 'PUT',
-        url: `http://localhost:3009/articles/${self.id}`,
+        url: `${self.url}/articles/${self.id}`,
         headers: {
           token: self.token
         },

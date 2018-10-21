@@ -28,7 +28,8 @@ export default {
   data () {
     return {
       articletitle: '',
-      articledescription: ''
+      articledescription: '',
+      url: 'https://blogapi.efratsadeli.tech'
     }
   },
   methods: {
@@ -36,7 +37,7 @@ export default {
       let self = this
       axios({
         method: 'POST',
-        url: 'http://localhost:3009/articles/',
+        url: `${self.url}/articles/`,
         headers: {
           token: self.token
         },
@@ -46,7 +47,6 @@ export default {
         }
       })
         .then(article => {
-          // console.log('Article Created ----', article.data)
           this.$router.push({ name: 'home' })
         })
         .catch(error => {

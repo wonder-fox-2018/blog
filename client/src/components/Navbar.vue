@@ -94,7 +94,8 @@ export default {
       entrypassword: '',
       token: localStorage.getItem('blogtoken'),
       islogin: false,
-      userbasicinfo: {}
+      userbasicinfo: {},
+      url: 'https://blogapi.efratsadeli.tech'
     }
   },
   methods: {
@@ -102,7 +103,7 @@ export default {
       let self = this
       axios({
         method: 'GET',
-        url: 'http://localhost:3009/users/credentials',
+        url: `${self.url}/users/credentials`,
         headers: {
           token: localStorage.getItem('blogtoken')
         }
@@ -122,7 +123,7 @@ export default {
       let self = this
       axios({
         method: 'POST',
-        url: 'http://localhost:3009/user/login',
+        url: `${self.url}/user/login`,
         data: {
           email: self.entryemail,
           password: self.entrypassword
@@ -152,7 +153,7 @@ export default {
       let self = this
       axios({
         method: 'POST',
-        url: `http://localhost:3009/user/register`,
+        url: `${self.url}/user/register`,
         data: {
           name: self.entryname,
           email: self.entryemail,

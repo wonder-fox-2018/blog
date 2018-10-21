@@ -93,7 +93,8 @@ export default {
     return {
       detailarticle: {},
       authorname: '',
-      newcomment: ''
+      newcomment: '',
+      url: 'https://blogapi.efratsadeli.tech'
     }
   },
   methods: {
@@ -126,7 +127,7 @@ export default {
       let self = this
       axios({
         method: 'GET',
-        url: `http://localhost:3009/articles/${self.id}`
+        url: `${self.url}/articles/${self.id}`
       })
         .then(article => {
           let detailarticle = article.data.data
@@ -141,7 +142,7 @@ export default {
       let self = this
       axios({
         method: 'DELETE',
-        url: `http://localhost:3009/articles/${self.id}`,
+        url: `${self.url}/articles/${self.id}`,
         headers: {
           token: self.token
         }
@@ -157,7 +158,7 @@ export default {
       let self = this
       axios({
         method: 'POST',
-        url: 'http://localhost:3009/comments',
+        url: `${self.url}/comments`,
         headers: {
           token: self.token
         },
@@ -179,7 +180,7 @@ export default {
       let self = this
       axios({
         method: 'DELETE',
-        url: `http://localhost:3009/comments/${input}`,
+        url: `${self.url}/comments/${input}`,
         headers: {
           token: self.token
         }

@@ -50,7 +50,8 @@ export default {
       token: '',
       userbasicinfo: {},
       keyword: '',
-      updateok: false
+      updateok: false,
+      url: 'https://blogapi.efratsadeli.tech'
     }
   },
   methods: {
@@ -58,10 +59,9 @@ export default {
       let self = this
       axios({
         method: 'GET',
-        url: 'http://localhost:3009/articles/lists'
+        url: `${self.url}/articles/lists`
       })
         .then(articles => {
-          // console.log('Result-----', articles.data.data)
           self.listarticles = articles.data.data
         })
         .catch(error => {
@@ -83,17 +83,15 @@ export default {
     searcharticles (val) {
       this.keyword = val
       let self = this
-      // console.log('THis is keyword----', self.keyword)
       // get selected data
       axios({
         method: 'POST',
-        url: 'http://localhost:3009/articles/search',
+        url: `${self.url}/articles/search`,
         data: {
           keyword: self.keyword
         }
       })
         .then(articles => {
-          console.log('Result Search---', articles.data.data)
           self.listarticles = articles.data.data
           // empty the keyword
           self.keyword = ''
