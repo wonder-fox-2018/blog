@@ -1,9 +1,23 @@
-var express = require('express');
-var router = express.Router();
+'use strict'
+const express = require('express'),
+      router = express.Router(),
+      images = require('../middleware/upload')
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});
+/* GET main endpoint. */
+router.get('/', (req, res, next) => {
+  res.send({ message: 'Welcome Buddy!' })
+})
 
-module.exports = router;
+router.post('/upload',
+  images.multer.single('image'), 
+  images.sendUploadToGCS,
+  (req, res) => {
+    console.log('msuk post upload...')
+    res.send({
+      status: 200,
+      message: 'Your file is successfully uploaded',
+      link: req.file.cloudStoragePublicUrl
+    })
+  })
+
+module.exports = router

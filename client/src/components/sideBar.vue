@@ -15,13 +15,13 @@
     </div>
     <div class="text py-4" v-for='article in articles'>
       <div class="meta">
-        <div><small>{{ article.date }}</small></div>
-        <div><a href="#">By {{article.author.username}}</a></div>
+        <div><small>{{ getDate(article.date) }}</small></div>
+        <div style='color: blue;'>By {{article.author.username}}</div>
       </div>
-      <h3 class="heading"><a href="#">{{article.title}}</a></h3>
+      <h3 class="heading" style='color: blue;'>{{article.title}}</h3>
       <p v-html='article.contents'>...</p>
       <router-link :to="{ path: `/home/${article.id}`}">
-        <span id='read' style='color:blue' @click='getReadCounter'>Read more</span>
+        <span id='read' style='color:blue' @click='getReadCounter(article.id)'>Read more</span>
       </router-link>
       <div class='row'>
         <div class='col-sm-4'>
@@ -29,7 +29,7 @@
         </div>
         <div class='offset col-sm-4'></div>
         <div class='col-sm-4'>
-          <i class="fa fa-eye" aria-hidden="true"></i> Read {{ readCounter }}
+          <i class="fa fa-eye" aria-hidden="true"></i> Read {{ article.read }}
         </div>
       </div><hr>
     </div>
@@ -39,7 +39,7 @@
 
 <script>
   export default {
-    props: ['isLogin', 'userId'],
+    props: ['isLogin', 'userId', 'getDate', 'showComments'],
     data() {
       return {
         articles: [],
@@ -103,13 +103,19 @@
           }
         })
         this.articles = arr
+      },
+      getReadCounter(id) {
+        // console.log('id', id)
+        this.showComments = false
+      }
+    },
+    watch: {
+      readCounter(val) {
+        console.log('readcount---', val)
       }
     },
     computed: {
-      getReadCounter: function() {
-        console.log('read')
-        return this.readCounter++
-      }
+      
     },
     created() {
       this.getArticles()

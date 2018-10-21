@@ -25,7 +25,7 @@
     </nav>
   </div>
   <div class='container'>
-     <router-view :hasLoggedIn='hasLoggedIn' :isLogin='isLogin' :userId='userId' />
+     <router-view :hasLoggedIn='hasLoggedIn' :isLogin='isLogin' :userId='userId' :getDate='getDate' :showComments='showComments' />
   </div>
     
   </div>
@@ -38,7 +38,8 @@
     return{
       isLogin : false,
       username: '',
-      userId: ''
+      userId: '',
+      showComments: false
     }    
   },
   components: {
@@ -57,6 +58,10 @@
       localStorage.removeItem('username')
       localStorage.removeItem('userId')
       this.isLogin = false
+    },
+    getDate(isoDate) {
+      let date = new Date(isoDate);
+      return date.getDate()+'-' + (date.getMonth()+1) + '-'+date.getFullYear();
     }
 
   },

@@ -8,7 +8,7 @@
       </div>
     <div class="form-group">
      <label for="image">Insert Article Image:</label>
-      <input class="form-control" type="file" name="image" id="" @change='image'>
+      <input class="form-control" type="file" name="image" id="" @change='onFileSelected'>
       or copy the url image from the internet:
       <input v-model="image" class="form-control form-control-lg rounded-0" name="image_url" required="" placeholder="url image">
     </div>
@@ -36,7 +36,8 @@ export default {
       image: '',
       msg: '',
       success: false,
-      error: false
+      error: false,
+      selectedFile: null
     }
   },
   methods: {
@@ -61,7 +62,14 @@ export default {
         contents: self.contents,
         image: self.image
       }
-      axios.post('http://localhost:3000/articles', data)
+      if(this.selectedFile) {
+        onUpload(this.selectedFile)
+      }
+      axios.post('http://localhost:3000/articles', data, {
+        headers: {
+          authorization: `Bearer ${localStorage.getItem('token')}`
+        }
+      })
       .then((result) => {
         // console.log(result)
         self.success = true,
@@ -72,6 +80,19 @@ export default {
         self.msg = err.response.data.message || 'internal server error!'
       });
       this.clearState()
+    },
+    onFileSelected(event) {
+      // console.log('upload event--', event)
+      this.selectedFile = event.target.files[0]
+    },
+    onUpload(file) {
+      const fd = new FormData()
+      fd.append('image', file, file.name)
+      axios.post('', fd)
+      .then()
+      .cathc(err=>{
+        console.log(err)
+      })
     }
   }
 }

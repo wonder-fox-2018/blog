@@ -19,10 +19,10 @@ const ArticleSchema = new Schema({
     type: String,
     required: true
   },
-  comments: {
+  comments: [{
     type: Schema.Types.ObjectId, 
     ref: 'Comment' 
-  },
+  }],
   likes: {
     type: Number,
     default: 0

@@ -26,11 +26,32 @@
         <span style='color: blue;'><i class="fa fa-share-alt" aria-hidden="true"></i> Share</span> 
       </div>
       <div class='col-sm-4'>
-        <span style='color: brown;'><i class="fa fa-comments" aria-hidden="true"></i> Add Comment &nbsp;&nbsp;</span>
-        <span style='color: rebeccapurple;'><i class="fa fa-comments-o" aria-hidden="true"></i> Live Chat</span>
+        <span style='color: brown;' @click='showCommentsForm(article._id)'><i class="fa fa-comments" aria-hidden="true"></i> Add Comment &nbsp;&nbsp;</span>
+        <span style='color: rebeccapurple;' @click='showGlobalChat=true'><i class="fa fa-comments-o" aria-hidden="true"></i> Live Chat</span>
       </div>
     </div>
     <comments></comments>
+    <div v-if='showGlobalChat'>
+      <input type='text' placeholder='Enter the message here...' v-model='messageChat' @keyup.enter='submitChat' />
+      <button @click='submitChat'>Send Message</button>
+      <div class="liveChat" v-for="(chat,index) in listChat" :key='index'>
+        <p>{{ chat.name }}: {{ chat.message }}</p>
+      </div>
+    </div>
+
+    <div class='comments' v-if='showComments'>
+      <h3>User Comments:</h3>
+      <hr>
+      <textarea style='min-height:100px; min-width:700px' placeholder='Enter your comment here...' v-model='comment' /><br>
+      <button @click='submitComment(article._id)'>Submit Comment</button>
+      <button @click='showCommentsForm(article._id)'>Refresh Comment</button>
+      <div v-for='comment in allComments' class='commentBox'>
+        <div>posted on: {{ getDate(comment.createdAt) }}</div>
+        <div style='text-align:left; padding-left:5px;'>{{ comment.user.username }} commented:</div>
+        <div style='text-align:right ; padding-right:5px;'>{{ comment.comment }}</div>
+      </div>
+    </div>
+
     <!-- MODAL EDIT -->
       <div class="modal fade " id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
@@ -92,13 +113,20 @@
 
 <script>
   import comments from '@/components/comments.vue';
+  import db from '../assets/config.js'
 
   export default {
-    props: ['isLogin'],
+    props: ['isLogin', 'getDate', 'showComments'],
     data() {
       return {
         article: '',
-        activeId: localStorage.getItem('userId')
+        activeId: localStorage.getItem('userId'),
+        showGlobalChat: false,
+        listChat:'',
+        messageChat:'',
+        removeList: '',
+        comment: '',
+        allComments: []
       }
     },
     components: {
@@ -110,15 +138,11 @@
         let self = this
         axios.get(`http://localhost:3000/articles/${id}`)
         .then((result) => {
-          console.log(result.data)
+          // console.log(result.data)
           self.article = result.data
         }).catch((err) => {
           console.log(err)
         });
-      },
-      getDate(isoDate) {
-        let date = new Date(isoDate);
-        return date.getDate()+'-' + (date.getMonth()+1) + '-'+date.getFullYear();
       },
       editArticle(id) {
         console.log(id,'--',this.article)
@@ -127,7 +151,11 @@
           title: self.article.title,
           contents: self.article.contents,
           image: self.article.image
-        })
+        }, {
+        headers: {
+          authorization: `Bearer ${localStorage.getItem('token')}`
+        }
+      })
         .then((result) => {
           console.log(result)
           self.getArticle(id)
@@ -136,12 +164,74 @@
         });
       },
       deleteArticle(id) {
-        console.log(this.$router)
+        console.log('masukkk kedelete...', id)
         let self = this
-        axios.delete(`http://localhost:3000/articles/${id}`)
+        axios.delete(`http://localhost:3000/articles/${id}`,{
+        headers: {
+          authorization: `Bearer ${localStorage.getItem('token')}`
+        }
+      })
         .then((result) => {
+          console.log('kedelete...')
           self.getArticle(id)
           this.$router.push({name:'home'})
+          this.getArticle()
+        }).catch((err) => {
+          console.log(err)
+        });
+      },
+      submitChat() {
+        try {
+          db.ref(`/db/globalChat`).push({
+            name: localStorage.getItem('username'),
+            message: this.messageChat,
+          })
+        } catch (error) {
+          console.log(error)
+        }
+        this.messageChat = ''
+      },
+      refreshLobby() {
+        db.ref('/db/globalChat').on('value', snapshot => {
+          if (snapshot.val()) {
+          this.listChat = Object.values(snapshot.val())
+              .reverse()
+              .slice(0, 9)
+              .reverse()
+          this.removeList = Object.keys(snapshot.val())
+              .reverse()
+              .slice(9)
+          }
+        })
+      },
+      showCommentsForm(id) {
+        this.showGlobalChat = false
+        this.showComments = true
+        this.showAllComments(id)
+      },
+      showAllComments(id) {
+        self = this
+        axios.get(`http://localhost:3000/comments/${id}`)
+        .then((result) => {
+          self.allComments = result.data
+        }).catch((err) => {
+          console.log(err)
+        });
+      },
+      submitComment(id) {
+        let self = this
+        axios.post(`http://localhost:3000/comments`, {
+          user: localStorage.getItem('userId'),
+          comment: self.comment,
+          article: id
+        }, {
+          headers: {
+            authorization: `Bearer ${localStorage.getItem('token')}`
+          }
+        })
+        .then((result) => {
+          // console.log('hasil dari submit comment--',result.data)
+          self.showAllComments(id)
         }).catch((err) => {
           console.log(err)
         });
@@ -151,7 +241,7 @@
       
     },
     created() {
-      
+      this.refreshLobby()
     },
     computed: {
       getParamsId: function() {
@@ -180,5 +270,15 @@
 .paragraf {
   text-align: justify;
   text-justify: inter-word;
+}
+#icons span:hover{
+  cursor: pointer;
+  background-color: wheat;
+}
+.commentBox {
+  border: 1px solid brown;
+  margin: 5px auto;
+  min-width:700px;
+  background-color: #eeeeee;
 }
 </style>

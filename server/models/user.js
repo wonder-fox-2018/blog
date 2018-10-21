@@ -22,7 +22,11 @@ const UserSchema = new Schema({
     type: String,
     required: true,
     minlength: [6,'Password length minimal is 6 characters!']
-  }
+  },
+  comments: [{
+    type: Schema.Types.ObjectId, 
+    ref: 'Comment' 
+  }]
 }, {
   timestamps: true
 })
