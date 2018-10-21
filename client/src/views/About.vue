@@ -1,6 +1,7 @@
 <template>
   <div class="about">
-    <h1>This is an about page</h1>
+    <br>
+    <h1> Fathul Q A | 2018 </h1>
    
   </div>
 </template>

@@ -16,13 +16,13 @@
   
         </article>
       </a>
+
       <div class="cardfooter">
-        <div> </div>
-        <div></div>
-        <div id="cmtbtn" @click="$router.push({name: 'articledetail',params: {id: article._id}}); goComment()" > Comment ( {{comments.length}} ) </div>
-        <div v-if="article.author._id == user._id">  </div>
+        <sharecomponent id="sharecmpnt" v-if="user" :article='article' :user='user'></sharecomponent>
+        <div id="cmtbtn" @click="$router.push({name: 'articledetail',params: {id: article._id}}); goComment()"> Comment ( {{comments.length}} ) </div>
         <div v-if="article.author._id == user._id" @click="deleteArticle()"> Delete </div>
       </div>
+
       <div v-if="detail" class="commentbar">
         <div class='articlecomments'>
           <div class="usercomment" v-for="comment in comments" :key="comment._id">
@@ -30,13 +30,14 @@
             <h5> - {{ comment.user.firstName+' '+comment.user.lastName }} <br> <i> at {{ formatthis(comment.createdAt) }} </i></h5>
           </div>
         </div>
-        <div class="commentarea">
+        <div v-if="user" class="commentarea">
           <VueForm :schema='schema' :model='model'></VueForm>
         </div>
-        <div style="align-self:start;">
+        <div v-if="user" style="align-self:start;">
           <button type="button" @click="postComment()" class="btn btn-primary">Post Comment</button>
         </div>
       </div>
+
     </div>
   </section>
 </template>
@@ -46,12 +47,14 @@
   import axios from 'axios';
   import $ from 'jquery';
   import moment from 'moment';
+  import sharecomponent from './Share.vue'
   
   export default {
     name: 'articlecard',
-    props: ['article', 'articles', 'detail', 'user','getArticles'],
+    props: ['article', 'articles', 'detail', 'user', 'getArticles'],
     components: {
-      VueForm: VueForm.component
+      VueForm: VueForm.component,
+      sharecomponent
     },
     created() {
       this.getComments()
@@ -78,14 +81,14 @@
       }
     },
     methods: {
-      deleteArticle(){
+      deleteArticle() {
         axios.delete(`http://localhost:3000/articles/${this.article._id}`)
-        .then(() => {
-          this.getArticles()
-          this.$router.push('/')
-        }).catch((err) => {
-          console.log(err);
-        });
+          .then(() => {
+            this.getArticles()
+            this.$router.push('/')
+          }).catch((err) => {
+            console.log(err);
+          });
       },
       postComment() {
         axios.post(`http://localhost:3000/comments/${this.article._id}`, {
@@ -168,6 +171,10 @@
     max-width: 90%;
     margin: 0 auto;
     text-align: left;
+  }
+
+  #sharecmpnt{
+    grid-column: 1 / span 3;
   }
   
   .cardfooter {
