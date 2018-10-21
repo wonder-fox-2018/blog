@@ -77,6 +77,7 @@ module.exports = {
       title: req.body.title,
       author: req.userId,
       desc: req.body.desc,
+      imageurl: req.body.imageurl,
       category: req.body.category,
       commentlist: req.body.commentlist
     });
@@ -98,12 +99,13 @@ module.exports = {
     // console.log('masuk controllers/articles -> update')
     const upd = {
       title: req.body.title,
-      author: req.userId,
       desc: req.body.desc,
+      imageurl: req.body.imageurl,
       category: req.body.category
     };
     Article.updateOne({
-        _id: req.params.id
+        _id: req.params.id,
+        author: req.userId
       }, upd, function(err) {
         if (!err) {
           res.status(200).json({

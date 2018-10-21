@@ -9,34 +9,39 @@ const express = require('express'),
 const indexRouter = require('./routes/index'),
       usersRouter = require('./routes/users'),
       articlesRouter = require('./routes/articles'),
-      commentsRouter = require('./routes/comments');
+      commentsRouter = require('./routes/comments')
 
-let PORT = 3000 || PORT;
-
+let PORT = 3000 || process.env.PORT
 
 //Connecting to Mongoose
 const mongoose   = require('mongoose'),
       urltest = `mongodb://localhost:27017/blog-test`,
-      url = `mongodb://illion01:illion01@ds125021.mlab.com:25021/blog`;
+      url = `mongodb://illion01:illion01@ds125021.mlab.com:25021/blog`
 
 if (process.env.NODE_ENV === 'test') {
   console.log('ready to test our server')
-    mongoose.connect(urltest,{ useNewUrlParser: true });
+    mongoose.connect(urltest,{ useNewUrlParser: true })
 } else {
-    mongoose.connect(url,{ useNewUrlParser: true });
+    mongoose.connect(url,{ useNewUrlParser: true })
 }
 
-var db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
+var db = mongoose.connection
+db.on('error', console.error.bind(console, 'connection error:'))
 db.once('open', function() {
-  console.log('We are connected');
+  console.log('We are connected')
 });
 
+const server =  app.listen (PORT, () => {
+  console.log(`Application listening on port: ${PORT}`)
+})
 
-app.listen (PORT, () => {
-  console.log(`Application listening on port: ${PORT}`);
-});
-
+const io = require('socket.io')(server)
+io.on('connection', function(socket) {
+  console.log(socket.id)
+  socket.on('SEND_MESSAGE', function(data) {
+      io.emit('MESSAGE', data)
+  })
+})
 
 app
   .use(express.json())

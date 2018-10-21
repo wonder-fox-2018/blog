@@ -65,13 +65,12 @@ export default {
       this.$emit('switch2log', true)
       this.regtoggle()
     },
-		regtoggle () {
-			this.regshow = !this.regshow
+    regtoggle () {
+      this.regshow = !this.regshow
     },
     signup () {
       let self = this
-
-      axios ({
+      axios({
         method: 'POST',
         url: this.baseurl + '/users/register',
         data: {
@@ -80,33 +79,33 @@ export default {
           password: self.password
         }
       })
-      .then(response => {
-        console.log('signup', response)
-        let token = response.data.token
-        localStorage.setItem('token', token)
-        location.reload()
-      })
-      .catch(error => {
-        console.log(error.response)
-        if (!self.email) {
-          self.notif = 'email is required'
-        } else if (!self.password) {
-          self.notif = 'password is required'
-        } else if (!self.name) {
-          self.notif = 'name is required'
-        } else {
-          let str = error.response.data.message
-          if(str.substring(0, 31) === 'User validation failed: email: ') {
-            self.notif = str.slice(31)
-          } else if (str.substring(0, 34) === 'User validation failed: password: ') {
-            self.notif = str.slice(34)
-          } else if (str.substring(0, 30) === 'User validation failed: name: ') {
-            self.notif = str.slice(30)
+        .then(response => {
+          console.log('signup', response)
+          let token = response.data.token
+          localStorage.setItem('token', token)
+          location.reload()
+        })
+        .catch(error => {
+          console.log(error.response)
+          if (!self.email) {
+            self.notif = 'email is required'
+          } else if (!self.password) {
+            self.notif = 'password is required'
+          } else if (!self.name) {
+            self.notif = 'name is required'
           } else {
-            self.notif = str
+            let str = error.response.data.message
+            if (str.substring(0, 31) === 'User validation failed: email: ') {
+              self.notif = str.slice(31)
+            } else if (str.substring(0, 34) === 'User validation failed: password: ') {
+              self.notif = str.slice(34)
+            } else if (str.substring(0, 30) === 'User validation failed: name: ') {
+              self.notif = str.slice(30)
+            } else {
+              self.notif = str
+            }
           }
-        }
-      })
+        })
     }
   },
   watch: {

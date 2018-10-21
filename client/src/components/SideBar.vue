@@ -1,172 +1,197 @@
 <template>
   <div>
-    <div class="blog-card" v-for="article in articles" :key="article._id">
-      <div class="meta">
-        <div class="photo" style="background-image: url(https://storage.googleapis.com/chydlx/codepen/blog-cards/image-1.jpg)"></div>
-        <router-link to='/about' class="details">Read More</router-link>
-      </div>
-      <div class="description">
-        <h1> {{ article.title }} </h1>
-        <h2> {{ article.author.name }} </h2>
-        <p> {{ article.desc.substring(0, 150) }} </p>
-      </div>
+    <div class="sidebar">
+      <h2 v-if="personal">My Article</h2>
+      <h2 v-else>Recent Article</h2>
+      <li v-if="personal"><div class="ui teal labeled icon button" @click="toogleCreate">
+        Create New Article
+      <i class="add icon"></i></div>
+      <div v-if="addModal"><div class="overlay"></div>
+      <article-form class="openform" :addModal="addModal" @addModal="toogleCreate"></article-form></div>
+      </li>
+      <li v-else><div class="ui icon input card">
+        <input type="text" v-model="search" placeholder="Search..." @keyup="getAllArticle(search)">
+        <i class="inverted circular search link icon"></i>
+      </div></li>
+      <ul v-if="personal">
+        <li v-for="article in articles" :key="article._id" v-if="article.author.name === me.name">
+          <router-link :to='{name:"read", params: {id: `${article._id}`}}'>
+            <img :src="article.imageurl" width="150" height="150"/>
+            <h3>{{ article.title }} </h3>
+            <span>{{ timeDifference(article.createdAt) }}</span>
+          </router-link>
+          <div class="ui segment" style="padding-left: 54%; border-color: transparent;">
+            <router-link :to='{name:"edit", params:{id: article._id}}' style="display:inline">
+            <button class="ui teal button">
+              Edit
+            </button>
+            </router-link>
+            <button class="ui red button" @click="deleteArticle(article._id)">Delete</button>
+          </div>
+        </li>
+      </ul>
+      <ul v-else>
+        <li v-for="article in articles" :key="article._id">
+          <router-link :to='{name:"article", params: {id: `${article._id}`}}'>
+            <img :src="article.imageurl" width="150" height="150"/>
+            <h3>{{ article.title }} </h3>
+            <span>{{ timeDifference(article.createdAt) }}</span>
+          </router-link>
+        </li>
+      </ul>
     </div>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
+import ArticleForm from '@/components/ArticleForm.vue'
 
 export default {
   name: 'side-bar',
+  props: ['me', 'personal'],
+  components: {
+    ArticleForm
+  },
   data () {
     return {
       articles: [],
+      search: '',
+      addModal: false,
       baseurl: 'http://localhost:3000'
     }
   },
   methods: {
-    getAllArticle () {
+    toogleCreate () {
+      this.addModal = !this.addModal
+    },
+    getAllArticle (input) {
       let self = this
-      axios (this.baseurl + '/articles')
-      .then(response => {
-        console.log('all article', response.data.articles)
-        self.articles = response.data.articles
-      })
-      .catch(error => {
-        console.log(error.response)
-      })
+      axios(this.baseurl + '/articles')
+        .then(response => {
+          let filter = []
+          if (input) {
+            response.data.articles.forEach(elem => {
+              if ((elem.title.toLowerCase()).match(input.toLowerCase()) || (elem.desc.toLowerCase()).match(input.toLowerCase()) || (elem.author.name.toLowerCase()).match(input.toLowerCase())) {
+                filter.push(elem)
+              }
+            })
+          } else {
+            filter = response.data.articles
+          }
+          filter.forEach(elem => {
+            if (!elem.imageurl) {
+              elem.imageurl = '//placehold.it/150x150'
+            }
+          })
+          self.articles = filter
+        })
+        .catch(error => {
+          console.log(error.response)
+        })
+    },
+    deleteArticle (id) {
+      axios
+        .delete(this.baseurl + `/articles/${id}`, {
+          headers: {
+            token: localStorage.getItem('token')
+          }
+        })
+        .then(response => {
+          this.$router.push('/blog')
+        })
+        .catch(err => {
+          console.log('get error', err.response)
+        })
+    },
+    timeDifference (previous) {
+      let current = new Date()
+      var msPerMinute = 60 * 1000
+      var msPerHour = msPerMinute * 60
+      var msPerDay = msPerHour * 24
+      var msPerMonth = msPerDay * 30
+      var msPerYear = msPerDay * 365
+
+      var elapsed = current - new Date(previous)
+      console.log('sisa', elapsed)
+
+      if (elapsed < msPerMinute) {
+        return Math.round(elapsed / 1000) + ' seconds ago'
+      } else if (elapsed < msPerHour) {
+        return Math.round(elapsed / msPerMinute) + ' minutes ago'
+      } else if (elapsed < msPerDay) {
+        return Math.round(elapsed / msPerHour) + ' hours ago'
+      } else if (elapsed < msPerMonth) {
+        return 'approximately ' + Math.round(elapsed / msPerDay) + ' days ago'
+      } else if (elapsed < msPerYear) {
+        return 'approximately ' + Math.round(elapsed / msPerMonth) + ' months ago'
+      } else {
+        return 'approximately ' + Math.round(elapsed / msPerYear) + ' years ago'
+      }
     }
   },
-  created() {
+  created () {
     this.getAllArticle()
-  },
+  }
 }
 </script>
 
 <style scoped>
 
-.blog-card {
-  display: flex;
-  flex-direction: column;
-  margin: 1rem auto;
-  min-height: 220px;
-  box-shadow: 1px 4px 7px 1px rgba(0, 0, 0, 0.1);
-  margin-bottom: 1.6%;
+.sidebar {
+  text-align: left;
+  margin-right: 1.5%;
+  padding-bottom: 1.5%;
   background: #fff;
-  line-height: 1.4;
-  font-family: sans-serif;
-  border-radius: 5px;
+  color: #475258;
+}
+.sidebar h2 {
+  font-size: 16pt;
+  padding: 0 6% 6%;
+  border-bottom: 1px solid #e1e5e7;
+}
+.sidebar li {
+  padding: 6%;
+}
+.sidebar a {
+  display: block;
+  text-decoration: none;
   overflow: hidden;
-  z-index: 0;
 }
-.blog-card a {
-  color: inherit;
+.sidebar a img {
+  float: left;
+  margin-right: 6%;
+  display: block;
 }
-.blog-card a:hover {
-  color: #5ad67d;
+.sidebar a h3 {
+  color: #475258;
 }
-.blog-card:hover .photo {
-  -webkit-transform: scale(1.3) rotate(3deg);
-          transform: scale(1.3) rotate(3deg);
+.sidebar a span {
+  display: block;
+  margin-top: 6%;
+  color: #919fa7;
+  font-size: 8pt;
 }
-.blog-card .meta {
-  position: relative;
-  z-index: 0;
-  height: 200px;
+i.inverted.bordered.icon, i.inverted.circular.icon {
+  background-color: #03bb91!important;
+  color: #fff!important;
 }
-.blog-card .photo {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
+.openform {
+  position: fixed;
+  z-index: 10000;
+  top: 10%;
+}
+.overlay {
+  position: fixed;
   left: 0;
-  background-size: cover;
-  background-position: center;
-  transition: -webkit-transform .2s;
-  transition: transform .2s;
-  transition: transform .2s, -webkit-transform .2s;
-}
-.blog-card .details {
-  margin: auto;
-  position: absolute;
   top: 0;
-  bottom: 0;
-  left: -100%;
-  transition: left .2s;
-  background: rgba(0, 0, 0, 0.6);
-  color: whitesmoke;
-  padding: 43% 10px;
-  width: 100%;
-  font-size: 18px;
-  cursor: pointer;
+  width: 150%;
+  height: 150%;
+  background: dimgrey;
+  z-index: 1000;
 }
-.blog-card .details a {
-  -webkit-text-decoration: dotted underline;
-          text-decoration: dotted underline;
+ul {
+  height: 70vh;
+  overflow-y: scroll;
 }
-
-.blog-card .description {
-  padding: 1rem;
-  background: #fff;
-  position: relative;
-  z-index: 1;
-}
-
-.blog-card .description h1 {
-  line-height: 1;
-  margin: 0;
-  font-size: 1.7rem;
-}
-.blog-card .description h2 {
-  font-size: 1rem;
-  font-weight: 300;
-  text-transform: uppercase;
-  color: #a2a2a2;
-  margin-top: 5px;
-}
-
-.blog-card p {
-  position: relative;
-  margin: 1rem 0 0;
-}
-.blog-card p:first-of-type {
-  margin-top: 1.25rem;
-}
-.blog-card p:first-of-type:before {
-  content: "";
-  position: absolute;
-  height: 5px;
-  background: #5ad67d;
-  width: 35px;
-  top: -0.75rem;
-  left: 41%;
-  border-radius: 3px;
-}
-.blog-card:hover .details {
-  left: 0%;
-}
-@media (min-width: 640px) {
-  .blog-card {
-    flex-direction: row;
-    max-width: 700px;
-  }
-  .blog-card .meta {
-    flex-basis: 40%;
-    height: auto;
-  }
-  .blog-card .description {
-    flex-basis: 60%;
-  }
-  .blog-card .description:before {
-    content: "";
-    background: #fff;
-    width: 30px;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    z-index: -1;
-  }
-}
-
 </style>

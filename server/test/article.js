@@ -36,6 +36,7 @@ describe("Success Article Case", function() {
   let usertoken, author = '' , articleId = ''
   let title = "Testing",
       desc = "",
+      imageurl = "",
       category = "",
       commentlist = []
   
@@ -78,6 +79,7 @@ describe("Success Article Case", function() {
         title,
         author,
         desc,
+        imageurl,
         category,
         commentlist
       })
@@ -99,6 +101,7 @@ describe("Success Article Case", function() {
       title,
       author,
       desc,
+      imageurl,
       category,
       commentlist
     })
@@ -121,6 +124,7 @@ describe("Success Article Case", function() {
       title,
       author,
       desc,
+      imageurl,
       category,
       commentlist
     })
@@ -134,6 +138,7 @@ describe("Success Article Case", function() {
         title : "Testing 2",
         author,
         desc : "Fill description for second",
+        imageurl : "http://localhost:8080/anything",
         category,
         commentlist
       })
@@ -143,8 +148,7 @@ describe("Success Article Case", function() {
         expect(res.body).to.be.a("object")
         expect(res.body).to.have.property('upd')
         expect(res.body.upd).to.have.property('title')
-        expect(res.body.upd).to.have.property('author')
-        expect(res.body.upd.author).to.equal(author)
+        expect(res.body.upd).to.have.property('desc')
         done()
       })
     })
@@ -155,6 +159,7 @@ describe("Success Article Case", function() {
       title,
       author,
       desc,
+      imageurl,
       category,
       commentlist
     })
@@ -201,6 +206,7 @@ describe("Failed Article Case", function() {
   let usertoken, author = '' , articleId = ''
   let title = "Testing",
       desc = "",
+      imageurl = "",
       category = "",
       commentlist = []
   
@@ -243,6 +249,7 @@ describe("Failed Article Case", function() {
         title,
         author,
         desc,
+        imageurl,
         category,
         commentlist
       })
@@ -258,6 +265,7 @@ describe("Failed Article Case", function() {
       title,
       author,
       desc,
+      imageurl,
       category,
       commentlist
     })
@@ -280,6 +288,7 @@ describe("Failed Article Case", function() {
       title,
       author,
       desc,
+      imageurl,
       category,
       commentlist
     })
@@ -293,6 +302,7 @@ describe("Failed Article Case", function() {
         title : "Testing 2",
         author,
         desc : "Fill description for second",
+        imageurl : "http://localhost:8080/anything",
         category,
         commentlist
       })
@@ -308,6 +318,7 @@ describe("Failed Article Case", function() {
       title,
       author,
       desc,
+      imageurl,
       category,
       commentlist
     })

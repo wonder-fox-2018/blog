@@ -5,6 +5,6 @@ const express = require('express'),
 /* GET articles listing. */
 router
 
-    // .get('/self', isSelf)
+    .get('/self', isSelf)
 
 module.exports = router;

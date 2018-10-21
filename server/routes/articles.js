@@ -1,6 +1,6 @@
 const express = require('express'),
     router = express.Router(),
-    { isLogin, authdulu } = require("../middlewares/auth"),
+    { isLogin } = require("../middlewares/auth"),
     { list, insert, remove, update, getMyArticle, getArticleById } = require('../controllers/articles');
 
 /* GET articles listing. */
@@ -13,8 +13,8 @@ router
     
     .get('/:id', getArticleById)
 
-    .put('/:id', isLogin, authdulu, update)
+    .put('/:id', isLogin, update)
 
-    .delete('/:id', isLogin, authdulu, remove)
+    .delete('/:id', isLogin, remove)
 
 module.exports = router;

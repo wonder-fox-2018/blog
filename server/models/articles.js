@@ -15,9 +15,12 @@ const articleScheme = new Schema(
     desc: {
       type: String
     },
-    category: {
-      type: String
+    imageurl: {
+      type: String,
     },
+    category: [{
+      type: String
+    }],
     commentlist: [{
       type: Schema.Types.ObjectId,
       ref: "Comment"

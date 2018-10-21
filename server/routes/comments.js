@@ -1,6 +1,6 @@
 const express = require('express'),
     router = express.Router(),
-    { isLogin, authdulu } = require("../middlewares/auth"),
+    { isLogin } = require("../middlewares/auth"),
     { list, insert, remove, findById } = require('../controllers/comments');
 
 /* GET articles listing. */
@@ -9,8 +9,8 @@ router
 
     .get('/:artid', list)
 
-    .post('/:artid', isLogin, authdulu, insert)
+    .post('/:artid', isLogin, insert)
 
-    .delete('/:id', isLogin, authdulu, remove)
+    .delete('/:id', isLogin, remove)
 
 module.exports = router;

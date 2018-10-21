@@ -1,12 +1,21 @@
 <template>
   <div cless='entry-modals'>
-    <div class='item' v-if='isLogin === false'>
+    <div class='menu ui' v-if='isLogin === false'>
       <register-modal :switch2reg='switch2reg' @switch2log='switchLog' @closelog='switch2log === false'></register-modal>
       <login-modal :switch2log='switch2log' @switch2reg='switchReg' @closereg='switch2reg === false'></login-modal>
     </div>
-    <div class='item' v-else>
-      <div cless='right item'>
-        <a class='ui inverted button' @click='logout()'>Logout</a>
+    <div v-else>
+      <div class='header'>
+        <div class='profile segment'>
+          <div class='profile__avatar i-block pull-left ui icon'>
+            <i class="icon user inverted"></i>
+          </div>
+          <div class='profile__name i-block'> {{me.name}} </div>
+          <ul class='promenu'>
+            <li class='promenu__item'>Profile</li>
+            <li class='promenu__item' @click='logout()'>Logout</li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>
@@ -18,7 +27,7 @@ import LoginModal from '@/components/LoginModal.vue'
 
 export default {
   name: 'entry-modals',
-  props: ['isLogin'],
+  props: ['isLogin', 'me'],
   components: {
     RegisterModal,
     LoginModal
@@ -41,10 +50,9 @@ export default {
     logout () {
       localStorage.clear()
       location.reload()
+      this.$router.push('/')
       this.$emit('isLogin', false)
     }
-  },
-  created () {
   }
 }
 </script>
@@ -58,6 +66,7 @@ export default {
   flex-direction: row;
   justify-content: center;
   width: 400px;
+  height: fit-content;
   background: #03bb91;
   border-radius: 10px;
   box-shadow: 0px 0px 0px 3000px rgba(52, 56, 60, 0.6);
@@ -120,6 +129,125 @@ export default {
   right: 0;
   margin-right: 20px;
   font-size: larger;
+}
+
+ul, li {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.i-block {
+  display: inline-block;
+}
+
+.pull-left {
+  float: left;
+}
+
+.profile {
+  height: 100%;
+  min-width: 220px;
+  width: auto;
+  padding: 0 10px;
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.profile:after {
+  content: '▾';
+  display: inline-block;
+  position: absolute;
+  right: 0;
+  top: 33%;
+  color: #34383c;
+  -webkit-transform: translate(-10px, -50%);
+          transform: translate(-10px, -50%);
+  transition: -webkit-transform 0.2s;
+  transition: transform 0.2s;
+  transition: transform 0.2s, -webkit-transform 0.2s;
+}
+.profile:hover:after {
+  -webkit-transform: translate(-10px, -50%) rotate(180deg);
+          transform: translate(-10px, -50%) rotate(180deg);
+}
+
+.profile__avatar {
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+  position: relative;
+  top: 50%;
+  margin-top: -17.5px;
+  background: #03bb91;
+  text-align: center;
+}
+
+.profile__name {
+  padding: 0 20px 0 15px;
+  color: #34383c;
+}
+
+.promenu {
+  width: 220px;
+  transition: all 0.2s;
+  position: absolute;
+  right: 0;
+  top: 40px;
+  background: #03bb91;
+  color: #34383c;
+}
+
+.profile .promenu {
+  visibility: hidden;
+  opacity: 0;
+  height: 0;
+}
+.profile:hover .promenu {
+  visibility: visible;
+  opacity: 1;
+  height: 92px;
+  box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
+}
+.profile:hover .promenu .promenu__item {
+  visibility: visible;
+  opacity: 1;
+}
+.profile:hover .promenu .promenu__item:nth-child(1) {
+  transition: opacity 0.2s 0.12s, -webkit-transform 0.2s;
+  transition: opacity 0.2s 0.12s, transform 0.2s;
+  transition: opacity 0.2s 0.12s, transform 0.2s, -webkit-transform 0.2s;
+}
+.profile:hover .promenu .promenu__item:nth-child(2) {
+  transition: opacity 0.2s 0.16s, -webkit-transform 0.2s;
+  transition: opacity 0.2s 0.16s, transform 0.2s;
+  transition: opacity 0.2s 0.16s, transform 0.2s, -webkit-transform 0.2s;
+}
+
+.promenu__item {
+  display: block;
+  height: 45px;
+  line-height: 45px;
+  cursor: pointer;
+  padding: 0 10px 0 15px;
+  visibility: hidden;
+  opacity: 0;
+}
+.promenu__item:hover {
+  background: #f2f2f2;
+  color: #03bb91;
+  -webkit-transform: scale(1.075);
+          transform: scale(1.075);
+  box-shadow: 0 3px 3px rgba(0, 0, 0, 0.1);
+}
+
+@media only screen and (max-width: 767px) {
+  .ui .menu>.ui.container {
+    width: 70%!important;
+  }
 }
 
 </style>

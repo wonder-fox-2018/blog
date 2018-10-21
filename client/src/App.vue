@@ -1,36 +1,73 @@
 <template>
   <div id="app">
-    <div id="nav">
+    <nav id="nav">
       <div class='ui inverted vertical center aligned segment'>
-        <div class='ui container'>
+        <div class='ui'>
           <div class='ui large secondary inverted menu'>
-            <router-link class='item' to='/'><img src='./assets/food-icon-min.png' width='50px' height='40px' alt='home'></router-link>
-            <router-link class='item' to='/about'>About</router-link>
-            <div class='right item'>
-              <entry-modals :isLogin='isLogin'/>
+            <div class='ui container item'>
+              <a style="display: flex; justify-content: center; align-items: center; margin-right: 15px;">
+                <img src="./assets/quill-min.png" width="45" height="45"/>
+                <span style="margin-left: 10px; text-align: left;"><p style="color: #03bb91; margin: 0;">Quill</p>
+                <small style="font-style: italic;">Write to Share</small></span>
+              </a>
+              <router-link class='item' to='/'>Home</router-link>
+              <router-link class='item' to='/blog'>Blog</router-link>
+              <router-link v-if='isLogin' class='item' to='/personal'>Personal</router-link>
             </div>
+            <div class='right item'>
+              <entry-modals class='item' :isLogin='isLogin' :me='me'/>
+            </div>
+            <a class="ui chat-btn" @click="toggleChat"><i class="icon chat teal"></i></a>
+            <chat-modal v-show="chat" style="position: fixed; z-index: 10000; right:3%; bottom: 10%;"></chat-modal>
           </div>
         </div>
       </div>
-    </div>
-    <router-view :isLogin='isLogin'/>
+    </nav>
+    <router-view :isLogin='isLogin' :me='me'/>
   </div>
 </template>
 
 <script>
+import axios from 'axios'
 import EntryModals from '@/components/EntryModals.vue'
+import ChatModal from '@/components/ChatModal.vue'
 
 export default {
-  name: 'home',
+  name: 'app',
   components: {
-    EntryModals
+    EntryModals,
+    ChatModal
   },
   data () {
     return {
-      isLogin: false
+      isLogin: false,
+      me: [],
+      chat: false,
+      baseurl: 'http://localhost:3000'
+    }
+  },
+  methods: {
+    toggleChat () {
+      this.chat = !this.chat
+    },
+    isSelf () {
+      let self = this
+      axios({
+        url: this.baseurl + '/self',
+        headers: {
+          token: localStorage.getItem('token')
+        }
+      })
+        .then(response => {
+          self.me = response.data.user
+        })
+        .catch(error => {
+          console.log(error.response)
+        })
     }
   },
   created () {
+    this.isSelf()
     let token = localStorage.getItem('token')
     if (token) {
       this.isLogin = true
@@ -46,6 +83,10 @@ export default {
   src: url("https://semantic-ui.com/dist/themes/default/assets/fonts/icons.eot?#iefix") format('embedded-opentype'), url("https://semantic-ui.com/dist/themes/default/assets/fonts/icons.woff2") format('woff2'), url("https://semantic-ui.com/dist/themes/default/assets/fonts/icons.woff") format('woff'), url("https://semantic-ui.com/dist/themes/default/assets/fonts/icons.ttf") format('truetype'), url("https://semantic-ui.com/dist/themes/default/assets/fonts/icons.svg#icons") format('svg');
 }
 
+/* ::-webkit-scrollbar {
+  display: none;
+} */
+
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -60,7 +101,6 @@ body {
 
 #nav {
   position: fixed;
-  background: #34383c;
   top: 0;
   left: 0;
   width: 100%;
@@ -69,19 +109,15 @@ body {
 
 #nav a {
   font-weight: bold;
-  color: white;
+  color: #34383c!important;
 }
 
 #nav a:hover, #nav a.router-link-exact-active {
   color: #03bb91!important;
 }
 
-#nav a.router-link-exact-active:first-child {
-  background: #158b70;
-}
-
 .ui.inverted.segment, .ui.primary.inverted.segment {
-  background: transparent;
+  background: white!important;
 }
 
 .nav.segment {
@@ -167,4 +203,33 @@ body {
     font-size: 1.5em;
   }
 }
+
+.ui.teal.button, .ui.teal.buttons .button {
+    background-color: #03bb91;
+    color: #fff;
+    text-shadow: none;
+    background-image: none;
+}
+
+.ui.teal.button:hover, .ui.teal.buttons .button:hover {
+    background-color: #258a73;
+    color: #fff;
+    text-shadow: none;
+}
+
+.chat-btn {
+  background: #e8dede;
+  padding: 16px 15px 16px 18px;
+  position: fixed;
+  z-index: 10000;
+  right:3%;
+  bottom: 3%;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.chat-btn:hover {
+  background: #b1a7a7;
+}
+
 </style>
