@@ -3,6 +3,7 @@ import Router from 'vue-router'
 // import Home from './views/Home.vue'
 import Article from './views/Article.vue'
 import Allarticles from './views/Allarticles.vue'
+import Detailarticle from './views/Detailarticle.vue'
 
 Vue.use(Router)
 
@@ -32,6 +33,12 @@ export default new Router({
         path: '/',
         name: 'Allarticles',
         component: Allarticles
+      },
+      {
+        path: ':id',
+        name: 'id',
+        component: Detailarticle,
+        props: true
       }]
     }
   ]

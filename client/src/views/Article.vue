@@ -7,11 +7,12 @@
 </template>
 <script>
 import Allarticles from '@/views/Allarticles.vue'
+import Detailarticle from '@/views/Detailarticle.vue'
 export default {
   name: 'Article',
   props: ['islogin', 'userbasicinfo', 'listarticles'],
   components: {
-    Allarticles
+    Allarticles, Detailarticle
   },
   watch: {
     islogin (val) {},

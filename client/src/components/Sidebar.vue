@@ -2,7 +2,9 @@
     <div>
         <nav id="sidebar">
             <div class="sidebar-header">
-                <h3>Sidebar</h3>
+                <button type="button" class="btn btn-success">Add Article</button>
+             <br>
+            <br>
             </div>
             <form class="form-inline my-2 my-lg-0">
                 <input class="form-control mr-sm-2" v-model= "keyword" type="text" placeholder="Search" aria-label="Search">
@@ -16,7 +18,7 @@
                 <hr>
                 <ul class="list-unstyled" id="homeSubmenu">
                     <li v-for="(article, index) in listarticles" :key="index">
-                    <button type="button" v-on:click= "getdetailarticles(article._id)" class="btn btn-light">{{ article.description }}</button>
+                     <router-link :to="{ name: 'id', params: { id: article._id }}">{{ article.title }}</router-link>
                     </li>
                 </ul>
             </ul>
@@ -37,9 +39,6 @@ export default {
   methods: {
     searcharticles () {
       this.$emit('searcharticles', this.keyword)
-    },
-    getdetailarticles (input) {
-      console.log('this input---->', input)
     }
   },
   watch: {
