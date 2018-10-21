@@ -88,6 +88,7 @@ describe('Article CRUD', ()=>{
                 .end((err,res)=>{
                     expect(res).to.have.status(200)
                     expect(res.body.data).to.be.an('array')
+                    expect(res.body.data).to.have.lengthOf(1)
                     done()
                 })
         })
@@ -139,6 +140,8 @@ describe('Article CRUD', ()=>{
                 .end((err,res)=>{
                     expect(res).to.have.status(201)
                     expect(res.body.msg).to.equal('Article Deleted')
+                    expect(res.body.data).to.have.a.property('title')
+                    expect(res.body.data).to.have.a.property('description')
                     done()
                 })
         })
@@ -168,6 +171,35 @@ describe('Article CRUD', ()=>{
                         done()
                     })
               })
+        })
+    })
+
+    describe('Negative Test - User try to delete article without login', ()=>{
+        it('should give an error message', (done)=>{
+                  
+            // try to delete article
+            chai.request(app)
+            .delete(`/articles/${articleIdTest}`)
+            .end((err,res)=>{
+                expect(res).to.have.status(401)
+                expect(res.body.msg).to.equal('ERROR TOKEN: User is not authorized')
+                done()
+            })
+        })
+    })
+
+    describe('Negative Test - User try to delete article with invalid token', ()=>{
+        it('should give an error message', (done)=>{
+                  
+            // try to delete article
+            chai.request(app)
+            .delete(`/articles/${articleIdTest}`)
+            .set('token', 'this is invalid token')
+            .end((err,res)=>{
+                expect(res).to.have.status(500)
+                expect(res.body).to.have.property('msg')
+                done()
+            })
         })
     })
 

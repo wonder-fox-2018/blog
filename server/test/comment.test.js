@@ -14,6 +14,7 @@ describe('Commentary CRUD', ()=>{
 
     let tokenTest = ''
     let userIdTest = ''
+    let userNameTest = ''
     let articleIdTest = ''
     let commentIdTest = ''
     beforeEach((done)=>{
@@ -25,6 +26,7 @@ describe('Commentary CRUD', ()=>{
         })
          .then(user =>{
              userIdTest = user._id
+             userNameTest = user.name
             // get token
             jwt.sign({
                 userid: user._id,
@@ -47,7 +49,8 @@ describe('Commentary CRUD', ()=>{
                          Commentary.create({
                              content: 'This is comment',
                              articleid: articleIdTest,
-                             userid: userIdTest
+                             userid: userIdTest,
+                             comentator: userNameTest
                          })
                            .then(comment =>{
                               commentIdTest =  comment._id
@@ -101,6 +104,7 @@ describe('Commentary CRUD', ()=>{
              .end((err,res)=>{
                  expect(res).to.have.status(200)
                  expect(res.body.data).to.be.an('array')
+                 expect(res.body.data).to.have.lengthOf(1)   
                  done()
              })
         })
@@ -115,6 +119,9 @@ describe('Commentary CRUD', ()=>{
                  expect(res).to.have.status(201)
                  expect(res.body.msg).to.equal('Comment Deleted')
                  expect(res.body.data).to.be.an('object')
+                 expect(res.body.data).to.have.a.property('content')
+                 expect(res.body.data).to.have.a.property('articleid')
+                 expect(res.body.data).to.have.a.property('comentator')
                  done()
              })
         })
@@ -144,6 +151,20 @@ describe('Commentary CRUD', ()=>{
                          done()
                      })   
                })
+        })
+    })
+
+    describe('Negative Test - Unauthorized user try to delete comment without login', ()=>{
+        it('should give an error message', (done)=>{
+            chai.request(app)
+            // try to delete comment
+            chai.request(app)
+                .delete(`/comments/${commentIdTest}`)
+                .end((err,res)=>{
+                    expect(res).to.have.status(401)
+                    expect(res.body.msg).to.equal('ERROR TOKEN: User is not authorized')
+                    done()
+                })   
         })
     })
 

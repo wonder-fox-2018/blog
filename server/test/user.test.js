@@ -93,7 +93,38 @@ describe('Get Details User Testing', ()=>{
 })
 
 // Negative Test
-describe('False Email When Register', ()=>{
+describe('Email is not unique Format When Register', ()=>{
+    it('registration should fail and not giving any token', (done)=>{
+        chai.request(app)
+         .post('/user/register')
+         .send({
+             name: 'Gerry',
+             email: 'bamba@bamba.com',
+             password: 'gerry'
+         })
+         .end((err,res)=>{
+             expect(res).to.have.status(201)
+             expect(res.body).to.have.property('msg')
+             expect(res.body).to.have.property('token')
+             chai.request(app)
+              .post('/user/register')
+              .send({
+                name: 'Andi',
+                email: 'bamba@bamba.com',
+                password: 'andi' 
+              })
+              .end((err,res)=>{
+                expect(res).to.have.status(500)
+                expect(res.body).to.have.property('msg')
+                expect(res.body).to.not.have.property('token')
+                done()
+              })
+         })
+    })
+})
+
+
+describe('False Email Format When Register', ()=>{
     it('should give Error Message Please check your email', (done)=>{
         chai.request(app)
          .post('/user/register')
@@ -106,14 +137,48 @@ describe('False Email When Register', ()=>{
              expect(res).to.have.status(400)
              expect(res.body).to.have.property('msg')
              expect(res.body.msg).to.equal('Please check your email')
+             expect(res).to.not.have.property('token')
+             done()
+         })
+    })
+})
+
+
+describe('False Email Format When Login', ()=>{
+    it('should give Error Message Please check your email', (done)=>{
+        chai.request(app)
+         .post('/user/login')
+         .send({
+             email: 'bamba.com',
+             password: 'bamba'
+         })
+         .end((err,res)=>{
+             expect(res).to.have.status(400)
+             expect(res.body).to.have.property('msg')
+             expect(res.body.msg).to.equal('Please check your email')
+             expect(res).to.not.have.property('token')
+             done()
+         })
+    })
+})
+
+describe('Wrong Email when login', ()=>{
+    it('should not give success message ', (done) => {
+        chai.request(app)
+         .post('/user/login')
+         .send({
+             email: 'lala@mail.com',
+             password: 'bamba'
+         })
+         .end((err,res)=>{
+             expect(res).to.have.status(500)
+             expect(res).to.not.have.property('token')
              done()
          })
     })
 
     afterEach((done)=>{
-        User.findOneAndRemove({
-            email : 'bamba@mail.com'
-        })
+        User.remove()
         .then( user =>{
 
             done()
