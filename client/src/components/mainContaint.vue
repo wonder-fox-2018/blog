@@ -23,7 +23,7 @@
           <span></span>
       </div>
       <div class='col-sm-4'>
-        <span style='color: blue;'><i class="fa fa-share-alt" aria-hidden="true"></i> Share</span> 
+        <span style='color: blue;' @click='showShare'><i class="fa fa-share-alt" aria-hidden="true"></i> Share</span> 
       </div>
       <div class='col-sm-4'>
         <span style='color: brown;' @click='showCommentsForm(article._id)'><i class="fa fa-comments" aria-hidden="true"></i> Add Comment &nbsp;&nbsp;</span>
@@ -31,6 +31,7 @@
       </div>
     </div>
     <comments></comments>
+    <share v-if='shareOpen' :article='article' :user='article.author.username'></share>
     <div v-if='showGlobalChat'>
       <input type='text' placeholder='Enter the message here...' v-model='messageChat' @keyup.enter='submitChat' />
       <button @click='submitChat'>Send Message</button>
@@ -113,6 +114,7 @@
 
 <script>
   import comments from '@/components/comments.vue';
+  import share from '@/components/share.vue'
   import db from '../assets/config.js'
 
   export default {
@@ -126,11 +128,12 @@
         messageChat:'',
         removeList: '',
         comment: '',
-        allComments: []
+        allComments: [],
+        shareOpen: false
       }
     },
     components: {
-      comments
+      comments, share
     },
     methods: {
       getArticle(id) {
@@ -235,6 +238,9 @@
         }).catch((err) => {
           console.log(err)
         });
+      },
+      showShare() {
+        this.shareOpen = true
       }
     },
     mounted() {
@@ -242,6 +248,7 @@
     },
     created() {
       this.refreshLobby()
+      this.showComments = false
     },
     computed: {
       getParamsId: function() {
