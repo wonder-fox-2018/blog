@@ -129,8 +129,9 @@ export default {
       })
         .then(comment => {
           self.newcomment = ''
-          this.$router.push({ name: 'home' })
-          // this.$router.push({ path: `/article/${self.id}` })
+          self.getdetailarticle()
+          // this.$router.push({ name: 'home' })
+          this.$router.push({ path: `/article/${self.id}` })
         })
         .catch(error => {
           console.log('ERROR Add Comment ', error)
@@ -146,8 +147,9 @@ export default {
         }
       })
         .then(comment => {
-          this.$router.push({ name: 'home' })
-          // this.$router.push({ path: `/article/${self.id}` })
+          self.getdetailarticle()
+          // this.$router.push({ name: 'home' })
+          this.$router.push({ path: `/article/${self.id}` })
         })
         .catch(error => {
           console.log('ERROR Delete Comment ', error)
@@ -159,6 +161,7 @@ export default {
   },
   watch: {
     id (val) {
+      console.log('detail id----', val)
       this.getdetailarticle()
     },
     islogin (val) {},

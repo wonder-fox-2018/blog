@@ -16,6 +16,7 @@
         </div>
         <div class="col-md-10">
           <router-view
+          @updatedlistarticles="getupdatedlistarticles"
           :token="token"
           :islogin="islogin"
           :getallarticle="getallarticle"
@@ -48,7 +49,8 @@ export default {
       islogin: false,
       token: '',
       userbasicinfo: {},
-      keyword: ''
+      keyword: '',
+      updateok: false
     }
   },
   methods: {
@@ -74,6 +76,9 @@ export default {
     },
     getuserbasicinfo (val) {
       this.userbasicinfo = val
+    },
+    getupdatedlistarticles (val) {
+      this.getallarticle()
     },
     searcharticles (val) {
       this.keyword = val
@@ -105,7 +110,11 @@ export default {
     islogin (val) {},
     userbasicinfo (val) {},
     keyword (val) {},
-    listarticles (val) {}
+    listarticles (val) {},
+    updateok (val) {
+      this.getallarticle()
+      // this.updateok = false
+    }
   }
 }
 </script>

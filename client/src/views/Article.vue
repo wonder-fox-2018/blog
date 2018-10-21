@@ -5,7 +5,8 @@
      :getallarticle="getallarticle"
      :islogin="islogin"
      :userbasicinfo="userbasicinfo"
-     :listarticles="listarticles"></router-view>
+     :listarticles="listarticles"
+     @updatedlistarticles="getupdatedlistarticles"></router-view>
    </div>
 </template>
 <script>
@@ -19,10 +20,27 @@ export default {
   components: {
     Allarticles, Detailarticle, Addarticle, Editarticle
   },
+  data () {
+    return {
+      updatedlistarticles: []
+    }
+  },
+  methods: {
+    getupdateok (val) {
+      this.updateok = val
+    },
+    getupdatedlistarticles (val) {
+      this.updatedlistarticles = val
+    }
+  },
   watch: {
     islogin (val) {},
     userbasicinfo (val) {},
-    listarticles (val) {}
+    listarticles (val) {},
+    getallarticle (val) {},
+    updatedlistarticles (val) {
+      this.$emit('updatedlistarticles', val)
+    }
   }
 }
 </script>

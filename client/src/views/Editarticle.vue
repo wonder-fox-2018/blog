@@ -5,12 +5,12 @@
         <div class="form-group">
             <label for="exampleInputEmail1">Title</label>
             <input type="text" class="form-control"
-             v-bind:value="detailarticletitle"
+             v-model="detailarticletitle"
              aria-describedby="emailHelp" placeholder="Enter Title">
         </div>
         <div class="form-group">
             <label for="exampleInputPassword1">Description</label>
-            <textarea type="text" v-bind:value="detailarticledescription"
+            <textarea type="text" v-model="detailarticledescription"
              class="form-control" aria-describedby="emailHelp"
              placeholder="Enter Description">
              </textarea>
@@ -30,10 +30,24 @@ export default {
     return {
       detailarticletitle: '',
       detailarticleauthor: '',
-      detailarticledescription: ''
+      detailarticledescription: '',
+      updatedlistarticles: []
     }
   },
   methods: {
+    getupdatedlistarticles () {
+      let self = this
+      axios({
+        method: 'GET',
+        url: 'http://localhost:3009/articles/lists'
+      })
+        .then(articles => {
+          self.updatedlistarticles = articles.data.data
+        })
+        .catch(error => {
+          console.log('ERROR Get List Articles ', error)
+        })
+    },
     getdetailarticle () {
       let self = this
       axios({
@@ -52,6 +66,7 @@ export default {
         })
     },
     editarticle () {
+      // console.log('EDIT-------------', this.id)
       let self = this
       axios({
         method: 'PUT',
@@ -65,7 +80,11 @@ export default {
         }
       })
         .then(article => {
+          self.getupdatedlistarticles()
+          console.log('UPDATED LIST -----', self.updatedlistarticles)
+          this.$emit('updatedlistarticles', self.updatedlistarticles)
           this.$router.push({ path: `/article/${self.id}` })
+          // this.$router.push({ name: 'home' })
         })
         .catch(error => {
           console.log('ERROR Edit article ', error)
