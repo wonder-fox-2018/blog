@@ -65,13 +65,22 @@ export default {
                 console.log(err)
             })
 
-        }
+        },
+        checkToken() {
+            let token = localStorage.getItem('token')
+            this.token = token
+            
+            if(token == null){
+                this.$router.push('/')
+            } 
+        },
     },
     created() {
         this.getMyArticle()
     },
     mounted(){
         this.getMyArticle()
+        this.checkToken()
     },
     watch : {
         triggerChange : function(val) {

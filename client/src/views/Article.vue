@@ -34,7 +34,7 @@
           <hr>
 
           <!-- Comments Form -->
-          <div class="card my-4">
+          <div class="card my-4" v-if="commentform === true">
             <h5 class="card-header">Leave a Comment:</h5>
             <div class="card-body">
                 <div class="form-group">
@@ -82,7 +82,8 @@ export default {
             inputcomment : '',
             comments : '',
             triggerevent : '',
-            token : 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1YmM4NDIzOGZmZWQ2MzY3Zjc0OGEwZGMiLCJuYW1lIjoic3VwZXJhZG1pbiIsImVtYWlsIjoic3VwZXJhZG1pbkBtYWlsLmNvbSIsImlhdCI6MTU0MDEwNTE1OX0.wHKGWFQkuOD4r9J5tcVvI0ARBr-xJ7xZP4vCEFRzXTs'
+            token : localStorage.getItem('token'),
+            commentform : false
         }
     },
     methods : {
@@ -124,15 +125,33 @@ export default {
                 .catch((err)=>{
                     console.log(err)
                 })
+        },
+        checkToken(){
+            let token = localStorage.getItem('token')
+            if(token){
+                this.token = token
+                this.commentform = true
+            }
+
         }
     },
     created () {
         this.getArticle(this.$route.params.articleId)
-        console.log('masuk ke created')
+        this.checkToken()
+    },
+    mounted (){
+        this.checkToken()
     },
     watch : {
         triggerevent : function(val) {
             this.getArticle(this.$route.params.articleId)
+        },
+        token : function(val) {
+            if(token === null){
+                this.commentform = false
+            }else{
+                this.commentform = true
+            }
         }
     }
 }
