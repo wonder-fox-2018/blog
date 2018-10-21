@@ -7,6 +7,20 @@
                     <button type="button" class="btn btn-primary">{{ detailarticle.title }}</button>
                     <br>
                     <hr>
+                    <div class="row">
+                      <div class="col-md-4">
+                        <a class="linkedin" v-on:click.prevent="openLinkedin">
+                        <i class="fa fa-linkedin"></i></a>
+                      </div>
+                      <div class="col-md-4">
+                        <a class="twitter" v-on:click.prevent="openTwitter">
+                        <i class="fa fa-twitter"></i></a>
+                      </div>
+                      <div class="col-md-4">
+                        <a class="googleplus" v-on:click.prevent="openGplus">
+                        <i class="fa fa-google-plus"></i></a>
+                      </div>
+                    </div>
                     <div v-if="token !== null && token !== '' && detailarticle.author._id === userbasicinfo.userid">
                         <router-link :to="{name: 'editarticle', params: {id: id }}">
                           <button type="button" class="btn btn-warning">
@@ -70,6 +84,7 @@
 </template>
 
 <script>
+/* eslint-disable */
 import axios from 'axios'
 export default {
   name: 'Detailarticle',
@@ -82,6 +97,31 @@ export default {
     }
   },
   methods: {
+    openTwitter() {
+      window.open(
+        `https://twitter.com/intent/tweet?status=${
+          this.twit ? this.twit : this.detailarticle.title
+        }`,
+        "popup",
+        "width=500,height=300"
+      );
+    },
+    openGplus() {
+      window.open(
+        `https://plus.google.com/share?url=${this.detailarticle.title}`,
+        "popup",
+        "width=400,height=400"
+      );
+    },
+    openLinkedin() {
+      window.open(
+        `https://www.linkedin.com/shareArticle?mini=true&url=${
+          this.detailarticle.title
+        }&title=${this.detailarticle.title}`,
+        "popup",
+        "width=600,height=600"
+      );
+    },
     getdetailarticle () {
       let self = this
       axios({
