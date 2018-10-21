@@ -18,8 +18,19 @@
               <a class="nav-link" href="#">About</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Services</a>
+              <a class="nav-link" href="#">Blog</a>
             </li>
+            <div class="dropdown">
+              <a class="btn nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Blog
+              </a>
+
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                <a class="dropdown-item" href="">My Profile</a>
+                <a class="dropdown-item" href="">My Article</a>
+                <a class="dropdown-item" href="">Create Article</a>
+              </div>
+            </div>
             <li class="nav-item">
               <a class="nav-link" href="#">Contact</a>
             </li>
