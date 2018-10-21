@@ -19,22 +19,23 @@
       <div class="cardfooter">
         <div> Like </div>
         <div> Unlike </div>
-        <div id="cmtbtn" @click="$router.push({name: 'articledetail',params: {id: article._id}})" > Comment ( {{comments.length}} ) </div>
-        <div v-if="article.author._id == user._id" > Edit </div>
+        <div id="cmtbtn" @click="$router.push({name: 'articledetail',params: {id: article._id}}); goComment()" > Comment ( {{comments.length}} ) </div>
+        <div v-if="article.author._id == user._id"> Edit </div>
         <div v-if="article.author._id == user._id"> Delete </div>
       </div>
       <div v-if="detail" class="commentbar">
         <div class='articlecomments'>
           <div class="usercomment" v-for="comment in comments" :key="comment._id">
-            <h5> {{ comment.user.firstName+' '+comment.user.lastName }} : {{ comment.comment }} </h5>
+            <h6> " {{ comment.comment }} " </h6>
+            <h5> - {{ comment.user.firstName+' '+comment.user.lastName }} <br> <i> at {{ formatthis(comment.createdAt) }} </i></h5>
           </div>
         </div>
-         <div class="commentarea">
-           <VueForm :schema='schema' :model='model'></VueForm>
-         </div>
-         <div  style="align-self:start;">
-            <button type="button" @click="postComment()" class="btn btn-primary">Post Comment</button>
-         </div>
+        <div class="commentarea">
+          <VueForm :schema='schema' :model='model'></VueForm>
+        </div>
+        <div style="align-self:start;">
+          <button type="button" @click="postComment()" class="btn btn-primary">Post Comment</button>
+        </div>
       </div>
     </div>
   </section>
@@ -44,70 +45,71 @@
   import VueForm from "vue-form-generator";
   import axios from 'axios';
   import $ from 'jquery';
-
+  import moment from 'moment';
+  
   export default {
     name: 'articlecard',
-    props: ['article','articles', 'detail','user'],
-    components : {
-      VueForm : VueForm.component
+    props: ['article', 'articles', 'detail', 'user'],
+    components: {
+      VueForm: VueForm.component
     },
     created() {
       this.getComments()
     },
-    mounted(){
-      $(document).ready(function () {
-        $('#cmtbtn').click(function () { 
-          setInterval(()=>{
-            $('#comment').focus();
-          },100)
-        });
-      });
+    mounted() {
+  
     },
     data() {
       return {
-        comments : [],
-
-        model : {
-          comment : ''
+        comments: [],
+  
+        model: {
+          comment: ''
         },
-
-        schema : {
-          fields : [{
+  
+        schema: {
+          fields: [{
             type: 'textArea',
-            model : 'comment',
-            placeholder : 'Your Comment ...',
+            model: 'comment',
+            placeholder: 'Your Comment ...',
             rows: 3,
             max: 1000,
-            hint : 'max 1000 char',
-            validator : VueForm.validators.string
+            hint: 'max 1000 char',
+            validator: VueForm.validators.string
           }]
         }
       }
     },
     methods: {
-      postComment(){
-        axios.post(`http://localhost:3000/comments/${this.article._id}`,{
-          user : this.user._id,
-          comment : this.model.comment
-        })
-        .then(() => {
-          this.getComments()
-          this.model.comment = ''
-        }).catch((err) => {
-          console.log(err);
-        });
+      postComment() {
+        axios.post(`http://localhost:3000/comments/${this.article._id}`, {
+            user: this.user._id,
+            comment: this.model.comment
+          })
+          .then(() => {
+            this.getComments()
+            this.model.comment = ''
+          }).catch((err) => {
+            console.log(err);
+          });
       },
-      getComments(){
+      getComments() {
         axios.get(`http://localhost:3000/comments/${this.article._id}`)
-        .then((result) => {
-          this.comments = result.data
-        }).catch((err) => {
-          console.log(err);
-        });
+          .then((result) => {
+            this.comments = result.data
+          }).catch((err) => {
+            console.log(err);
+          });
       },
-
+      formatthis(date) {
+        return moment(date).format('DD MMM YY - hh:mm')
+      },
+      goComment() {
+        $('#comment').focus();
+      }
+  
     },
-    watch : {
+    watch: {
       '$route.params.id': function(newVal) {
         this.param = newVal
         this.article = this.articles.filter(item => {
@@ -126,20 +128,20 @@
   .commentbar {
     /* width: 100%; */
     display: grid;
-    grid-template-rows: 1fr minmax(30px,100px) minmax(20px,50px);
+    grid-template-rows: 1fr minmax(30px, 100px) minmax(20px, 50px);
     justify-items: center;
     align-items: center;
     background-color: #fff;
     box-shadow: 0 0.1875rem 1.5rem rgba(0, 0, 0, 0.2);
     padding-top: 15px;
   }
-
-  .articlecomments{
+  
+  .articlecomments {
     width: 100%;
     max-width: 90%;
     padding-top: 20px;
   }
-
+  
   .commentarea {
     width: 100%;
     max-width: 90%;
@@ -183,6 +185,18 @@
     display: grid;
     justify-items: center;
     align-items: center;
+  }
+  
+  i {
+    font-size: 13px;
+  }
+  
+  h6 {
+    text-align: center;
+  }
+  
+  h5 {
+    text-align: right;
   }
   
   .cardfooter div:hover {

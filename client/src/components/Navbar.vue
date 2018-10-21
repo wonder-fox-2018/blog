@@ -8,15 +8,17 @@
             <searcbar :schema='schema' :model='model'></searcbar>
           </div>
           <div v-if="user">
-            <router-link to="/creator" :getArticles="getArticles">CREATE</router-link>
+            <router-link to="/creator" :getArticles="getArticles">+ NEW ARTICLE</router-link>
           </div>
         </div>
   
-        <div class="logoSect">H8 </div>
+        <div class="logoSect">
+          <router-link to="/" :getArticles="getArticles">H8LOG</router-link>
+        </div>
   
         <div class="linkBar">
           <div>
-            <router-link to="/" :getArticles="getArticles">HOME</router-link>
+            <router-link to="/" :getArticles="getArticles">ARTICLES</router-link>
           </div>
           <div>
             <router-link to="/about">ABOUT</router-link>
@@ -26,7 +28,7 @@
           </div>
           <div>
             <router-link to="/login" v-if="!user" :setUser='setUser'>SIGN IN</router-link>
-            <div v-if="user" v-on:click="signOut">SIGN OUT</div>
+            <div v-if="user" v-on:click="signOut">LOG OUT</div>
           </div>
         </div>
   
@@ -38,10 +40,11 @@
 <script lang="js">
   import $ from "jquery";
   import VueForm from 'vue-form-generator';
+  import axios from 'axios'
   
   export default {
     name: 'navbar',
-    props: ['setUser', 'setMessage', 'user', 'articles', 'getArticles'],
+    props: ['setUser', 'setMessage', 'user', 'articles', 'getArticles', 'setFilteredArticles'],
     components: {
       "searcbar": VueForm.component
     },
@@ -60,8 +63,17 @@
             buttons: [{
               classes: 'btn',
               label: 'Search',
-              onclick: function(model) {
-                console.log(model);
+              onclick: (model)=> {
+                if(model.searchinput){
+                  this.getSearch()
+                }
+              }
+            },{
+              classes: 'btn-clear',
+              label: 'Clear',
+              onclick: ()=> {
+                this.model.searchinput = ''
+                this.getArticles()
               }
             }]
           }]
@@ -70,6 +82,19 @@
     },
   
     methods: {
+      getSearch(){
+        this.$router.push('/')
+        let self = this
+        axios.post('http://localhost:3000/articles/search', {
+                    searchinput : this.model.searchinput
+                  })
+                  .then((result) => {
+                    self.setFilteredArticles(result.data)
+                  })
+                  .catch(function(error) {
+                    console.log(error);
+                  })
+      },
       signOut() {
         localStorage.clear()
         this.setUser('')
@@ -134,8 +159,8 @@
   
   .linkBar div:hover {
     margin-top: -6px;
-    transition: .3s;
-    text-shadow: 3px 3px 2px #FFF9FB;
+    transition: 0.3s;
+    text-shadow: 3px 3px 2px #fff9fb;
     cursor: pointer;
   }
   
@@ -153,9 +178,8 @@
     grid-column: 1/4;
     margin: 15px 10px 0 10px;
   }
-
+  
   .linkBar .searchbar:hover {
     margin: 15px 10px 0 10px;
   }
-
 </style>

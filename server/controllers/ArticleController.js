@@ -4,7 +4,7 @@ module.exports = {
 
     list: function (req, res) {
         ArticleModel.find().populate('author comments').sort('-createdAt').exec()
-        .then((Articles) => {
+            .then((Articles) => {
                 return res.json(Articles);
             }).catch((err) => {
                 return res.status(500).json({
@@ -35,7 +35,7 @@ module.exports = {
     },
 
     create: function (req, res) {
-    
+
         var Article = new ArticleModel({
             title: req.body.title,
             content: req.body.content,
@@ -43,7 +43,7 @@ module.exports = {
             comments: []
 
         });
-        
+
         Article.save(function (err, Article) {
             if (err) {
                 return res.status(500).json({
@@ -53,6 +53,24 @@ module.exports = {
             }
             return res.status(201).json(Article);
         });
+    },
+
+    search: function (req, res) {
+        ArticleModel.find({
+                $or: [{
+                        title: new RegExp(req.body.searchinput, 'i')
+                    },
+                ]
+            })
+            .populate('author comments').sort('-createdAt').exec()
+            .then(data => {
+                res.status(200).json(data)
+            })
+            .catch(err => {
+                res.status(500).json({
+                    error: err.message
+                })
+            })
     },
 
     update: function (req, res) {

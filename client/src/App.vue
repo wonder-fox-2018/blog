@@ -1,7 +1,7 @@
 <template>
   <div id="app">
   
-    <navbar :setUser="setUser" :setMessage="setMessage" :getArticles="getArticles" :user='user' :articles="articles"></navbar>
+    <navbar :setUser="setUser" :setMessage="setMessage" :setFilteredArticles='setFilteredArticles' :getArticles="getArticles" :user='user' :articles="articles"></navbar>
     <transition name="fade" mode="out-in">
       <router-view :setUser="setUser" :user='user' :articles="articles" :getArticles="getArticles"></router-view>
     </transition>
@@ -24,6 +24,7 @@
       return {
         user: '',
         message: '',
+        filteredArticles : '',
         articles: '',
         token: localStorage.getItem('token') || ''
       }
@@ -35,8 +36,19 @@
       if (this.token) {
         this.getUserByToken(this.token)
       }
+      if (this.filteredArticles){
+        this.articles = this.filteredArticles
+      }
+    },
+    watch : {
+      filteredArticles: function(newval){
+        this.articles = newval
+      }
     },
     methods: {
+      setFilteredArticles : function(val){
+        this.filteredArticles = val
+      },
       setUser: function(val) {
         this.user = val
       },
