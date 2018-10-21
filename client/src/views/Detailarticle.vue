@@ -89,7 +89,6 @@ export default {
         url: `http://localhost:3009/articles/${self.id}`
       })
         .then(article => {
-          // console.log('DETAIL ARTICLE-----', article.data.data)
           let detailarticle = article.data.data
           self.authorname = detailarticle.author.name
           self.detailarticle = article.data.data
@@ -130,7 +129,6 @@ export default {
         .then(comment => {
           self.newcomment = ''
           self.getdetailarticle()
-          // this.$router.push({ name: 'home' })
           this.$router.push({ path: `/article/${self.id}` })
         })
         .catch(error => {
@@ -148,7 +146,6 @@ export default {
       })
         .then(comment => {
           self.getdetailarticle()
-          // this.$router.push({ name: 'home' })
           this.$router.push({ path: `/article/${self.id}` })
         })
         .catch(error => {
@@ -161,7 +158,6 @@ export default {
   },
   watch: {
     id (val) {
-      console.log('detail id----', val)
       this.getdetailarticle()
     },
     islogin (val) {},

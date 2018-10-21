@@ -55,7 +55,6 @@ export default {
         url: `http://localhost:3009/articles/${self.id}`
       })
         .then(article => {
-          // console.log('Edit ARTICLE-----', article.data.data)
           let detailarticle = article.data.data
           self.detailarticletitle = detailarticle.title
           self.detailarticleauthor = detailarticle.author.name
@@ -81,10 +80,8 @@ export default {
       })
         .then(article => {
           self.getupdatedlistarticles()
-          console.log('UPDATED LIST -----', self.updatedlistarticles)
           this.$emit('updatedlistarticles', self.updatedlistarticles)
           this.$router.push({ path: `/article/${self.id}` })
-          // this.$router.push({ name: 'home' })
         })
         .catch(error => {
           console.log('ERROR Edit article ', error)
