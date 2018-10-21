@@ -148,6 +148,7 @@ export default {
         })
     },
     registerUser () {
+      console.log('REGISTER OK')
       let self = this
       axios({
         method: 'POST',

@@ -27,7 +27,33 @@
                     <br>
                     {{ detailarticle.description }}
                     <hr>
-                    <p class="card-text">Comments: </p>
+                    <p class="card-text"><b>Comments: </b></p>
+                    <hr>
+                    <div v-if="detailarticle.listcomments.length !== 0">
+                      <div class="row"
+                        v-for="(comment,index) in detailarticle.listcomments" :key="index">
+                          <div class="col-md-2">
+                            <span class="badge badge-secondary">{{ comment.comentator }} </span>
+                          </div>
+                          <div class="col-md-7">
+                            <p>{{ comment.content }}</p>
+                          </div>
+                      </div>
+                    </div>
+                    <div v-else>
+                      <p>No comment available</p>
+                    </div>
+                    <hr>
+                    <div v-if= "token !== '' && token !== null ">
+                      <h4>Add comment</h4>
+                        <form>
+                            <div class="form-group">
+                                <label for="exampleInputPassword1">Comment</label>
+                                <textarea class="form-control" rows="5" id="comment" placeholder="Add feedback" v-model= "newcomment"></textarea>
+                            </div>
+                            <button type="button" class="btn btn-primary" v-on:click= "addcomment()">Add Comment</button>
+                        </form>
+                    </div>
                 </div>
             </div>
             <br>
@@ -43,7 +69,8 @@ export default {
   data () {
     return {
       detailarticle: {},
-      authorname: ''
+      authorname: '',
+      newcomment: ''
     }
   },
   methods: {
@@ -77,6 +104,27 @@ export default {
         })
         .catch(error => {
           console.log('ERROR Delete Article ', error)
+        })
+    },
+    addcomment () {
+      let self = this
+      axios({
+        method: 'POST',
+        url: 'http://localhost:3009/comments',
+        headers: {
+          token: self.token
+        },
+        data: {
+          content: self.newcomment,
+          articleid: self.id
+        }
+      })
+        .then(comment => {
+          self.newcomment = ''
+          this.$router.push({ path: `/article/${self.id}` })
+        })
+        .catch(error => {
+          console.log('ERROR Add Comment ', error)
         })
     }
   },
