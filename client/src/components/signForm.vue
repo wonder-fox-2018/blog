@@ -7,19 +7,18 @@
     </div>
     <div id='signBackdrop' v-if='openSignModal'></div>
     <div id='signModal' v-if='openSignModal'>
-      <button @click='signModal' style="background: transparent; color: white; font-size: 30px; border: none; cursor: pointer; outline: none"><i class="far fa-times-circle"></i></button><br><br>
+      <button class='mt-4' @click='signModal' style="background: transparent; color: white; font-size: 30px; border: none; cursor: pointer; outline: none"><i class="far fa-times-circle"></i></button><br><br>
       <div v-if='isSigningUp'><input class='mx-2' v-model='name' type="text" placeholder="Name" @keyup.enter="onEnter"><br></div>
       <div v-else><input id='phInput' readonly></div>
       <input class='mx-2' v-model='email' type="email" placeholder="Email" @keyup.enter='onEnter'><br>
       <input class='mx-2' v-model='password' type="password" placeholder="Password" @keyup.enter="onEnter"><br>
       <div id='signBtn'>
-        <button @click='signin()'><strong>Sign In</strong></button>
-        <span class="unselectable"> | </span>
-        <button @click='signup()'><strong>Sign Up</strong></button>
+        <button @click='signin()' :class="{ active: !isSigningUp }"><strong>Sign In</strong></button>
+        <!-- <span class="unselectable"> | </span> -->
+        <button @click='signup()' :class="{ active: isSigningUp }" ><strong>Sign Up</strong></button>
       </div>
-      <br>
-      <div v-if="notice.length > 0" class='unselectable' id='notice'>{{ notice }}</div>
-      <div v-else class="placeholder">placeholder</div>
+      <div v-if="notice.length > 0" class='unselectable mt-4 mb-4' id='notice'><b>{{ notice }}</b></div>
+      <div v-else class="placeholder mt-4 mb-4">placeholder</div>
     </div>
   </div>
 </template>

@@ -59,7 +59,7 @@ html, body
     height: 100%;
     top: 0;
     left: 0;
-    background-color: rgba(66, 185, 131, 0.9);
+    background-color: rgba(0, 0, 0, 0.5);
     z-index: 10000;
 }
 
@@ -68,19 +68,19 @@ html, body
     width: 20%;
     top: 25%;
     left: 40%;
-    background-color: transparent;
+    background-color: #42b983;
     z-index: 11000;
+    border-radius: 50px;
 }
 
 #signModal input {
     border: none;
     margin: 1vh 0;
-    width: 100%;
-    background: transparent;
-    color: white;
+    width: 80%;
     font-size: 20px;
     padding: 10px 20px;
     font-family: 'Roboto', sans-serif;
+    text-align: center;
 }
 
 #signModal input:focus, #signBtn button:focus, .signModalBtn:focus {
@@ -99,10 +99,17 @@ html, body
     color: white;
     border: none;
     cursor: pointer;
+    padding: 0px 20px;
+    margin: 0px 10px;
+}
+
+#signBtn button.active {
+    border-bottom: 3px solid white;
 }
 
 #phInput {
     cursor: default;
+    background: transparent;
 }
 
 .signModalBtn {
