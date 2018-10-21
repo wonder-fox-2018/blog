@@ -38,6 +38,14 @@
                           <div class="col-md-7">
                             <p>{{ comment.content }}</p>
                           </div>
+                          <div class="col-md-1">
+                             <div v-if= "comment.userid == userbasicinfo.userid && token !== '' && token !== null">
+                              <span type="button" class="btn btn-danger" v-on:click= "deletecomment(comment._id)">Delete</span>
+                            </div>
+                          </div>
+                          <br>
+                          <br>
+                          <hr>
                       </div>
                     </div>
                     <div v-else>
@@ -121,10 +129,28 @@ export default {
       })
         .then(comment => {
           self.newcomment = ''
-          this.$router.push({ path: `/article/${self.id}` })
+          this.$router.push({ name: 'home' })
+          // this.$router.push({ path: `/article/${self.id}` })
         })
         .catch(error => {
           console.log('ERROR Add Comment ', error)
+        })
+    },
+    deletecomment (input) {
+      let self = this
+      axios({
+        method: 'DELETE',
+        url: `http://localhost:3009/comments/${input}`,
+        headers: {
+          token: self.token
+        }
+      })
+        .then(comment => {
+          this.$router.push({ name: 'home' })
+          // this.$router.push({ path: `/article/${self.id}` })
+        })
+        .catch(error => {
+          console.log('ERROR Delete Comment ', error)
         })
     }
   },
