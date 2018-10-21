@@ -8,7 +8,7 @@
                 <p class="card-text" v-html="article.content.slice(0, 150) + ' ...'"></p>
                 <router-link :to="`/article/${article._id}`" class="btn btn-primary ml-2">Read </router-link> 
                 <router-link :to="`/article/${article._id}`" class="btn btn-success ml-2">Edit </router-link>
-                <router-link :to="`/article/${article._id}`" class="btn btn-danger ml-2">Delete </router-link>
+                <button @click="deleteArticle(article._id)" class="btn btn-danger ml-2">Delete </button>
             </div>
             <div class="card-footer text-muted">
                 <div v-html="'Posted on ' + article.createdAt.slice(0, 10)"></div>
@@ -26,7 +26,8 @@ export default {
     name : 'myarticle',
     data () {
         return {
-            myarticle : ''
+            myarticle : '',
+            triggerChange : ''
         }
     },
     methods : {
@@ -46,6 +47,24 @@ export default {
             .catch((err)=>{
                 console.log(err)
             })
+        },
+        deleteArticle(id){
+            let self = this
+
+            axios({
+                method : 'DELETE',
+                url : `${config.port}/articles/${id}`,
+                headers : {
+                    token : localStorage.getItem('token')
+                }
+            })
+            .then((response)=>{
+                self.triggerChange = response.data
+            })
+            .catch((err)=>{
+                console.log(err)
+            })
+
         }
     },
     created() {
@@ -53,7 +72,13 @@ export default {
     },
     mounted(){
         this.getMyArticle()
+    },
+    watch : {
+        triggerChange : function(val) {
+            this.getMyArticle()
+        }
     }
+    
 }
 </script>
 
