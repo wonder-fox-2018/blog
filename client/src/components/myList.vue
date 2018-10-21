@@ -16,17 +16,23 @@
                 <button class="btn btn-primary"  @click="detailArticle(value._id)">Read More</button>
                 </div>
                 <div class="py-3">
+                  <button type="button" class="btn btn-secondary my-2 my-sm-0" data-toggle="modal" data-target="#modalEdit">Edit</button>
                   <button class="btn btn-secondary" @click="deleteArticle(value._id)">Delete</button>
                 </div>
             </div>
           </div>
         </div>
+      <modalEdit :id="value._id" :getmylist="getMyList"></modalEdit>
     </div>
   </div>
 </template>
 
 <script>
+import modalEdit from '@/components/modalEdit.vue'
 export default {
+  components :{
+    modalEdit
+  },
   props : ['article', 'category', 'updatecomponent'],
   data() {
     return {

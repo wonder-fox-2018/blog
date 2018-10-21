@@ -7,8 +7,8 @@
                     <div class="col-12 col-md-6 col-lg-3">
                         <div class="kilimanjaro_part">
                             <h5>About Us</h5>
-                            <p>It includes rich features & contents. It's designed & developed based on One Page/ Multi-page Layout,blog themes,world press themes and blogspot. You can use any layout from any demo anywhere.</p>
-                            <p>webblogoverflow is completely creative, clean & 100% responsive website. Put your business into next level with Webublogoverflow.</p>
+                            <p>Fullstack Javascript</p>
+                            <p>Pro Web Dev</p>
                         </div>
                         <div class="kilimanjaro_part m-top-15">
                             <h5>Social Links</h5>
@@ -22,20 +22,6 @@
                         </div>
                     </div>
                     <div class="col-12 col-md-6 col-lg-3">
-                        <div class="kilimanjaro_part">
-                            <h5>Tags Widget</h5>
-                            <ul class=" kilimanjaro_widget">
-                                <li><a href="#">Classy</a></li>
-                                <li><a href="#">Blog</a></li>
-                                <li><a href="#">Creative</a></li>
-                                <li><a href="#">One Page</a></li>
-                                <li><a href="#">Multipurpose</a></li>
-                                <li><a href="#">Minimal</a></li>
-                                <li><a href="#">Classic</a></li>
-                                <li><a href="#">Medical</a></li>
-                            </ul>
-                        </div>
-
                         <div class="kilimanjaro_part m-top-15">
                             <h5>Important Links</h5>
                             <ul class="kilimanjaro_links">
@@ -53,25 +39,8 @@
                             <h5>Latest News</h5>
                             <div class="kilimanjaro_blog_area">
                                 <div class="kilimanjaro_thumb">
-                <img class="img-fluid" src="https://3.bp.blogspot.com/--C1wpaf_S4M/W7V__10nRoI/AAAAAAAAK24/1NSfapuYSIY0f0wzXY9NgoH0FjQLT07YACKgBGAs/s1600/maxresdefault.jpg" alt="">
-
-                                </div>
-                                <a href="#">Your Blog Title Goes Here</a>
-                                <p class="kilimanjaro_date">21 Jan 2018</p>
-                                <p>Lorem ipsum dolor sit amet, consectetur</p>
-                            </div>
-                            <div class="kilimanjaro_blog_area">
-                                <div class="kilimanjaro_thumb">
-                <img class="img-fluid" src="https://3.bp.blogspot.com/--C1wpaf_S4M/W7V__10nRoI/AAAAAAAAK24/1NSfapuYSIY0f0wzXY9NgoH0FjQLT07YACKgBGAs/s1600/maxresdefault.jpg" alt="">
-                                </div>
-                                <a href="#">Your Blog Title Goes Here</a>
-                                <p class="kilimanjaro_date">21 Jan 2018</p>
-                                <p>Lorem ipsum dolor sit amet, consectetur</p>
-                            </div>
-                            <div class="kilimanjaro_blog_area">
-                                <div class="kilimanjaro_thumb">
-                <img class="img-fluid" src="https://3.bp.blogspot.com/--C1wpaf_S4M/W7V__10nRoI/AAAAAAAAK24/1NSfapuYSIY0f0wzXY9NgoH0FjQLT07YACKgBGAs/s1600/maxresdefault.jpg" alt="">
-                                </div>
+                                    <img class="img-fluid" src="https://3.bp.blogspot.com/--C1wpaf_S4M/W7V__10nRoI/AAAAAAAAK24/1NSfapuYSIY0f0wzXY9NgoH0FjQLT07YACKgBGAs/s1600/maxresdefault.jpg" alt="">
+                                </div>  
                                 <a href="#">Your Blog Title Goes Here</a>
                                 <p class="kilimanjaro_date">21 Jan 2018</p>
                                 <p>Lorem ipsum dolor sit amet, consectetur</p>
@@ -83,11 +52,11 @@
                             <h5>Quick Contact</h5>
                             <div class="kilimanjaro_single_contact_info">
                                 <h5>Phone:</h5>
-                                <p>+255 789 54 50 40 <br> +2255 766 90 94 00</p>
+                                <p>+6281 235 928 925</p>
                             </div>
                             <div class="kilimanjaro_single_contact_info">
                                 <h5>Email:</h5>
-                                <p>support@webblogoverflow.com <br> luckmoshy@gmail.com</p>
+                                <p>support@franshiena.id <br> franshiro@gmail.com</p>
                             </div>
                         </div>
                         <div class="kilimanjaro_part">

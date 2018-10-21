@@ -19,6 +19,7 @@
       <modalRegister></modalRegister>
       <modalLogin  :gettoken="getToken"></modalLogin>
       <modalArticle :getarticle="getArticle" :updatecomponent="updateComponent"></modalArticle>
+      <!-- <modalEdit></modalEdit> -->
   </div>
 </template>
 
@@ -30,6 +31,7 @@
   import modalRegister from '@/components/modalRegister.vue'
   import modalLogin from '@/components/modalLogin.vue'
   import modalArticle from '@/components/modalArticle.vue'
+  // import modalEdit from '@/components/modalEdit.vue'
 
   export default {
     components : {
@@ -39,7 +41,8 @@
       footers,
       modalRegister,
       modalLogin,
-      modalArticle
+      modalArticle,
+      // modalEdit
     },
     data : function(){
       return {

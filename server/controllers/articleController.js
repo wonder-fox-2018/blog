@@ -29,8 +29,10 @@ class ArticleController{
         })
         .then(article => {
             if(article){
+                article.img = req.body.img,
+                article.category = req.body.category,
                 article.title = req.body.title,
-                article.article = req.body.article
+                article.article = req.body.content
                 article.save()
                 .then(updated => {
                     res.status(200).json({
