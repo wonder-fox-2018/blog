@@ -49,7 +49,8 @@
             <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
             <div class="media-body">
               <h5 class="mt-0">{{comment.user.name}}</h5>
-              {{comment.thecomment}}
+              {{comment.thecomment}}<br>
+              <button class="btn-sm btn-danger" v-on:click="deleteComment(comment._id)" v-if="currentuser === comment.user._id && islogin === true">Delete</button>
             </div>
           </div>
 
@@ -83,8 +84,9 @@ export default {
             inputcomment : '',
             comments : '',
             triggerevent : '',
-            token : localStorage.getItem('token'),
-            commentform : false
+            token : '',
+            commentform : false,
+            currentuser : localStorage.getItem('currentuser')
         }
     },
     methods : {
@@ -127,13 +129,17 @@ export default {
                     console.log(err)
                 })
         },
+        deleteComment(id){
+
+        },
         checkToken(){
             let token = localStorage.getItem('token')
             if(token){
                 this.token = token
                 this.islogin = true
+            }else{
+                this.islogin = false
             }
-
         }
     },
     created () {
@@ -149,6 +155,10 @@ export default {
         },
         islogin : function(val) {
             this.checkToken()
+            this.getArticle(this.$route.params.articleId)
+        },
+        currentuser : function(val){
+            this.getArticle(this.$route.params.articleId)
         }
     }
 }

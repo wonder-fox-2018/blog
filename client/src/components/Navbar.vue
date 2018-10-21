@@ -28,10 +28,13 @@
                 </div>
                 </div>
                 <li class="nav-item" v-if="islogin === false" data-toggle="modal" data-target="#exampleModalCenter">
-                <a class="nav-link" href="#">Login</a>
+                    <a class="nav-link" href="#">Login</a>
+                </li>
+                <li class="nav-item" v-if="islogin === false" data-toggle="modal" data-target="#registerModal">
+                    <a class="nav-link" href="#">Register</a>
                 </li>
                 <li class="nav-item" v-if="islogin === true">
-                <a class="nav-link" @click="signout()">Logout</a>
+                    <a class="nav-link" @click="signout()" >Logout</a>
                 </li>
             </ul>
             </div>
@@ -43,7 +46,7 @@
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                    <h5 class="modal-title" id="exampleModalLongTitle">Login</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                     </button>
@@ -57,6 +60,32 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-primary" data-dismiss="modal" @click="signin()">Login</button>
+                </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Register</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Name<br>
+                    <input type="text" v-model="register_name"><br>
+                    Email<br>
+                    <input type="email" v-model="register_email"><br>
+                    Password<br>
+                    <input type="password" v-model="register_password">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" @click="register()">Register</button>
                 </div>
                 </div>
             </div>
@@ -77,7 +106,11 @@ export default {
             login_email : '',
             login_password : '',
 
-            triggerchange : ''
+            triggerchange : '',
+
+            register_name : '',
+            register_email : '',
+            register_password : ''
         }
     },
     mounted () {
@@ -94,6 +127,28 @@ export default {
             if(admin === true) {
                 this.isadmin = true
             }
+        },
+        register() {
+            let self = this
+
+            let data = {
+                name : this.register_name,
+                email : this.register_email,
+                password : this.register_password
+            }
+
+            axios({
+                url : `${config.port}/users/signup`,
+                method : 'POST',
+                data
+            })
+            .then((response)=>{
+                console.log(response)
+                console.log(response.data)
+            })
+            .catch((err)=>{
+                console.log(err)
+            })
         },
         signin() {
             let email = this.login_email
@@ -118,6 +173,7 @@ export default {
 
                 localStorage.setItem('token', response.data.token)
                 localStorage.setItem('admin',response.data.isAdmin)
+                localStorage.setItem('currentuser',response.data.userId)
 
                 if(response.data.isAdmin === true){
                     self.isadmin = true
@@ -125,7 +181,6 @@ export default {
                 self.islogin = true
 
                 self.$emit('islogin-data',self.islogin)
-                console.log(self.islogin)
                 self.$emit('isadmin-data',self.isadmin)
                 // console.log(this.isadmin)
             })
