@@ -7,7 +7,7 @@
                     <button type="button" class="btn btn-primary">{{ detailarticle.title }}</button>
                     <br>
                     <br>
-                    <p class="card-text">Author: {{detailarticle.author.name }}</p>
+                    <p class="card-text">Author: {{ authorname }}</p>
                     <hr>
                     <br>
                     <p><b>Description:</b></p>
@@ -30,7 +30,8 @@ export default {
   props: ['id', 'islogin', 'userbasicinfo'],
   data () {
     return {
-      detailarticle: {}
+      detailarticle: {},
+      authorname: ''
     }
   },
   methods: {
@@ -42,12 +43,17 @@ export default {
       })
         .then(article => {
           // console.log('DETAIL ARTICLE-----', article.data.data)
+          let detailarticle = article.data.data
+          self.authorname = detailarticle.author.name
           self.detailarticle = article.data.data
         })
         .catch(error => {
           console.log('ERROR Getting Detail Article ', error)
         })
     }
+  },
+  created () {
+    this.getdetailarticle()
   },
   watch: {
     id (val) {

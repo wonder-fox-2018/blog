@@ -16,13 +16,20 @@
     </div>
 </template>
 <script>
+import axios from 'axios'
 export default {
   name: 'Allarticle',
-  props: ['islogin', 'userbasicinfo', 'listarticles'],
+  props: ['islogin', 'userbasicinfo', 'listarticles', 'getallarticle'],
+  created () {
+    console.log('Dari ADD ARTICLE')
+  },
   watch: {
     islogin (val) {},
     userbasicinfo (val) {},
     listarticles (val) {}
+  },
+  created () {
+    this.getallarticle()  
   }
 }
 </script>

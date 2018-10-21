@@ -1,6 +1,8 @@
 <template>
    <div id="marginleftcustom">
-     <router-view :islogin="islogin"
+     <router-view
+     :getallarticle="getallarticle"
+     :islogin="islogin"
      :userbasicinfo="userbasicinfo"
      :listarticles="listarticles"></router-view>
    </div>
@@ -8,11 +10,12 @@
 <script>
 import Allarticles from '@/views/Allarticles.vue'
 import Detailarticle from '@/views/Detailarticle.vue'
+import Addarticle from '@/views/Addarticle.vue'
 export default {
   name: 'Article',
-  props: ['islogin', 'userbasicinfo', 'listarticles'],
+  props: ['islogin', 'userbasicinfo', 'listarticles', 'getallarticle'],
   components: {
-    Allarticles, Detailarticle
+    Allarticles, Detailarticle, Addarticle
   },
   watch: {
     islogin (val) {},

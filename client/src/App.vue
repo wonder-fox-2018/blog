@@ -1,15 +1,20 @@
 <template>
   <div id="app">
-    <Navbar @userbasicinfo="getuserbasicinfo" @islogin="getislogin" ></Navbar>
+    <Navbar @userbasicinfo="getuserbasicinfo"
+       @islogin="getislogin" ></Navbar>
     <div class="container-fluid" id="marginTopCustom">
       <div class="row">
         <div class="col-md-2">
-          <Sidebar :listarticles="listarticles"
+          <Sidebar
+                :getallarticle="getallarticle"
+                :islogin ="islogin"
+                :listarticles="listarticles"
                 :userbasicinfo="userbasicinfo"
                 @searcharticles="searcharticles"></Sidebar>
         </div>
         <div class="col-md-10">
           <router-view :islogin="islogin"
+          :getallarticle="getallarticle"
           :userbasicinfo="userbasicinfo"
           :listarticles="listarticles"></router-view>
         </div>

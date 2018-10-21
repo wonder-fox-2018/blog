@@ -9,7 +9,7 @@
         <div class="collapse navbar-collapse" id="navbarsExampleDefault">
             <ul class="navbar-nav mr-auto">
             <li class="nav-item active" v-if = "token !== null && token !== '' ">
-                <label class="nav-link"> Welcome {{userbasicinfo.name}}! <span class="sr-only">(current)</span></label>
+                <label class="nav-link"> Welcome {{ namelengkap }}! <span class="sr-only">(current)</span></label>
             </li>
             </ul>
             <div v-if= "token === null || token === '' " >
@@ -97,7 +97,8 @@ export default {
       entrypassword: '',
       token: localStorage.getItem('blogtoken'),
       islogin: false,
-      userbasicinfo: {}
+      userbasicinfo: {},
+      namelengkap: ''
     }
   },
   methods: {
@@ -114,7 +115,7 @@ export default {
           self.userbasicinfo.userid = user.data.userid
           self.userbasicinfo.name = user.data.name
           self.userbasicinfo.email = user.data.email
-          console.log('Result Get Credential ', self.userbasicinfo)
+          // console.log('Result Get Credential ', self.userbasicinfo)
           this.$emit('userbasicinfo', self.userbasicinfo)
         })
         .catch(error => {
@@ -139,6 +140,7 @@ export default {
           self.token = user.data.token
           localStorage.setItem('blogtoken', self.token)
           self.getcredentials()
+          this.$router.push({ name: 'home' })
           // eslint-disable-next-line
           $('#loginModal').modal('hide')
         })
@@ -168,6 +170,7 @@ export default {
           self.token = user.data.token
           localStorage.setItem('blogtoken', self.token)
           self.getcredentials()
+          this.$router.push({ name: 'home' })
           // eslint-disable-next-line
           $('#registerModal').modal('hide')
         })
@@ -194,7 +197,14 @@ export default {
     }
   },
   watch: {
-    token (val) {}
+    token (val) {
+      if (val) {
+        this.islogin = true
+      }
+    },
+    userbasicinfo (val) {
+      this.namelengkap = val.name
+    }
   }
 }
 </script>

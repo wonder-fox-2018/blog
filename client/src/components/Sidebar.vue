@@ -1,8 +1,13 @@
 <template>
     <div>
         <nav id="sidebar">
-            <div class="sidebar-header">
-                <button type="button" class="btn btn-success">Add Article</button>
+            <br>
+            <div class="sidebar-header"
+              v-if= "islogin === true">
+              <router-link :to="{name: 'addarticle'}">
+                <button type="button" class="btn btn-success">
+                  Add Article</button>
+              </router-link>
              <br>
             <br>
             </div>
@@ -29,7 +34,7 @@
 <script>
 export default {
   name: 'Sidebar',
-  props: ['listarticles', 'userbasicinfo'],
+  props: ['listarticles', 'userbasicinfo', 'islogin', 'getallarticle'],
   data () {
     return {
       keyword: '',
@@ -43,8 +48,7 @@ export default {
   },
   watch: {
     userbasicinfo (val) {},
-    listarticles (val) {
-    }
+    listarticles (val) {}
   }
 }
 </script>

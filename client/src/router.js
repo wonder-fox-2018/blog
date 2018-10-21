@@ -4,6 +4,7 @@ import Router from 'vue-router'
 import Article from './views/Article.vue'
 import Allarticles from './views/Allarticles.vue'
 import Detailarticle from './views/Detailarticle.vue'
+import Addarticle from './views/Addarticle.vue'
 
 Vue.use(Router)
 
@@ -33,6 +34,12 @@ export default new Router({
         path: '/',
         name: 'Allarticles',
         component: Allarticles
+      },
+      {
+        path: '/article/add',
+        name: 'addarticle',
+        component: Addarticle,
+        props: true
       },
       {
         path: ':id',
