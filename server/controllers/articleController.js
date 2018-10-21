@@ -87,12 +87,12 @@ class Controller {
         })
     }
 
-    static myarticle(req,res){
+    static my(req,res){
         Article.find({
             author : req.userData._id
         })
         .then((result)=>{
-            console.log('result in server',result)
+            // console.log('result in server',result)
             res.status(201).json({
                 message : 'get my article success',
                 data : result

@@ -35,6 +35,7 @@ import config from '@/config.js'
 
 export default {
     name : 'myprofile',
+    props : ['islogin'],
     data() {
         return {
             currentuser : localStorage.getItem('currentuser'),
@@ -77,6 +78,11 @@ export default {
     mounted() {
         this.checkToken()
         this.getProfile()
+    },
+    watch : {
+        islogin : function(val) {
+            this.checkToken()
+        }
     }
 }
 </script>

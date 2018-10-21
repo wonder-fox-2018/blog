@@ -3,13 +3,15 @@ const articleController = require('../controllers/articleController')
 const middleware = require('../middleware/middleware')
 const images = require('../helpers/images')
 
+
+router.get('/my',middleware.authenticate,articleController.my)
 router.post('/create',middleware.authenticate,articleController.create)
 router.get('/',articleController.read)
 router.get('/search',articleController.search)
 router.get('/:id',articleController.readOne)
 router.put('/:id',middleware.authenticate,articleController.update)
 router.delete('/:id',middleware.authenticate,articleController.delete)
-router.get('/myarticle',middleware.authenticate,articleController.myarticle)
+
 
 router.post('/upload',
     images.multer.single('image'), 

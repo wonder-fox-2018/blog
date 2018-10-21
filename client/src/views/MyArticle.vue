@@ -24,6 +24,7 @@ import config from '@/config.js'
 
 export default {
     name : 'myarticle',
+    props : ['islogin'],
     data () {
         return {
             myarticle : '',
@@ -36,7 +37,7 @@ export default {
 
             axios({
                 method : 'GET',
-                url : `${config.port}/articles/`,
+                url : `${config.port}/articles/my`,
                 headers : {
                     token : localStorage.getItem('token')
                 }
@@ -76,7 +77,7 @@ export default {
         },
     },
     created() {
-        this.getMyArticle()
+
     },
     mounted(){
         this.getMyArticle()
@@ -85,6 +86,9 @@ export default {
     watch : {
         triggerChange : function(val) {
             this.getMyArticle()
+        },
+        islogin : function(val) {
+            this.checkToken()
         }
     }
     
