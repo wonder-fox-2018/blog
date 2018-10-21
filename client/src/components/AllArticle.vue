@@ -5,7 +5,7 @@
             <img class="card-img-top" v-bind:src="article.picture" alt="Card image cap">
             <div class="card-body">
                 <h2 class="card-title">{{article.title}}</h2>
-                <p class="card-text">{{article.content}}</p>
+                <p class="card-text" v-html="article.content.slice(0, 150) + ' ...'"></p>
                 <router-link :to="`/article/${article._id}`" class="btn btn-primary">Read More &rarr;</router-link>
             </div>
             <div class="card-footer text-muted">

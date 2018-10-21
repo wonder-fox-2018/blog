@@ -9,6 +9,7 @@ router.get('/search',articleController.search)
 router.get('/:id',articleController.readOne)
 router.put('/:id',middleware.authenticate,articleController.update)
 router.delete('/:id',middleware.authenticate,articleController.delete)
+router.get('/myarticle',middleware.authenticate,articleController.myarticle)
 
 router.post('/upload',
     images.multer.single('image'), 

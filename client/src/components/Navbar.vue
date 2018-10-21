@@ -24,7 +24,7 @@
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                     <router-link :to="`/myprofile`" class="dropdown-item" href="">My Profile</router-link>
                     <router-link :to="`/myarticle`" class="dropdown-item" href="">My Article</router-link>
-                    <router-link :to="`/create`" class="dropdown-item" href="">Create Article</router-link>
+                    <router-link :to="`/create`" class="dropdown-item" href="">Post Article</router-link>
                 </div>
                 </div>
                 <li class="nav-item" v-if="islogin === false" data-toggle="modal" data-target="#exampleModalCenter">

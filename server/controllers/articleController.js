@@ -6,6 +6,8 @@ class Controller {
             res.status(500).json({message: 'An article need a content and title'})
         } else if (!req.body.title || req.body.title.length === 0) {
             res.status(500).json({message: 'An article need to be titled'})
+        }else if(req.body.picture.length === 0){
+            req.body.picture = 'http://placehold.it/750x300'
         } else if (!req.body.content || req.body.content.length === 0) {
             res.status(500).json({message: 'An article need a content'})
         } else {
@@ -81,6 +83,25 @@ class Controller {
         .catch(err => {
             res.status(500).json({
                 message: err
+            })
+        })
+    }
+
+    static myarticle(req,res){
+        Article.find({
+            author : req.userData._id
+        })
+        .then((result)=>{
+            console.log('result in server',result)
+            res.status(201).json({
+                message : 'get my article success',
+                data : result
+            })
+        })
+        .catch((err)=>{
+            console.log(err)
+            res.status(500).json({
+                message : 'get my article failed'
             })
         })
     }
