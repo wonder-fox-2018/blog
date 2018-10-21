@@ -5,7 +5,7 @@ const cors = require('cors')
 const mongoose = require('mongoose')
 const db = mongoose.connection
 const port = process.env.PORT || 3000
-const DBName = `blog_${process.env.DB_STAGE}`
+const DBName = `blog_${process.env.DB_STAGE || 'dev'}`
 
 const userRoute = require('./routes/userRoute')
 const articleRoute = require('./routes/articleRoute')
@@ -36,11 +36,11 @@ app
 
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function () {
-  // console.log(`> DB Connected to ${DBName}`)
+  console.log(`> DB Connected to ${DBName}`)
 });
 
 app.listen(port, () => {
-  // console.log(`\n> Server Listening to port ${port}`)
+  console.log(`\n> Server Listening to port ${port}`)
 })
 
 module.exports = app

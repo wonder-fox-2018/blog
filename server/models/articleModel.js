@@ -37,7 +37,13 @@ const articleSchema = new Schema({
   commentId: [{
     type: Schema.Types.ObjectId,
     ref: 'Comment'
-  }]
+  }],
+  imgHeader: {
+    type: String,
+    default: 'https://via.placeholder.com/350x70'
+  }
+}, {
+  timestamps: true
 });
 
 const Article = mongoose.model('Article', articleSchema);

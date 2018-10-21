@@ -73,6 +73,14 @@ const userSchema = new Schema({
       }
     }
   },
+  avatar: {
+    type: String,
+    default: "https://rickandmortyapi.com/api/character/avatar/1.jpeg"
+  },
+  verified: {
+    type: Number,
+    default: 0
+  },
   role: {
     type: String,
     default: 'user'

@@ -188,7 +188,7 @@ describe('Comments', () => {
         })
     })
 
-    it("should return status '404' if user fill articleId input ", done => {
+    it("should return status '404' if user don't fill articleId input ", done => {
       chai
         .request(app)
         .post(`/comment/`)

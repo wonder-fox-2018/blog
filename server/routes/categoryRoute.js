@@ -5,5 +5,6 @@ const CategoryController = require('../controllers/controllerCategory')
 
 route
   .post('/', isLogin, isAdmin, CategoryController.createCategory)
+  .get('/', CategoryController.getCategory)
 
 module.exports = route

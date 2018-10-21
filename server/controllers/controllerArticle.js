@@ -5,8 +5,27 @@ const errCatcherArticle = require('../helpers/errCatcherArticle')
 
 class ArticleContrroller {
 
+  static getMyArticle(req, res) {
+    Article.find({
+        userId: req.decoded.id
+      })
+      .then(data => {
+        res.status(200).json({
+          status: 'success',
+          data: data
+        })
+      })
+      .catch(err => {
+        res.status(500).json({
+          status: 'failed',
+          message: err.message
+        })
+      })
+  }
+
   static createArticle(req, res) {
     let data = {
+      imgHeader: req.file.cloudStoragePublicUrl,
       title: req.body.title,
       description: req.body.description,
       userId: req.decoded.id,
@@ -104,6 +123,8 @@ class ArticleContrroller {
 
   static getAllArticle(req, res) {
     Article.find()
+      .populate('userId', 'fname')
+      .populate('categoryId', 'name')
       .then(data => {
         res.status(200).json({
           status: 'success',
@@ -122,6 +143,54 @@ class ArticleContrroller {
     Article.findOne({
         _id: req.params.id
       })
+      .populate('userId')
+      .populate({
+        path: 'commentId',
+        populate: {
+          path: 'userId'
+        }
+      })
+      .populate('categoryId')
+      .then(data => {
+        res.status(200).json({
+          status: 'success',
+          data: data
+        })
+      })
+      .catch(err => {
+        res.status(500).json({
+          status: 'failed',
+          message: err.message
+        })
+      })
+  }
+  static getArticleByCategory(req, res) {
+    Article.find({
+        categoryId: req.params.id
+      })
+      .populate('categoryId', 'name')
+      .then(data => {
+        res.status(200).json({
+          status: 'success',
+          data: data
+        })
+      })
+      .catch(err => {
+        res.status(500).json({
+          status: 'failed',
+          message: err.message
+        })
+      })
+  }
+
+  static getArticleByTitle(req, res) {
+    Article.find({
+        title: {
+          $regex: `${req.params.title}`,
+          $options: "i"
+        }
+      })
+      .populate('categoryId', 'name')
       .then(data => {
         res.status(200).json({
           status: 'success',

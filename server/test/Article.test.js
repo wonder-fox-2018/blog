@@ -10,7 +10,7 @@ const Comment = require('../models/commentModel')
 
 chai.use(chaiHttp)
 
-describe('Article', function () {
+describe('Article', function() {
   describe('Create Article', () => {
     describe('POST => /articles', () => {
       let token = ''
@@ -42,7 +42,8 @@ describe('Article', function () {
         let user = new User(dataNewUser)
 
         user.save().then(data => {
-          token = jwt.sign({
+          token = jwt.sign(
+            {
               id: data._id,
               fname: data.fname
             },
@@ -214,7 +215,8 @@ describe('Article', function () {
         let user = new User(dataNewUser)
 
         user.save().then(data => {
-          token1 = jwt.sign({
+          token1 = jwt.sign(
+            {
               id: data._id,
               fname: data.fname
             },
@@ -233,7 +235,8 @@ describe('Article', function () {
         user = new User(dataNewUser)
 
         user.save().then(data => {
-          token2 = jwt.sign({
+          token2 = jwt.sign(
+            {
               id: data._id,
               fname: data.fname
             },
@@ -398,7 +401,8 @@ describe('Article', function () {
         let user = new User(dataNewUser)
 
         user.save().then(data => {
-          token1 = jwt.sign({
+          token1 = jwt.sign(
+            {
               id: data._id,
               fname: data.fname
             },
@@ -417,7 +421,8 @@ describe('Article', function () {
         user = new User(dataNewUser)
 
         user.save().then(data => {
-          token2 = jwt.sign({
+          token2 = jwt.sign(
+            {
               id: data._id,
               fname: data.fname
             },
@@ -570,7 +575,8 @@ describe('Article', function () {
         let user = new User(user1)
 
         user.save().then(data => {
-          token1 = jwt.sign({
+          token1 = jwt.sign(
+            {
               id: data._id,
               fname: data.fname
             },
@@ -582,7 +588,8 @@ describe('Article', function () {
         user = new User(user2)
 
         user.save().then(data => {
-          token2 = jwt.sign({
+          token2 = jwt.sign(
+            {
               id: data._id,
               fname: data.fname
             },
@@ -594,7 +601,8 @@ describe('Article', function () {
         user = new User(user3)
 
         user.save().then(data => {
-          token3 = jwt.sign({
+          token3 = jwt.sign(
+            {
               id: data._id,
               fname: data.fname
             },
@@ -681,11 +689,10 @@ describe('Article', function () {
 
       let category = new Category(dataCategory)
 
-      category.save()
-        .then(data => {
-          categoryId = data._id
-          done()
-        })
+      category.save().then(data => {
+        categoryId = data._id
+        done()
+      })
     })
 
     before(done => {
@@ -698,16 +705,18 @@ describe('Article', function () {
 
       let user = new User(user1)
 
-      user.save()
-        .then(data => {
-          token1 = jwt.sign({
+      user.save().then(data => {
+        token1 = jwt.sign(
+          {
             id: data._id,
             fname: data.fname,
             role: data.role
-          }, process.env.JWT_HASH)
-          userId1 = data._id
-          done()
-        })
+          },
+          process.env.JWT_HASH
+        )
+        userId1 = data._id
+        done()
+      })
     })
 
     before(done => {
@@ -720,16 +729,18 @@ describe('Article', function () {
 
       user = new User(user2)
 
-      user.save()
-        .then(data => {
-          token2 = jwt.sign({
+      user.save().then(data => {
+        token2 = jwt.sign(
+          {
             id: data._id,
             fname: data.fname,
             role: data.role
-          }, process.env.JWT_HASH)
-          userId2 = data._id
-          done()
-        })
+          },
+          process.env.JWT_HASH
+        )
+        userId2 = data._id
+        done()
+      })
     })
 
     before(done => {
@@ -742,11 +753,10 @@ describe('Article', function () {
 
       let article = new Article(article1)
 
-      article.save()
-        .then(data => {
-          articleId1 = data._id
-          done()
-        })
+      article.save().then(data => {
+        articleId1 = data._id
+        done()
+      })
     })
 
     before(done => {
@@ -759,11 +769,10 @@ describe('Article', function () {
 
       article = new Article(article2)
 
-      article.save()
-        .then(data => {
-          articleId2 = data._id
-          done()
-        })
+      article.save().then(data => {
+        articleId2 = data._id
+        done()
+      })
     })
 
     before(done => {
@@ -775,11 +784,10 @@ describe('Article', function () {
 
       let comment = new Comment(comment1)
 
-      comment.save()
-        .then(data => {
-          commentId1 = data._id
-          done()
-        })
+      comment.save().then(data => {
+        commentId1 = data._id
+        done()
+      })
     })
 
     before(done => {
@@ -791,11 +799,10 @@ describe('Article', function () {
 
       comment = new Comment(comment2)
 
-      comment.save()
-        .then(data => {
-          commentId2 = data._id
-          done()
-        })
+      comment.save().then(data => {
+        commentId2 = data._id
+        done()
+      })
     })
 
     after(done => {
@@ -832,12 +839,11 @@ describe('Article', function () {
         .end((err, res) => {
           expect(res).to.have.status(200)
 
-          Comment.find({})
-            .then(data => {
-              expect(data).to.be.a('array')
-              expect(data).to.have.lengthOf(0)
-              done()
-            })
+          Comment.find({}).then(data => {
+            expect(data).to.be.a('array')
+            expect(data).to.have.lengthOf(0)
+            done()
+          })
         })
     })
   })
