@@ -15,7 +15,7 @@
             Content : 
             <textarea class="form-control" rows="3" v-model="input_content"></textarea>
           </div>
-          <button class="btn btn-primary" v-on:click="submitArticle()">Submit</button>
+          <button class="btn btn-primary" v-on:click="submitArticle()">Submit Update</button>
       </div>
     </div>
 </template>
@@ -31,7 +31,8 @@ export default {
             input_title : '',
             input_content : '',
 
-            input_image : ''
+            input_image : '',
+            new_image : ''
         }
     },
     methods : {
@@ -57,24 +58,58 @@ export default {
                 self.input_image = response.data.data.picture
                 self.input_title = response.data.data.title
                 self.input_content = response.data.data.content
+                self.new_image = response.data.data.picture
             })
             .catch((err)=>{
                 console.log(err)
             })
         },
         submitArticle() {
-
-            let formdata = new FormData()
-            formdata.append('image', this.input_image);
-
-            axios.post(`${config.port}/articles/upload`, formdata, {
+            if(this.new_image !== this.input_image){
                 
-            })
-            .then((response)=>{
+                let formdata = new FormData()
+                formdata.append('image', this.new_image);
+
+                axios.post(`${config.port}/articles/upload`, formdata, {
+
+                })
+                .then((response)=>{
+                    let title = this.input_title
+                    let content = this.input_content
+                    let picture = response.data.link
+
+                    let self = this
+
+                    let data = {
+                        title,
+                        content,
+                        picture
+                    }
+
+                    axios({
+                        method : 'PUT',
+                        url : `${config.port}/articles/${this.$route.params.articleId}`,
+                        headers : {
+                            token : localStorage.getItem('token')
+                        },
+                        data
+                    })
+                    .then((response)=>{
+                        self.input_title = ''
+                        self.input_content = ''
+                        self.input_image = ''
+                        this.$router.push('/myarticle')
+                    })
+                })
+                .catch((err)=>{
+                    console.log(err)
+                })
+            }else if(this.input_image === this.new_image){
+
                 let title = this.input_title
                 let content = this.input_content
-                let picture = response.data.link
-
+                let picture = this.input_image
+                
                 let self = this
 
                 let data = {
@@ -84,26 +119,23 @@ export default {
                 }
 
                 axios({
-                    method : 'PUT',
-                    url : `${config.port}/articles/${this.$route.params.articleId}`,
-                    headers : {
-                        token : localStorage.getItem('token')
-                    },
-                    data
-                })
-                .then((response)=>{
-                    self.input_title = ''
-                    self.input_content = ''
-                    self.input_image = ''
-                    this.$router.push('/myarticle')
-                })
-            })
-            .catch((err)=>{
-                console.log(err)
-            })
+                        method : 'PUT',
+                        url : `${config.port}/articles/${this.$route.params.articleId}`,
+                        headers : {
+                            token : localStorage.getItem('token')
+                        },
+                        data
+                    })
+                    .then((response)=>{
+                        self.input_title = ''
+                        self.input_content = ''
+                        self.input_image = ''
+                        this.$router.push('/myarticle')
+                    })
+            }
         },
         addImage(link){
-            this.input_image = link.target.files[0];
+            this.new_image = link.target.files[0];
         }
     },
     mounted () {
