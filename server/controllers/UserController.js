@@ -9,7 +9,6 @@ class UserController {
 
     // register user
     static registerUser(req,res){
-
         if(isEmail(req.body.email)){
             User.create({
                 name: req.body.name,

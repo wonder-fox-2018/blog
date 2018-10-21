@@ -9,7 +9,8 @@ class CommentController{
         Commentary.create({
             content: req.body.content,
             articleid: req.body.articleid,
-            userid: req.decoded.userid
+            userid: req.decoded.userid,
+            comentator: req.decoded.name
         })
           .then(comment =>{
              let newComment = comment

@@ -15,7 +15,8 @@ const CommentSchema = new Schema({
     userid: {
         type: Schema.Types.ObjectId,
         ref: 'User'
-    }
+    },
+    comentator: String
 },{
     timestamps: true
 })
