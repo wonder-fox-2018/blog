@@ -1,13 +1,5 @@
 <template>
   <div class="about">
-    <h3>HALO DARI ABOUT</h3>
-    <h3>HALO DARI ABOUT</h3>
-    <h3>HALO DARI ABOUT</h3>
-    <h3>HALO DARI ABOUT</h3>
-    <h3>HALO DARI ABOUT</h3>
-    <h3>HALO DARI ABOUT</h3>
-    <h3>HALO DARI ABOUT</h3>
-    <h3>HALO DARI ABOUT</h3>
-    <h3>HALO DARI ABOUT</h3>
+    <h1>This is an about page</h1>
   </div>
 </template>

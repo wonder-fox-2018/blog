@@ -1,6 +1,6 @@
 <template>
-<!-- Sidebar Widgets Column -->
     <div class="col-md-4">
+
         <!-- Search Widget -->
         <div class="card my-4">
             <h5 class="card-header">Search</h5>
@@ -13,66 +13,60 @@
                 </div>
             </div>
         </div>
+
         <!-- Categories Widget -->
-        <div class="card my-3">
+        <div class="card my-4">
             <h5 class="card-header">Categories</h5>
             <div class="card-body">
                 <div class="row">
                     <div class="col-lg-6">
                         <ul class="list-unstyled mb-0">
                             <li>
-                                <a href="#">Simba</a>
+                                <a href="#">Web Design</a>
                             </li>
                             <li>
-                                <a href="#">Nyati</a>
+                                <a href="#">HTML</a>
                             </li>
                             <li>
-                                <a href="#">Faru</a>
+                                <a href="#">Freebies</a>
                             </li>
                         </ul>
                     </div>
                     <div class="col-lg-6">
                         <ul class="list-unstyled mb-0">
                             <li>
-                                <a href="#">Kiboko</a>
+                                <a href="#">JavaScript</a>
                             </li>
                             <li>
-                                <a href="#">Fisi</a>
+                                <a href="#">CSS</a>
                             </li>
                             <li>
-                                <a href="#">Pundamlia</a>
+                                <a href="#">Tutorials</a>
                             </li>
                         </ul>
                     </div>
                 </div>
             </div>
         </div>
+
         <!-- Side Widget -->
         <div class="card my-4">
-            <h5 class="card-header">Chat Room</h5>
+            <h5 class="card-header">Side Widget</h5>
             <div class="card-body">
-                ............................
+                You can put anything you want inside of these side widgets. They are easy to use, and feature the new
+                Bootstrap 4 card containers!
             </div>
         </div>
-        <!-- Side Widget -->
-        <div class="card my-4">
-            <h5 class="card-header">Banner</h5>
-            <div class="card-body">
-                <img class="card-img-top" src="https://avatarfiles.alphacoders.com/150/150078.png"
-                    alt="Card image cap">
-            </div>
-        </div>
-        <!-- ANYTHING HERE -->
-        <div class="card my-4">
-            <h5 class="card-header">Anything Here</h5>
-            <div class="card-body">
-                ................................
-            </div>
-        </div>
+
     </div>
 </template>
+
 <script>
-export default {
-  name: 'Sidebar',
-};
+    export default {
+        name: 'Sidebar'
+    }
 </script>
+
+<style>
+
+</style>
