@@ -98,7 +98,7 @@ export default {
                 url : `${config.port}/articles/${id}`
             })
             .then((response)=>{
-                console.log(response.data)
+                // console.log(response.data)
                 self.article = response.data
                 self.comments = self.article.data.comments
             })
@@ -107,7 +107,7 @@ export default {
             })
         },
         submitComment(){
-            console.log('submit comment')
+            // console.log('submit comment')
 
             let self = this
             
@@ -130,7 +130,23 @@ export default {
                 })
         },
         deleteComment(id){
+            let self = this
 
+            axios({
+                method : 'DELETE',
+                url : `${config.port}/comments/${id}`,
+                headers : {
+                    token : localStorage.getItem('token')
+                }
+            })
+            .then((response)=>{
+                // console.log(response.data)
+                self.triggerevent = response
+                
+            })
+            .catch((err)=>{
+                console.log(err)
+            })
         },
         checkToken(){
             let token = localStorage.getItem('token')

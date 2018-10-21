@@ -12,6 +12,9 @@ class Controller {
                 name:  req.body.name,
                 email:   req.body.email,
                 password: encryptedPassword,
+                avatar : 'http://placehold.it/50x50',
+                age : null,
+                bio : null
             })
             return newUser
         })
@@ -75,6 +78,19 @@ class Controller {
                     err
                 })
             })
+    }
+
+    static readOne(req,res){
+        User.findById(req.params.id)
+        .then((data)=>{
+            res.status(200).json(data)
+        })
+        .catch((err)=>{
+            res.status(500).json({
+                message : 'failed to find user',
+                err : err
+            })
+        })
     }
 }
 

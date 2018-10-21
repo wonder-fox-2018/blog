@@ -26,6 +26,15 @@ const userSchema = new Schema({
   },
   password: {
     type: String
+  },
+  avatar : {
+    type: String
+  },
+  age : {
+    type : Number
+  },
+  bio : {
+    type : String
   }
 }, {
     timestamps : true

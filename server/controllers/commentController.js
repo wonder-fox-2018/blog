@@ -44,6 +44,21 @@ class Controller {
 
     }
 
+    static delete(req,res){
+        myComment.findByIdAndDelete(req.params.id)
+        .then(()=>{
+            res.status(200).json({
+                message : 'delete success'
+            })
+        })
+        .catch((err)=>{
+            res.status(500).json({
+                message : 'delete failed',
+                err : err
+            })
+        })
+    }
+
 }
 
 module.exports = Controller;
