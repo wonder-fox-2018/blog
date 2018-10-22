@@ -12,16 +12,19 @@ export default new Router({
       path: '/',
       name: 'home',
       component: Home,
+      children : [
+        {
+          path: '/author/:authorId',
+          name: 'authorprofile',
+          props : true,
+          component: () => import(/* webpackChunkName: "about" */ './views/Author.vue')
+        }
+      ]
     },
     {
       path: '/article/:articleId',
       name: 'completearticle',
       component: () => import(/* webpackChunkName: "about" */ './views/Article.vue')
-    },
-    {
-      path: '/author/:authorId',
-      name: 'authorprofile',
-      component: () => import(/* webpackChunkName: "about" */ './views/Author.vue')
     },
     {
       path: '/edit/:articleId',

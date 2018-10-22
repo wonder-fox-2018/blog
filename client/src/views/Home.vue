@@ -12,7 +12,7 @@
           </h1>
 
           <!-- Blog Post -->
-          <all-article :searchresult="searchresult"></all-article>
+          <all-article :searchresult="searchresult" :categoryresult="categoryresult"></all-article>
 
           <!-- Pagination -->
           <pagination></pagination>
@@ -20,7 +20,7 @@
         </div>
 
         <!-- Sidebar Widgets Column -->
-        <sidebar @search-result="searchResult"></sidebar>
+        <sidebar @search-result="searchResult" @category-result="categoryResult"></sidebar>
 
       </div>
       <!-- /.row -->
@@ -46,13 +46,17 @@ export default {
   },
   data () {
     return {
-      searchresult : ''
+      searchresult : '',
+      categoryresult : ''
     }
   },
   methods : {
     searchResult(val){
-      console.log('val in home from sidebar',val)
+      // console.log('val in home from sidebar',val)
       this.searchresult = val
+    },
+    categoryResult(val){
+      this.categoryresult = val
     }
   }
 }

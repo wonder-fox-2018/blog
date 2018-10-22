@@ -11,7 +11,8 @@
             <div class="card-footer text-muted">
                 <div v-html="'Posted on ' + article.createdAt.slice(0, 10)"></div>
                 by
-                <router-link :to="`/author/${article.author._id}`" >{{article.author.name}}</router-link>
+                <!-- <router-link :to="`/author/${article.author._id}`" >{{article.author.name}}</router-link> -->
+                <router-link :to="{name : 'authorprofile', params : {authorId : article.author._id} }" >{{article.author.name}}</router-link>
             </div>
         </div>
     </div>
@@ -22,7 +23,7 @@ import config from '@/config.js'
 
 export default {
     name : 'AllArticle',
-    props : ['searchresult'],
+    props : ['searchresult','categoryresult'],
     data () {
         return {
             allArticle : '',
@@ -53,6 +54,11 @@ export default {
     watch : {
         searchresult : function(val) {
             this.allArticle.data = this.searchresult
+        },
+        categoryresult : function(val){
+            // console.log('all article data',this.allArticle.data)
+            // console.log('category result data',this.categoryresult.data)
+            this.allArticle.data = this.categoryresult
         }
     }
 }

@@ -14,6 +14,13 @@
             <br>
             Content : 
             <textarea class="form-control" rows="3" v-model="input_content"></textarea>
+            <br>
+            Category :
+            <br>
+            <select v-model="input_category" name="Category">
+                <option value="5bcd3a46991786086325b225">Funny</option>
+                <option value="5bcd3a4b991786086325b226">Serious</option>
+            </select>
           </div>
           <button class="btn btn-primary" v-on:click="submitArticle()">Submit</button>
       </div>
@@ -31,7 +38,9 @@ export default {
             input_title : '',
             input_content : '',
 
-            input_image : ''
+            input_image : '',
+
+            input_category : ''
         }
     },
     methods : {
@@ -55,13 +64,15 @@ export default {
                 let title = this.input_title
                 let content = this.input_content
                 let picture = response.data.link
+                let category = this.input_category
 
                 let self = this
 
                 let data = {
                     title,
                     content,
-                    picture
+                    picture,
+                    category
                 }
 
                 axios({

@@ -12,6 +12,8 @@ router.get('/:id',articleController.readOne)
 router.put('/:id',middleware.authenticate,articleController.update)
 router.delete('/:id',middleware.authenticate,articleController.delete)
 
+router.get('/bycategory/:id',articleController.byCategory)
+
 
 router.post('/upload',
     images.multer.single('image'), 

@@ -21,27 +21,8 @@
                 <div class="row">
                     <div class="col-lg-6">
                         <ul class="list-unstyled mb-0">
-                            <li>
-                                <a href="#">Web Design</a>
-                            </li>
-                            <li>
-                                <a href="#">HTML</a>
-                            </li>
-                            <li>
-                                <a href="#">Freebies</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="col-lg-6">
-                        <ul class="list-unstyled mb-0">
-                            <li>
-                                <a href="#">JavaScript</a>
-                            </li>
-                            <li>
-                                <a href="#">CSS</a>
-                            </li>
-                            <li>
-                                <a href="#">Tutorials</a>
+                            <li class="mb-2" v-for="(category, index) in all_categories" :key="index">
+                                <button class="btn-sm button-light" @click="getByCategory(category._id)" >{{category.name}}</button>
                             </li>
                         </ul>
                     </div>
@@ -50,14 +31,12 @@
         </div>
 
         <!-- Side Widget -->
-        <div class="card my-4">
+        <!-- <div class="card my-4">
             <h5 class="card-header">Side Widget</h5>
             <div class="card-body">
-                You can put anything you want inside of these side widgets. They are easy to use, and feature the new
-                Bootstrap 4 card containers!
+                <i>...under construction...
             </div>
-        </div>
-
+        </div> -->
     </div>
 </template>
 
@@ -68,7 +47,10 @@ export default {
     name: 'Sidebar',
     data () {
         return {
-            input_search : ''
+            input_search : '',
+            all_categories : '',
+
+            category_result : ''
         }
     },
     methods : {
@@ -85,7 +67,41 @@ export default {
             .catch((err)=>{
                 console.log(err)
             })
+        },
+        getCategories(){
+            let self = this
+
+            axios({
+                method : 'GET',
+                url : `${config.port}/categories/`
+            })
+            .then((response)=>{
+                self.all_categories = response.data
+                console.log(response)
+            })
+            .catch((err)=>{
+                console.log(err)
+            })
+        },
+        getByCategory(id){
+            let self = this
+
+            axios({
+                method : 'GET',
+                url : `${config.port}/articles/bycategory/${id}`
+            })
+            .then((response)=>{
+                console.log(response.data.data)
+
+                self.$emit('category-result',response.data.data)
+            })
+            .catch((err)=>{
+                console.log(err)
+            })
         }
+    },
+    created () {
+        this.getCategories()
     }
 }
 </script>

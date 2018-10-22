@@ -106,6 +106,23 @@ class Controller {
         })
     }
 
+    static byCategory(req,res){
+        Article.find({
+            category : req.params.id
+        })
+        .then((result)=>{
+            res.status(201).json({
+                data : result
+            })
+        })
+        .catch((err)=>{
+            console.log(err)
+            res.status(500).json({
+                message : 'get article by category failed'
+            })
+        })
+    }
+
     static delete(req,res){
         Article.findOneAndDelete(req.params.id)
         .then((deleted)=>{
