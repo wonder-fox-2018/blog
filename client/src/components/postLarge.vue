@@ -3,15 +3,13 @@
     <div v-if='showAll'>
       <div class="border mb-4" v-for='(post, index) in posts' :key='index'>
         <div v-if='post.author._id === authuser'>
-          <div class="optBtn float-left">
+          <div class="optBtn float-right">
             <button title="Edit Post" @click='editModal(post._id, post.title, post.content)'><i class="far fa-edit"></i></button>
             <button title="Delete Post" @click='deleteModal(post._id)'><i class="far fa-trash-alt"></i></button>
           </div>
         </div>
-        <div class="optBtn float-right">
-          <button title="Share with Twitter"><i class="fab fa-twitter"></i></button>
-          <button title="Share with Facebook"><i class="fab fa-facebook"></i></button>
-          <button title="Share with Google Plus"><i class="fab fa-google-plus"></i></button>
+        <div v-else>
+          <div class="optBtn"></div>
         </div>
         <router-link :to="{name: 'detail', params: {id: post._id}}">
           <img class="card-img-top" :src="post.image" style='height: 250px'>
@@ -25,15 +23,13 @@
     </div>
     <div v-else>
       <div v-if='detail.author._id === authuser'>
-        <div class="optBtn float-left">
+        <div class="optBtn float-right">
           <button title="Edit Post" @click='editModal(detail._id, detail.title, detail.content)'><i class="far fa-edit"></i></button>
           <button title="Delete Post" @click='deleteModal(detail._id)'><i class="far fa-trash-alt"></i></button>
         </div>
       </div>
-      <div class="optBtn float-right">
-        <button title="Share with Twitter"><i class="fab fa-twitter"></i></button>
-        <button title="Share with Facebook"><i class="fab fa-facebook"></i></button>
-        <button title="Share with Google Plus"><i class="fab fa-google-plus"></i></button>
+      <div v-else>
+        <div class="optBtn"></div>
       </div>
       <img class="card-img-top" :src="detail.image" style='height: 250px'>
       <div class="img-overlay"></div>
@@ -59,7 +55,7 @@
             <div class="commenter">
               <b>{{ comment.commenter.name }}</b> commented on {{ comment.createdAt.slice(0, 10) }}
             </div>
-            <h6>{{ comment.words }}</h6>
+            <h6 v-html="comment.words"></h6>
           </div>
           <div class="col-1" v-if='comment.commenter._id === authuser'>
             <button class='comDelBtn' @click='deleteCommentModal(comment._id)'><i class="far fa-trash-alt"></i></button>
@@ -81,7 +77,7 @@
               <div class="commenter">
                 <b>{{ reply.commenter.name }}</b> replied on {{ reply.createdAt.slice(0, 10) }}
               </div>
-              <h6>{{ reply.words }}</h6>
+              <h6 v-html="reply.words"></h6>
             </div>
             <div class="col-1 border-top pt-3 pb-2" v-if='reply.commenter._id === authuser'>
               <button class='comDelBtn' @click='deleteCommentModal(reply._id)'><i class="far fa-trash-alt"></i></button>
