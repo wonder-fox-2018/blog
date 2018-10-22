@@ -21,14 +21,14 @@
       <h3 class="heading" style='color: blue;'>{{article.title}}</h3>
       <p v-html='article.contents'>...</p>
       <router-link :to="{ path: `/home/${article.id}`}">
-        <span id='read' style='color:blue' @click='getReadCounter(article.id)'>Read more</span>
+        <span id='read' style='color:blue'>Read more</span>
       </router-link>
       <div class='row'>
         <div class='col-sm-4'>
           <i class="fa fa-heart"></i> Likes {{article.likes}}
         </div>
         <div class='offset col-sm-4'></div>
-        <div class='col-sm-4'>
+        <div class='col-sm-4' >
           <i class="fa fa-eye" aria-hidden="true"></i> Read {{ article.read }}
         </div>
       </div><hr>
@@ -39,7 +39,7 @@
 
 <script>
   export default {
-    props: ['isLogin', 'userId', 'getDate', 'showComments'],
+    props: ['isLogin', 'userId', 'getDate'],
     data() {
       return {
         articles: [],
@@ -52,7 +52,8 @@
         mine: false,
         msg: '',
         success: false,
-        error: false
+        error: false,
+        showComments: false
       }
     },
     methods: {

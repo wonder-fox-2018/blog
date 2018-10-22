@@ -21,10 +21,10 @@
 
     <div class="row">
       <div class="side-bar col-md-3">
-        <SideBar :isLogin='isLogin' :getDate='getDate' :showComments='showComments'></SideBar>
+        <SideBar :isLogin='isLogin' :getDate='getDate' ></SideBar>
       </div>
       <div class="main-content col-md-9">
-        <MainContaint  :isLogin='isLogin' :getDate='getDate' :showComments='showComments'></MainContaint>
+        <MainContaint  :isLogin='isLogin' :getDate='getDate'></MainContaint>
       </div>
     </div>
 
@@ -37,7 +37,7 @@ import MainContaint from "@/components/mainContaint.vue";
 import SideBar from "@/components/sideBar.vue";
 
 export default {
-  props: ['isLogin', 'getDate', 'showComments'],
+  props: ['isLogin', 'getDate'],
   name: 'home',
   data () {
     return {
@@ -52,6 +52,9 @@ export default {
   },
   methods: {
     
+  },
+  watch: {
+   
   }
 }
 </script>

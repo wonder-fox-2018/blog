@@ -27,16 +27,16 @@
       </div>
       <div class='col-sm-4'>
         <span style='color: brown;' @click='showCommentsForm(article._id)'><i class="fa fa-comments" aria-hidden="true"></i> Add Comment &nbsp;&nbsp;</span>
-        <span style='color: rebeccapurple;' @click='showGlobalChat=true'><i class="fa fa-comments-o" aria-hidden="true"></i> Live Chat</span>
+        <span style='color: rebeccapurple;' @click='showGlobalChats'><i class="fa fa-comments-o" aria-hidden="true"></i> Live Chat</span>
       </div>
     </div>
     <comments></comments>
     <share v-if='shareOpen' :article='article' :user='article.author.username'></share>
     <div v-if='showGlobalChat'>
-      <input type='text' placeholder='Enter the message here...' v-model='messageChat' @keyup.enter='submitChat' />
-      <button @click='submitChat'>Send Message</button>
+      <input class='form-control' type='text' placeholder='Enter the message here...' v-model='messageChat' @keyup.enter='submitChat' />
+      
       <div class="liveChat" v-for="(chat,index) in listChat" :key='index'>
-        <p>{{ chat.name }}: {{ chat.message }}</p>
+        <span>{{ chat.name }}:</span> <p>{{ chat.message }}</p>
       </div>
     </div>
 
@@ -118,7 +118,7 @@
   import db from '../assets/config.js'
 
   export default {
-    props: ['isLogin', 'getDate', 'showComments'],
+    props: ['isLogin', 'getDate'],
     data() {
       return {
         article: '',
@@ -129,7 +129,8 @@
         removeList: '',
         comment: '',
         allComments: [],
-        shareOpen: false
+        shareOpen: false,
+        showComments: false
       }
     },
     components: {
@@ -143,6 +144,7 @@
         .then((result) => {
           // console.log(result.data)
           self.article = result.data
+          this.showComments = false
         }).catch((err) => {
           console.log(err)
         });
@@ -175,7 +177,6 @@
         }
       })
         .then((result) => {
-          console.log('kedelete...')
           self.getArticle(id)
           this.$router.push({name:'home'})
           this.getArticle()
@@ -221,6 +222,10 @@
           console.log(err)
         });
       },
+      showGlobalChats() {
+        this.showGlobalChat = true
+        this.showComments = false
+      },
       submitComment(id) {
         let self = this
         axios.post(`http://localhost:3000/comments`, {
@@ -235,6 +240,7 @@
         .then((result) => {
           // console.log('hasil dari submit comment--',result.data)
           self.showAllComments(id)
+          self.comment=''
         }).catch((err) => {
           console.log(err)
         });
@@ -260,7 +266,10 @@
         this.getArticle(val)
       },
       article: function(val) {
-        console.log(val)
+        // console.log(val)
+      },
+      showComments: function(val) {
+        console.log('status showComment-->', val)
       }
     }
   }
@@ -271,12 +280,13 @@
   background-color: white;
 }
 #image {
-  height: 400px;
+  min-height: 400px;
   width: 100%;
 }
 .paragraf {
   text-align: justify;
   text-justify: inter-word;
+  width: 100%
 }
 #icons span:hover{
   cursor: pointer;
@@ -286,6 +296,18 @@
   border: 1px solid brown;
   margin: 5px auto;
   min-width:700px;
-  background-color: #eeeeee;
+  background-color: #e6e6fa;
+}
+.liveChat {
+  border: 1px solid cyan;
+  min-width:auto;
+  background-color: #c6e2ff;
+  border-radius: 50px;
+}
+.liveChat span {
+  text-align: left;
+}
+.liveChat p {
+  text-align: center;
 }
 </style>
