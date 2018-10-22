@@ -1,6 +1,6 @@
 var ArticleModel = require('../models/ArticleModel.js');
 
-module.exports = {
+const ArticleController = {
 
     list: function (req, res) {
         ArticleModel.find().populate('author comments').sort('-createdAt').exec()
@@ -58,9 +58,8 @@ module.exports = {
     search: function (req, res) {
         ArticleModel.find({
                 $or: [{
-                        title: new RegExp(req.body.searchinput, 'i')
-                    },
-                ]
+                    title: new RegExp(req.body.searchinput, 'i')
+                }, ]
             })
             .populate('author comments').sort('-createdAt').exec()
             .then(data => {
@@ -73,9 +72,19 @@ module.exports = {
             })
     },
 
-    update: function (req, res) {
-        console.log('masuk udate');
-        res.json({message : 'under construction'})
+    update(req, res) {
+        ArticleModel.findByIdAndUpdate(req.params.id, {
+                title: req.body.title ? req.body.title : undefined ,
+                content: req.body.content ? req.body.content : undefined ,
+            })
+            .then((result) => {
+                ArticleController.show(req, res)
+            }).catch((err) => {
+                res.status(500).json({
+                    message: 'Update Failed',
+                    error: err
+                })
+            });
     },
 
     remove: function (req, res) {
@@ -88,8 +97,10 @@ module.exports = {
                 });
             }
             return res.status(204).json({
-                message : 'Delete article success'
+                message: 'Delete article success'
             });
         });
     }
 };
+
+module.exports = ArticleController

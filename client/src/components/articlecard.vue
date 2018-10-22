@@ -8,26 +8,36 @@
           <img class="post-image" src="https://picsum.photos/300/300/?random" />
           <div class="article-details">
             <h4 class="post-category"> Category </h4>
-            <h3 class="post-title">{{ article.title }}</h3>
-            <p class="post-description" v-if="!detail">{{ article.content.slice(0,200) }} <a style="color:red;">... readmore  </a> </p>
-            <p class="post-description" v-if="detail">{{ article.content }}</p>
-            <p class="post-author">By {{ article.author.firstName+' '+article.author.lastName }}</p>
+  
+            <VueEditForm v-if="editMode" :schema='schemaEdit' :model='model'></VueEditForm>
+            <div class="buttonbar">
+              <button v-if="editMode" type="button" v-on:click="editArticle()" class="btn btn-primary">Update</button>
+              <button v-if="editMode" type="button" v-on:click="editMode=false" class="btn btn-secondary">Cancel</button>
+            </div>
+            <div v-if="!editMode">
+              <h3 class="post-title">{{ article.title }}</h3>
+              <p class="post-description" v-if="!detail">{{ article.content.slice(0,200) }} <a style="color:red;">... readmore  </a> </p>
+              <p class="post-description" v-if="detail">{{ article.content }}</p>
+              <p class="post-author">By {{ article.author.firstName+' '+article.author.lastName }}</p>
+            </div>
           </div>
   
         </article>
       </a>
-
+  
       <div class="cardfooter">
         <sharecomponent id="sharecmpnt" v-if="user" :article='article' :user='user'></sharecomponent>
         <div id="cmtbtn" @click="$router.push({name: 'articledetail',params: {id: article._id}}); goComment()"> Comment ( {{comments.length}} ) </div>
-        <div v-if="article.author._id == user._id" @click="deleteArticle()"> Delete </div>
+        <div v-if="article.author._id == user._id & detail" @click="editMode = true"> Edit </div>
+        <div v-if="article.author._id == user._id & detail" @click="deleteArticle()"> Delete </div>
       </div>
-
+  
       <div v-if="detail" class="commentbar">
         <div class='articlecomments'>
           <div class="usercomment" v-for="comment in comments" :key="comment._id">
             <h6> " {{ comment.comment }} " </h6>
             <h5> - {{ comment.user.firstName+' '+comment.user.lastName }} <br> <i> at {{ formatthis(comment.createdAt) }} </i></h5>
+            <h5 v-if="comment.user._id == user._id"> <i> <button type="button" @click="deleteComment(comment._id)" class="btn">REMOVE</button> </i> </h5>
           </div>
         </div>
         <div v-if="user" class="commentarea">
@@ -37,7 +47,7 @@
           <button type="button" @click="postComment()" class="btn btn-primary">Post Comment</button>
         </div>
       </div>
-
+  
     </div>
   </section>
 </template>
@@ -54,17 +64,22 @@
     props: ['article', 'articles', 'detail', 'user', 'getArticles'],
     components: {
       VueForm: VueForm.component,
-      sharecomponent
+      sharecomponent,
+      VueEditForm: VueForm.component
     },
     created() {
       this.getComments()
     },
     data() {
       return {
+        editMode: false,
         comments: [],
   
         model: {
-          comment: ''
+          comment: '',
+  
+          titleEdit: this.article.title,
+          contentEdit: this.article.content
         },
   
         schema: {
@@ -77,14 +92,59 @@
             hint: 'max 1000 char',
             validator: VueForm.validators.string
           }]
+        },
+  
+        schemaEdit: {
+          fields: [{
+              type: "input",
+              inputType: "text",
+              label: 'Title Edit',
+              model: "titleEdit",
+              placeholder: "Article Title",
+              required: true,
+            },
+            {
+              type: "textArea",
+              model: "contentEdit",
+              label: 'Content Edit',
+              placeholder: "Content",
+              required: true,
+              rows: 15,
+              validator: VueForm.validators.string
+            }
+          ]
         }
       }
     },
     methods: {
+      deleteComment(commentId) {
+        axios.delete(`http://localhost:3000/comments/${commentId}`)
+          .then(() => {
+            this.getComments()
+          }).catch((err) => {
+            console.log(err);
+          });
+      },
+  
+      editArticle() {
+        let self = this
+        axios.put(`http://localhost:3000/articles/${this.article._id}`, {
+            title: self.model.titleEdit,
+            content: self.model.contentEdit,
+          })
+          .then(() => {
+            this.getArticles()
+            this.$router.push(`/`)
+          }).catch((err) => {
+            console.log(err)
+          });
+      },
+  
       deleteArticle() {
         axios.delete(`http://localhost:3000/articles/${this.article._id}`)
           .then(() => {
             this.getArticles()
+            this.article = this.article
             this.$router.push('/')
           }).catch((err) => {
             console.log(err);
@@ -126,6 +186,16 @@
         })[0]
         this.getComments()
       },
+  
+      // articles: {
+      //   handler: function(newValue) {
+      //     this.article = newValue.filter(item => {
+      //       return item._id == this.$route.params.id
+      //     })[0]
+      //   },
+      //   deep: true,
+      // }
+  
     },
   }
 </script>
@@ -140,6 +210,12 @@
     background-color: #fff;
     box-shadow: 0 0.1875rem 1.5rem rgba(0, 0, 0, 0.2);
     padding-top: 15px;
+  }
+  
+  .buttonbar {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 20px;
   }
   
   .articlecomments {
@@ -172,9 +248,9 @@
     margin: 0 auto;
     text-align: left;
   }
-
-  #sharecmpnt{
-    grid-column: 1 / span 3;
+  
+  #sharecmpnt {
+    grid-column: 1 / span 2;
   }
   
   .cardfooter {
