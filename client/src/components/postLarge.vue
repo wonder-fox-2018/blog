@@ -163,7 +163,7 @@ export default {
   methods: {
     getDetail (id) {
       axios({
-        url: `http://localhost:3000/articles/${id}`
+        url: `https://blog-server.ismailnagib.xyz/articles/${id}`
       })
         .then(data => {
           this.detail = data.data.data
@@ -199,7 +199,7 @@ export default {
     },
     editPost () {
       axios({
-        url: `http://localhost:3000/articles/${this.editId}`,
+        url: `https://blog-server.ismailnagib.xyz/articles/${this.editId}`,
         method: 'put',
         headers: {
           token: localStorage.getItem('token')
@@ -223,7 +223,7 @@ export default {
     },
     deletePost () {
       axios({
-        url: `http://localhost:3000/articles/${this.deleteId}`,
+        url: `https://blog-server.ismailnagib.xyz/articles/${this.deleteId}`,
         method: 'delete',
         headers: {
           token: localStorage.getItem('token')
@@ -240,7 +240,7 @@ export default {
     },
     addComment (id) {
       axios({
-        url: 'http://localhost:3000/comments',
+        url: 'https://blog-server.ismailnagib.xyz/comments',
         method: 'post',
         headers: {
           token: localStorage.getItem('token')
@@ -262,7 +262,7 @@ export default {
     },
     replyComment (id, index) {
       axios({
-        url: 'http://localhost:3000/comments/stack',
+        url: 'https://blog-server.ismailnagib.xyz/comments/stack',
         method: 'post',
         headers: {
           token: localStorage.getItem('token')
@@ -292,7 +292,7 @@ export default {
     },
     deleteComment () {
       axios({
-        url: `http://localhost:3000/comments/${this.delComId}`,
+        url: `https://blog-server.ismailnagib.xyz/comments/${this.delComId}`,
         method: 'delete',
         headers: {
           token: localStorage.getItem('token')

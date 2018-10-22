@@ -41,7 +41,7 @@ export default {
     },
     sendChat () {
       axios({
-        url: 'http://localhost:3000/users/checklogin',
+        url: 'https://blog-server.ismailnagib.xyz/users/checklogin',
         method: 'post',
         headers: {
           token: localStorage.getItem('token')

@@ -82,7 +82,7 @@ export default {
   methods: {
     getPosts () {
       axios({
-        url: 'http://localhost:3000/articles'
+        url: 'https://blog-server.ismailnagib.xyz/articles'
       })
         .then(data => {
           this.posts = data.data.data
@@ -94,7 +94,7 @@ export default {
     },
     getMyPosts () {
       axios({
-        url: 'http://localhost:3000/articles/self',
+        url: 'https://blog-server.ismailnagib.xyz/articles/self',
         headers: {
           token: localStorage.getItem('token')
         }
@@ -129,7 +129,7 @@ export default {
         formData.append('image', this.image)
 
         axios({
-          url: 'http://localhost:3000/upload',
+          url: 'https://blog-server.ismailnagib.xyz/upload',
           method: 'post',
           data: formData,
           headers: {
@@ -139,7 +139,7 @@ export default {
         })
           .then(image => {
             axios({
-              url: 'http://localhost:3000/articles',
+              url: 'https://blog-server.ismailnagib.xyz/articles',
               method: 'post',
               headers: {
                 token: localStorage.getItem('token')
@@ -168,7 +168,7 @@ export default {
           })
       } else {
         axios({
-          url: 'http://localhost:3000/articles',
+          url: 'https://blog-server.ismailnagib.xyz/articles',
           method: 'post',
           headers: {
             token: localStorage.getItem('token')
@@ -214,7 +214,7 @@ export default {
         }
       } else {
         axios({
-          url: `http://localhost:3000/articles/search?keyword=${this.keyword}`
+          url: `https://blog-server.ismailnagib.xyz/articles/search?keyword=${this.keyword}`
         })
           .then(data => {
             this.posts = data.data.data
