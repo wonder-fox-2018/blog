@@ -12,6 +12,14 @@ export default new Router({
       path: '/',
       name: 'home',
       component: Home,
+      children: [{
+        path: 'article/:id',
+        name: 'articleDetail',
+        component: () => import('./components/main-content-components/DetailArticle.vue'),
+        props: true
+        
+        
+      }]
     },
     {
       path: '/about',

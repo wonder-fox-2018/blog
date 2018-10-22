@@ -2,7 +2,8 @@
 <div class="home">
   <div class="row d-flex justify-content-center">
     <Profile :isLogin="isLogin" @updateUserId="updateUserId" @updateArticle="fetchNewArticle" v-if="isLogin" :updateProfile="updateProfile"></Profile>
-    <Article :isLogin="isLogin" :userId="userId" :updateArticle="updateArticle" @updateProfile="fetchNewProfile"></Article>
+    <router-view :userId="userId"></router-view>
+    <Article :isLogin="isLogin" :userId="userId" :updateArticle="updateArticle" @updateProfile="fetchNewProfile" v-if="!this.$route.params.id" :findArticle="findArticle"></Article>
   </div>
 </div>
 </template>
@@ -17,13 +18,18 @@ export default {
   components: {
     Profile,Article,
   },
-  props: ['isLogin'],
+  props: ['isLogin', 'findArticle'],
   data() {
     return {
-      userId: '',
-      updateArticle: '',
-      updateProfile: '',
+      userId: undefined,
+      updateArticle: undefined,
+      updateProfile: undefined,
     };
+  },
+  mounted() {
+    if (localStorage.getItem('access-token') === null) {
+      this.$router.push('/')
+    }
   },
   methods: {
     updateUserId(val) {

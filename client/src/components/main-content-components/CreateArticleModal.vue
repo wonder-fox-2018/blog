@@ -12,7 +12,7 @@
         <div class="modal-body">
           <form>
             <div class="form-group">
-              <label for="recipient-name" class="col-form-label">Ttitle:</label>
+              <label for="recipient-name" class="col-form-label">Title:</label>
               <input type="text" class="form-control" id="recipient-name" v-model="inputTitle">
             </div>
             <div class="form-group">
@@ -51,6 +51,8 @@ export default {
                     'access-token': localStorage.getItem('access-token')
                 }
             }).then((result) => {
+                this.inputTitle = '';
+                this.inputContent = '';
                 this.$emit('updateArticle', result.data._id);
             }).catch((err) => {
                 console.log(err);

@@ -41,7 +41,7 @@ export default {
     },
     methods: {
         populateData() {
-            console.log('MASUK EDIT');
+            
             this.$server({
                 method: 'get',
                 url: `article/${this.articleId}`

@@ -1,9 +1,9 @@
 <template>
   <div id="app">
-    <navbar :isLogin="isLogin" :updateLogin="updateLogin"></navbar>
+    <navbar :isLogin="isLogin" :updateLogin="updateLogin" @filterArticle="filterArticle"></navbar>
     <div class="container-fluid">
         <div class="main">
-          <router-view :updateLogin="updateLogin" :isLogin="isLogin"/>
+          <router-view :updateLogin="updateLogin" :isLogin="isLogin" :findArticle="findArticle"/>
         </div>
     </div>
   </div>
@@ -15,6 +15,7 @@ export default {
   data() {
     return {
       isLogin: false,
+      findArticle: ''
     };
   },
   components: {
@@ -31,20 +32,22 @@ export default {
         this.isLogin = false;
       }
     },
+
+    filterArticle(val) {
+      this.findArticle = val;
+    }
   },
   created() {
     
   },
   watch: {
-    isLogin: function () {
-      console.log('masuk');
-    },
+    
   },
 };
 </script>
 <style>
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: 'Roboto', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;

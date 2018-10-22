@@ -47,7 +47,7 @@ export default {
         first_name: this.inputFirstName,
         last_name: this.inputLastName,
       }).then(() => {
-        this.$router.push('/');
+        this.$router.push('/login');
       }).catch(() => {
         this.failInput = true;
       });

@@ -5,31 +5,37 @@
       alt="Card image cap">
     <div class="card-body">
       <h2 class="card-title">{{firstName}} {{lastName}}</h2>
-      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-        content.</p>
+      
     </div>
     <ul class="list-group list-group-flush">
-      <li class="list-group-item">Articles: {{userArticles.length}}</li>
-      <li class="list-group-item">Vestibulum at eros</li>
+      <li class="list-group-item">My articles: {{userArticles.length}}</li>
     </ul>
-    <div class="card-body">
-      <a class="card-link" data-toggle="modal" data-target="#modal-create-article">write an article <i class="far fa-plus-square"></i></a>
-    </div>
-   
-   
-    
-      <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false"
-        aria-controls="collapseExample">
-        show article list
-      </a>
+    <ul class="list-group list-group-flush option">
+      <button class="btn btn-outline-success" data-toggle="modal" data-target="#modal-create-article">write an article</button>
+    </ul>
 
-    
+    <ul class="list-group list-group-flush option">
+      <button class="btn btn-outline-success">
+        <router-link to="/" id="link">show all article</router-link>
+      </button>
+    </ul>
+
+
+
+    <button class="btn btn-outline-success" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false"
+      aria-controls="collapseExample">
+      browse all articles
+    </button>
+
+
     <div class="collapse" id="collapseExample">
-       <div class="card-body" id="nested-routes">
-      <ul class="list-group list-group-flush" v-for="(article, index) in allArticle" :key="index">
-        <li class="list-group-item">{{article._id}}</li>
-      </ul>
-    </div>
+      <div class="card-body" id="nested-routes">
+        <ul class="list-group list-group-flush" v-for="(article, index) in allArticle" :key="index">
+          <!-- <router-link :to="{name: 'articleDetail', params: {id: article.author._id}}"> {{article.title}} {{article.author._id}}</router-link> -->
+          <router-link :to="{path: `/article/${article._id}`}">{{article.title}}</router-link>
+
+        </ul>
+      </div>
     </div>
   </div>
   <!-- modal test -->
@@ -56,7 +62,7 @@ export default {
     },
     methods: {
       fetchProfile() {
-        console.log(localStorage.getItem('access-token'));
+       
         this.$server({
           method: 'GET',
           url: '/profile',
@@ -76,7 +82,7 @@ export default {
             }
           }).then((result) => {
            
-            this.allArticle = result.data;
+            this.allArticle = result.data.reverse();
             this.userArticles = result.data.filter((article) => {
               return article.author._id == this.id;
             });
@@ -94,6 +100,10 @@ export default {
     },
     mounted() {
 
+      if (localStorage.getItem('access-token')) {
+        
+        this.fetchProfile();
+      }
       
     },
     created() {
@@ -127,5 +137,26 @@ export default {
       height: 172px;
       overflow-y: scroll;
       overflow-x: hidden;
+    }
+
+    .option {
+      margin-bottom: 3%;
+
+    }
+
+    #link {
+      color: green;
+    }
+
+    .btn:hover #link{
+      color: white;
+    }
+
+    .btn {
+      width: 100%;
+    }
+
+    .btn:hover {
+       background-color: #22939A;
     }
 </style>

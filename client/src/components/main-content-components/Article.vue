@@ -4,27 +4,34 @@
         <div class="card-body">
           <h3 class="card-title"><b>{{article.title}}</b></h3>
           <h6 class="card-subtitle mb-2 text-muted"> <i>by: {{article.author.first_name}} {{article.author.last_name}}</i></h6>
-          <p class="card-text">{{article.content}}</p>
-          <div v-if="article.author._id === userId">
-            <a href="#" class="card-link"><i class="far fa-comment"></i></a>
-            <a class="card-link" @click="editArticle(article._id)" data-toggle="modal" data-target="#modal-edit-article"><i class="far fa-edit"></i></a>
-            <a class="card-link" @click="removeArticle(article._id)"><i class="far fa-trash-alt"></i></a>
+             <h6 class="card-subtitle mb-2 text-muted"> <i> {{new Date(article.createdAt).getDate()}}-{{new Date(article.createdAt).getMonth() + 1}}-{{new Date(article.createdAt).getFullYear()}}
+                    </i></h6><br>
+          <p class="card-text" style="text-align:left">{{article.content}}</p>
+          <div v-if="isLogin">
+            <a class="card-link" @click="editArticle(article._id)" data-toggle="modal" data-target="#modal-comment-article"><i class="far fa-comment"></i></a>
+            <a class="card-link" @click="editArticle(article._id)" data-toggle="modal" data-target="#modal-edit-article" v-if="article.author._id === userId"><i class="far fa-edit"></i></a>
+            <a class="card-link" @click="removeArticle(article._id)" v-if="article.author._id === userId"><i class="far fa-trash-alt"></i></a>
           </div>
         </div>
       </div>
+      
+
+
+      <comment-modal :article-id="editedArticle" :userId="userId"></comment-modal>
       <edit-article-modal :articleId="editedArticle" @fetchNewArticle="fetchArticle"></edit-article-modal>
     </div>
 </template>
 
 <script>
 import EditArticleModal from '@/components/main-content-components/EditArticleModal'
+import CommentModal from './commentModal.vue';
 
 export default {
     name: 'Article',
     components: {
-      EditArticleModal
+      EditArticleModal, CommentModal
     },
-    props: ['isLogin', 'userId', 'updateArticle'],
+    props: ['isLogin', 'userId', 'updateArticle', 'findArticle'],
     data: function() {
         return {
           articles: [],
@@ -58,28 +65,42 @@ export default {
         });
       },
       editArticle(id) {
-        console.log('edit');
+        
         this.editedArticle = id;
-        console.log(this.editedArticle, 'done');
-      }
+       
+      },
     },
     watch: {
       updateArticle() {
         this.fetchArticle();
+      },
+      findArticle(val) {
+        
+        if (val === '') {
+          this.fetchArticle()
+        } else {
+          this.$server({
+            method: 'get',
+            url: `/article/search/${val}`
+          }).then((result) => {
+            this.articles = result.data;
+          }).catch((err) => {
+            console.log(err);
+          });
+        }
       }
     },
     created() {
-      console.log(this.articles);
+      
       this.fetchArticle();
-      console.log(this.articles);
+     
     },
 };
 </script>
 
 <style scoped>
     .article-grid {
-        margin-top: 3%;
-        margin-bottom: 3%;
+        margin-top: 8%;
         border-bottom: solid 1px;
     }
 
