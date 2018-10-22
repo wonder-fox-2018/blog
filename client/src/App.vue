@@ -11,28 +11,27 @@
 import Navbar from '@/components/Navbar'
 
 export default {
-  name : 'app',
+  name: 'app',
   data () {
     return {
-      isadmin : '',
-      islogin : ''
+      isadmin: '',
+      islogin: ''
     }
   },
-  components : {
+  components: {
     Navbar
   },
-  methods : {
-    isLogin(val) {
+  methods: {
+    isLogin (val) {
       this.islogin = val
     },
-    isAdmin(val) {
+    isAdmin (val) {
       this.isadmin = val
     },
-    triggerChange(val) {
-      
+    triggerChange (val) {
+
     }
   }
 }
-
 
 </script>

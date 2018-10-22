@@ -5,14 +5,14 @@
       <div class="card-body">
           <div class="form-group">
             Picture :
-            <br> 
+            <br>
             <input type="file" v-on:change="addImage($event)">
             <br>
             <br>
-            Title : 
+            Title :
             <input type="text" class="form-control" rows="3" v-model="input_title">
             <br>
-            Content : 
+            Content :
             <textarea class="form-control" rows="3" v-model="input_content"></textarea>
           </div>
           <button class="btn btn-primary" v-on:click="submitArticle()">Submit Update</button>
@@ -24,128 +24,126 @@
 import config from '@/config.js'
 
 export default {
-    name : 'editarticle',
-    data () {
-        return {
-            token : '',
-            input_title : '',
-            input_content : '',
+  name: 'editarticle',
+  data () {
+    return {
+      token: '',
+      input_title: '',
+      input_content: '',
 
-            input_image : '',
-            new_image : ''
-        }
+      input_image: '',
+      new_image: ''
+    }
+  },
+  methods: {
+    checkToken () {
+      let token = localStorage.getItem('token')
+      this.token = token
+
+      if (token == null) {
+        this.$router.push('/')
+      }
     },
-    methods : {
-        checkToken() {
-            let token = localStorage.getItem('token')
-            this.token = token
-            
-            if(token == null){
-                this.$router.push('/')
-            } 
-        },
-        getValue(){
+    getValue () {
+      let self = this
+
+      axios({
+        method: 'GET',
+        url: `${config.port}/articles/${this.$route.params.articleId}`,
+        headers: {
+          token: localStorage.getItem('token')
+        }
+      })
+        .then((response) => {
+          self.input_image = response.data.data.picture
+          self.input_title = response.data.data.title
+          self.input_content = response.data.data.content
+          self.new_image = response.data.data.picture
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    },
+    submitArticle () {
+      if (this.new_image !== this.input_image) {
+        let formdata = new FormData()
+        formdata.append('image', this.new_image)
+
+        axios.post(`${config.port}/articles/upload`, formdata, {
+
+        })
+          .then((response) => {
+            let title = this.input_title
+            let content = this.input_content
+            let picture = response.data.link
+
             let self = this
 
-            axios({
-                method : 'GET',
-                url : `${config.port}/articles/${this.$route.params.articleId}`,
-                headers : {
-                    token : localStorage.getItem('token')
-                }
-            })
-            .then((response)=>{
-                self.input_image = response.data.data.picture
-                self.input_title = response.data.data.title
-                self.input_content = response.data.data.content
-                self.new_image = response.data.data.picture
-            })
-            .catch((err)=>{
-                console.log(err)
-            })
-        },
-        submitArticle() {
-            if(this.new_image !== this.input_image){
-                
-                let formdata = new FormData()
-                formdata.append('image', this.new_image);
-
-                axios.post(`${config.port}/articles/upload`, formdata, {
-
-                })
-                .then((response)=>{
-                    let title = this.input_title
-                    let content = this.input_content
-                    let picture = response.data.link
-
-                    let self = this
-
-                    let data = {
-                        title,
-                        content,
-                        picture
-                    }
-
-                    axios({
-                        method : 'PUT',
-                        url : `${config.port}/articles/${this.$route.params.articleId}`,
-                        headers : {
-                            token : localStorage.getItem('token')
-                        },
-                        data
-                    })
-                    .then((response)=>{
-                        self.input_title = ''
-                        self.input_content = ''
-                        self.input_image = ''
-                        this.$router.push('/myarticle')
-                    })
-                })
-                .catch((err)=>{
-                    console.log(err)
-                })
-            }else if(this.input_image === this.new_image){
-
-                let title = this.input_title
-                let content = this.input_content
-                let picture = this.input_image
-                
-                let self = this
-
-                let data = {
-                    title,
-                    content,
-                    picture
-                }
-
-                axios({
-                        method : 'PUT',
-                        url : `${config.port}/articles/${this.$route.params.articleId}`,
-                        headers : {
-                            token : localStorage.getItem('token')
-                        },
-                        data
-                    })
-                    .then((response)=>{
-                        self.input_title = ''
-                        self.input_content = ''
-                        self.input_image = ''
-                        this.$router.push('/myarticle')
-                    })
+            let data = {
+              title,
+              content,
+              picture
             }
-        },
-        addImage(link){
-            this.new_image = link.target.files[0];
+
+            axios({
+              method: 'PUT',
+              url: `${config.port}/articles/${this.$route.params.articleId}`,
+              headers: {
+                token: localStorage.getItem('token')
+              },
+              data
+            })
+              .then((response) => {
+                self.input_title = ''
+                self.input_content = ''
+                self.input_image = ''
+                this.$router.push('/myarticle')
+              })
+          })
+          .catch((err) => {
+            console.log(err)
+          })
+      } else if (this.input_image === this.new_image) {
+        let title = this.input_title
+        let content = this.input_content
+        let picture = this.input_image
+
+        let self = this
+
+        let data = {
+          title,
+          content,
+          picture
         }
+
+        axios({
+          method: 'PUT',
+          url: `${config.port}/articles/${this.$route.params.articleId}`,
+          headers: {
+            token: localStorage.getItem('token')
+          },
+          data
+        })
+          .then((response) => {
+            self.input_title = ''
+            self.input_content = ''
+            self.input_image = ''
+            this.$router.push('/myarticle')
+          })
+      }
     },
-    mounted () {
-        this.checkToken()
-        this.getValue()
-    },
-    created () {
-        this.checkToken()
-        this.getValue()
+    addImage (link) {
+      this.new_image = link.target.files[0]
     }
+  },
+  mounted () {
+    this.checkToken()
+    this.getValue()
+  },
+  created () {
+    this.checkToken()
+    this.getValue()
+  }
 }
 </script>
 

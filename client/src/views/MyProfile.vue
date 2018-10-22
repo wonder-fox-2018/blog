@@ -15,11 +15,11 @@
                     <!-- <small><cite title="Source Title">Chicago, United States of America <i class="icon-map-marker"></i></cite></small> -->
                 </blockquote>
                 <p>
-                    name<br> 
+                    name<br>
                     <input type="text" v-model="profile_name"> <br>
                     email<br>
                     <input type="text" v-model="profile_email"> <br>
-                    age<br> 
+                    age<br>
                     <input type="number" v-model="profile_age"> <br>
                     bio<br>
                     <textarea type="text" v-model="profile_bio"></textarea> <br>
@@ -34,82 +34,81 @@
 import config from '@/config.js'
 
 export default {
-    name : 'myprofile',
-    props : ['islogin'],
-    data() {
-        return {
-            currentuser : localStorage.getItem('currentuser'),
-            profile_name : '',
-            profile_email : '',
-            profile_age : '',
-            profile_bio : '',
-            profile_avatar : ''
-        }
-    },
-    methods : {
-        checkToken() {
-            let token = localStorage.getItem('token')
-            this.token = token
-            
-            if(token == null){
-                this.$router.push('/')
-            } 
-        },
-        getProfile(id){
-            let self = this
-
-            axios({
-                method : 'GET',
-                url : `${config.port}/users/${this.currentuser}`
-            })
-            .then((response)=>{
-                self.profile_name = response.data.name
-                self.profile_email = response.data.email
-                self.profile_age = response.data.age
-                self.profile_bio = response.data.bio
-                self.profile_avatar = response.data.avatar
-                
-            })
-            .catch((err)=>{
-                console.log(err)
-            })
-        },
-        updateProfile(){
-            let self = this
-
-            let data = {
-                name : self.profile_name,
-                email : self.profile_email,
-                age : self.profile_age,
-                bio : self.profile_bio,
-                avatar : self.profile_avatar
-            }
-
-            axios({
-                method : 'PUT',
-                url : `${config.port}/users/update`,
-                headers : {
-                    token : localStorage.getItem('token')
-                },
-                data
-            })
-            .then((response)=>{
-                console.log(response)
-            })
-            .catch((err)=>{
-                console.log(err)
-            })
-        }
-    },
-    mounted() {
-        this.checkToken()
-        this.getProfile()
-    },
-    watch : {
-        islogin : function(val) {
-            this.checkToken()
-        }
+  name: 'myprofile',
+  props: ['islogin'],
+  data () {
+    return {
+      currentuser: localStorage.getItem('currentuser'),
+      profile_name: '',
+      profile_email: '',
+      profile_age: '',
+      profile_bio: '',
+      profile_avatar: ''
     }
+  },
+  methods: {
+    checkToken () {
+      let token = localStorage.getItem('token')
+      this.token = token
+
+      if (token == null) {
+        this.$router.push('/')
+      }
+    },
+    getProfile (id) {
+      let self = this
+
+      axios({
+        method: 'GET',
+        url: `${config.port}/users/${this.currentuser}`
+      })
+        .then((response) => {
+          self.profile_name = response.data.name
+          self.profile_email = response.data.email
+          self.profile_age = response.data.age
+          self.profile_bio = response.data.bio
+          self.profile_avatar = response.data.avatar
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    },
+    updateProfile () {
+      let self = this
+
+      let data = {
+        name: self.profile_name,
+        email: self.profile_email,
+        age: self.profile_age,
+        bio: self.profile_bio,
+        avatar: self.profile_avatar
+      }
+
+      axios({
+        method: 'PUT',
+        url: `${config.port}/users/update`,
+        headers: {
+          token: localStorage.getItem('token')
+        },
+        data
+      })
+        .then((response) => {
+          console.log(response)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    }
+  },
+  mounted () {
+    this.checkToken()
+    this.getProfile()
+  },
+  watch: {
+    islogin: function (val) {
+      this.checkToken()
+    }
+  }
 }
 </script>
 
@@ -128,4 +127,3 @@ export default {
     font-weight:bold;
 }
 </style>
-

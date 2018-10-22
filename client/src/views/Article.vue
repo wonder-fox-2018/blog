@@ -20,7 +20,7 @@
           <!-- Date/Time -->
           <p v-html="'Posted on ' + article.data.createdAt.slice(0, 10)"></p>
             <!-- Posted on January 1, 2018 at 12:00 PM -->
-          
+
           <hr>
 
           <!-- Preview Image -->
@@ -54,8 +54,6 @@
             </div>
           </div>
 
-          
-
         </div>
 
         <!-- Sidebar Widgets Column -->
@@ -73,112 +71,111 @@ import config from '@/config.js'
 import Sidebar from '@/components/Sidebar.vue'
 
 export default {
-    name : 'completearticle',
-    components : {
-        Sidebar
-    },
-    props : ['islogin'],
-    data () {
-        return {
-            article : '',
-            inputcomment : '',
-            comments : '',
-            triggerevent : '',
-            token : '',
-            commentform : false,
-            currentuser : localStorage.getItem('currentuser')
-        }
-    },
-    methods : {
-        getArticle(id){
-            let self = this
-
-            axios({
-                method : 'GET',
-                url : `${config.port}/articles/${id}`
-            })
-            .then((response)=>{
-                // console.log(response.data)
-                self.article = response.data
-                self.comments = self.article.data.comments
-            })
-            .catch((err)=>{
-                console.log(err)
-            })
-        },
-        submitComment(){
-            // console.log('submit comment')
-
-            let self = this
-            
-            axios({
-                method : 'POST',
-                url : `${config.port}/comments/${this.$route.params.articleId}`,
-                headers : {
-                    token : self.token
-                },
-                data : {
-                    thecomment : self.inputcomment
-                }
-                })
-                .then((response)=>{
-                    self.inputcomment = ''
-                    self.triggerevent = response
-                })
-                .catch((err)=>{
-                    console.log(err)
-                })
-        },
-        deleteComment(id){
-            let self = this
-
-            axios({
-                method : 'DELETE',
-                url : `${config.port}/comments/${id}`,
-                headers : {
-                    token : localStorage.getItem('token')
-                }
-            })
-            .then((response)=>{
-                // console.log(response.data)
-                self.triggerevent = response
-                
-            })
-            .catch((err)=>{
-                console.log(err)
-            })
-        },
-        checkToken(){
-            let token = localStorage.getItem('token')
-            if(token){
-                this.currentuser = localStorage.getItem('currentuser')
-                this.token = token
-                this.islogin = true
-            }else{
-                this.islogin = false
-                this.currentuser = ''
-            }
-        }
-    },
-    created () {
-        this.getArticle(this.$route.params.articleId)
-        this.checkToken()
-    },
-    mounted (){
-        this.checkToken()
-    },
-    watch : {
-        triggerevent : function(val) {
-            this.getArticle(this.$route.params.articleId)
-        },
-        islogin : function(val) {
-            this.checkToken()
-            this.getArticle(this.$route.params.articleId)
-        },
-        currentuser : function(val){
-            this.getArticle(this.$route.params.articleId)
-        }
+  name: 'completearticle',
+  components: {
+    Sidebar
+  },
+  props: ['islogin'],
+  data () {
+    return {
+      article: '',
+      inputcomment: '',
+      comments: '',
+      triggerevent: '',
+      token: '',
+      commentform: false,
+      currentuser: localStorage.getItem('currentuser')
     }
+  },
+  methods: {
+    getArticle (id) {
+      let self = this
+
+      axios({
+        method: 'GET',
+        url: `${config.port}/articles/${id}`
+      })
+        .then((response) => {
+          // console.log(response.data)
+          self.article = response.data
+          self.comments = self.article.data.comments
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    },
+    submitComment () {
+      // console.log('submit comment')
+
+      let self = this
+
+      axios({
+        method: 'POST',
+        url: `${config.port}/comments/${this.$route.params.articleId}`,
+        headers: {
+          token: self.token
+        },
+        data: {
+          thecomment: self.inputcomment
+        }
+      })
+        .then((response) => {
+          self.inputcomment = ''
+          self.triggerevent = response
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    },
+    deleteComment (id) {
+      let self = this
+
+      axios({
+        method: 'DELETE',
+        url: `${config.port}/comments/${id}`,
+        headers: {
+          token: localStorage.getItem('token')
+        }
+      })
+        .then((response) => {
+          // console.log(response.data)
+          self.triggerevent = response
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    },
+    checkToken () {
+      let token = localStorage.getItem('token')
+      if (token) {
+        this.currentuser = localStorage.getItem('currentuser')
+        this.token = token
+        this.islogin = true
+      } else {
+        this.islogin = false
+        this.currentuser = ''
+      }
+    }
+  },
+  created () {
+    this.getArticle(this.$route.params.articleId)
+    this.checkToken()
+  },
+  mounted () {
+    this.checkToken()
+  },
+  watch: {
+    triggerevent: function (val) {
+      this.getArticle(this.$route.params.articleId)
+    },
+    islogin: function (val) {
+      this.checkToken()
+      this.getArticle(this.$route.params.articleId)
+    },
+    currentuser: function (val) {
+      this.getArticle(this.$route.params.articleId)
+    }
+  }
 }
 </script>
 

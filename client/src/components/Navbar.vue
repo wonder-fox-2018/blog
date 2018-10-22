@@ -98,107 +98,111 @@
 import config from '@/config.js'
 
 export default {
-    name: 'Navbar',
-    data () {
-        return {
-            islogin : false,
-            isadmin : false,
-            login_email : '',
-            login_password : '',
+  name: 'Navbar',
+  data () {
+    return {
+      islogin: false,
+      isadmin: false,
+      login_email: '',
+      login_password: '',
 
-            triggerchange : '',
+      triggerchange: '',
 
-            register_name : '',
-            register_email : '',
-            register_password : ''
-        }
-    },
-    mounted () {
-        this.checkToken()
-    },
-    methods : {
-        checkToken() {
-            let token = localStorage.getItem('token')
-            if(token){
-                this.islogin = true
-            }
-
-            let admin = localStorage.getItem('admin')
-            if(admin === true) {
-                this.isadmin = true
-            }
-        },
-        register() {
-            let self = this
-
-            let data = {
-                name : this.register_name,
-                email : this.register_email,
-                password : this.register_password
-            }
-
-            axios({
-                url : `${config.port}/users/signup`,
-                method : 'POST',
-                data
-            })
-            .then((response)=>{
-                console.log(response)
-                console.log(response.data)
-            })
-            .catch((err)=>{
-                console.log(err)
-            })
-        },
-        signin() {
-            let email = this.login_email
-            let password = this.login_password
-
-            let data = {
-                email,
-                password
-            }
-
-            let self = this
-
-            axios({
-                method: "POST",
-                url: `${config.port}/users/signin`,
-                data
-            })
-            .then(function (response) {
-                self.login_email = ''
-                self.login_password = ''
-
-
-                localStorage.setItem('token', response.data.token)
-                localStorage.setItem('admin',response.data.isAdmin)
-                localStorage.setItem('currentuser',response.data.userId)
-
-                if(response.data.isAdmin === true){
-                    self.isadmin = true
-                }
-                self.islogin = true
-
-                self.$emit('islogin-data',self.islogin)
-                self.$emit('isadmin-data',self.isadmin)
-                // console.log(this.isadmin)
-            })
-            .catch(function (err){
-                self.failedLogin = true
-                console.log(err)
-            })
-        },
-        signout() {
-            localStorage.removeItem('token')
-            localStorage.removeItem('admin')
-            this.islogin = false
-            this.isadmin = false
-            this.$emit('trigger-change',this.triggerchange)
-            this.$emit('islogin-data',this.islogin)
-            this.$emit('isadmin-data',this.isadmin)
-        }
+      register_name: '',
+      register_email: '',
+      register_password: ''
     }
+  },
+  mounted () {
+    this.checkToken()
+  },
+  methods: {
+    checkToken () {
+      let token = localStorage.getItem('token')
+      if (token) {
+        this.islogin = true
+      }
+
+      let admin = localStorage.getItem('admin')
+      if (admin === true) {
+        this.isadmin = true
+      }
+    },
+    register () {
+      let self = this
+
+      let data = {
+        name: this.register_name,
+        email: this.register_email,
+        password: this.register_password
+      }
+
+      axios({
+        url: `${config.port}/users/signup`,
+        method: 'POST',
+        data
+      })
+        .then((response) => {
+          console.log(response)
+          console.log(response.data)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    },
+    signin () {
+      let email = this.login_email
+      let password = this.login_password
+
+      let data = {
+        email,
+        password
+      }
+
+      let self = this
+
+      axios({
+        method: 'POST',
+        url: `${config.port}/users/signin`,
+        data
+      })
+        .then(function (response) {
+          self.login_email = ''
+          self.login_password = ''
+
+        //   console.log(response.data.name)
+
+          localStorage.setItem('token', response.data.token)
+          localStorage.setItem('admin', response.data.isAdmin)
+          localStorage.setItem('currentuser', response.data.userId)
+          localStorage.setItem('name', response.data.name)
+
+          if (response.data.isAdmin === true) {
+            self.isadmin = true
+          }
+          self.islogin = true
+
+          self.$emit('islogin-data', self.islogin)
+          self.$emit('isadmin-data', self.isadmin)
+          // console.log(this.isadmin)
+        })
+        .catch(function (err) {
+          self.failedLogin = true
+          console.log(err)
+        })
+    },
+    signout () {
+      localStorage.removeItem('token')
+      localStorage.removeItem('admin')
+      localStorage.removeItem('currentuser')
+      localStorage.removeItem('name')
+      this.islogin = false
+      this.isadmin = false
+      this.$emit('trigger-change', this.triggerchange)
+      this.$emit('islogin-data', this.islogin)
+      this.$emit('isadmin-data', this.isadmin)
+    }
+  }
 }
 </script>
 

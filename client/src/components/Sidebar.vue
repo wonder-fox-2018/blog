@@ -31,78 +31,77 @@
         </div>
 
         <!-- Side Widget -->
-        <!-- <div class="card my-4">
-            <h5 class="card-header">Side Widget</h5>
-            <div class="card-body">
-                <i>...under construction...
-            </div>
-        </div> -->
+        <global-chat></global-chat>
     </div>
 </template>
 
 <script>
-import config from '@/config.js'    
+import config from '@/config.js'
+import GlobalChat from '@/components/GlobalChat.vue'
 
 export default {
-    name: 'Sidebar',
-    data () {
-        return {
-            input_search : '',
-            all_categories : '',
+  name: 'Sidebar',
+  data () {
+    return {
+      input_search: '',
+      all_categories: '',
 
-            category_result : ''
-        }
-    },
-    methods : {
-        runSearch() {
-            let self = this
-            axios({
-                method : 'GET',
-                url : `${config.port}/articles/search?keyword=${self.input_search}`,
-            })
-            .then((response)=>{
-                self.$emit('search-result',response.data.data)
-                console.log(response.data.data)
-            })
-            .catch((err)=>{
-                console.log(err)
-            })
-        },
-        getCategories(){
-            let self = this
-
-            axios({
-                method : 'GET',
-                url : `${config.port}/categories/`
-            })
-            .then((response)=>{
-                self.all_categories = response.data
-                console.log(response)
-            })
-            .catch((err)=>{
-                console.log(err)
-            })
-        },
-        getByCategory(id){
-            let self = this
-
-            axios({
-                method : 'GET',
-                url : `${config.port}/articles/bycategory/${id}`
-            })
-            .then((response)=>{
-                console.log(response.data.data)
-
-                self.$emit('category-result',response.data.data)
-            })
-            .catch((err)=>{
-                console.log(err)
-            })
-        }
-    },
-    created () {
-        this.getCategories()
+      category_result: ''
     }
+  },
+  components : {
+    GlobalChat
+  },
+  methods: {
+    runSearch () {
+      let self = this
+      axios({
+        method: 'GET',
+        url: `${config.port}/articles/search?keyword=${self.input_search}`
+      })
+        .then((response) => {
+          self.$emit('search-result', response.data.data)
+          console.log(response.data.data)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    },
+    getCategories () {
+      let self = this
+
+      axios({
+        method: 'GET',
+        url: `${config.port}/categories/`
+      })
+        .then((response) => {
+          self.all_categories = response.data
+          console.log(response)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    },
+    getByCategory (id) {
+      let self = this
+
+      axios({
+        method: 'GET',
+        url: `${config.port}/articles/bycategory/${id}`
+      })
+        .then((response) => {
+          console.log(response.data.data)
+
+          self.$emit('category-result', response.data.data)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    }
+  },
+  created () {
+    this.getCategories()
+  }
 }
 </script>
 

@@ -12,11 +12,11 @@ export default new Router({
       path: '/',
       name: 'home',
       component: Home,
-      children : [
+      children: [
         {
           path: '/author/:authorId',
           name: 'authorprofile',
-          props : true,
+          props: true,
           component: () => import(/* webpackChunkName: "about" */ './views/Author.vue')
         }
       ]

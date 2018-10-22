@@ -46,16 +46,16 @@ export default {
   },
   data () {
     return {
-      searchresult : '',
-      categoryresult : ''
+      searchresult: '',
+      categoryresult: ''
     }
   },
-  methods : {
-    searchResult(val){
+  methods: {
+    searchResult (val) {
       // console.log('val in home from sidebar',val)
       this.searchresult = val
     },
-    categoryResult(val){
+    categoryResult (val) {
       this.categoryresult = val
     }
   }

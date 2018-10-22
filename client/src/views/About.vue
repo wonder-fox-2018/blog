@@ -1,5 +1,9 @@
 <template>
   <div class="about">
-    <h1>This is an about page</h1>
+    <br>
+    <center>
+    <h1>PORTOFOLIO WEEK 3</h1>
+    <h3>fmurtadho</h3>
+    </center>
   </div>
 </template>

@@ -13,7 +13,7 @@
                     <small><cite title="Source Title">{{profile_email}} <i class="icon-map-marker"></i></cite></small>
                 </blockquote>
                 <p>
-                    age<br> 
+                    age<br>
                     {{profile.age}} <br>
                     bio<br>
                     {{profile.bio}}<textarea type="text" v-model="profile_bio"></textarea> <br>
@@ -27,40 +27,40 @@
 import config from '@/config.js'
 
 export default {
-    name : 'authorprofile',
-    props : ['islogin'],
-    data() {
-        return {
-            profile_name : '',
-            profile_email : '',
-            profile_age : '',
-            profile_bio : '',
-            profile_avatar : ''
-        }
-    },
-    methods : {
-        getProfile(id){
-            let self = this
-
-            axios({
-                method : 'GET',
-                url : `${config.port}/users/${id}`
-            })
-            .then((response)=>{
-                self.profile_name = response.data.name
-                self.profile_email = response.data.email
-                self.profile_age = response.data.age
-                self.profile_bio = response.data.bio
-                self.profile_avatar = response.data.avatar
-            })
-            .catch((err)=>{
-                console.log(err)
-            })
-        }
-    },
-    mounted() {
-        this.getProfile(this.$route.params.authorId)
+  name: 'authorprofile',
+  props: ['islogin'],
+  data () {
+    return {
+      profile_name: '',
+      profile_email: '',
+      profile_age: '',
+      profile_bio: '',
+      profile_avatar: ''
     }
+  },
+  methods: {
+    getProfile (id) {
+      let self = this
+
+      axios({
+        method: 'GET',
+        url: `${config.port}/users/${id}`
+      })
+        .then((response) => {
+          self.profile_name = response.data.name
+          self.profile_email = response.data.email
+          self.profile_age = response.data.age
+          self.profile_bio = response.data.bio
+          self.profile_avatar = response.data.avatar
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    }
+  },
+  mounted () {
+    this.getProfile(this.$route.params.authorId)
+  }
 }
 </script>
 
@@ -79,4 +79,3 @@ export default {
     font-weight:bold;
 }
 </style>
-

@@ -22,43 +22,43 @@
 import config from '@/config.js'
 
 export default {
-    name : 'AllArticle',
-    props : ['searchresult','categoryresult'],
-    data () {
-        return {
-            allArticle : '',
-        }
-    },
-    methods : {
-        getAllArticle() {
-            let self = this
-
-            axios({
-                method : 'GET',
-                url : `${config.port}/articles`
-            })
-            .then((response)=>{
-                self.allArticle = response.data
-            })
-            .catch((err)=>{
-                console.log(err)
-            })
-        }
-    },
-    created() {
-        this.getAllArticle()
-    },
-    mounted() {
-        this.getAllArticle()
-    },
-    watch : {
-        searchresult : function(val) {
-            this.allArticle.data = this.searchresult
-        },
-        categoryresult : function(val){
-            this.allArticle.data = this.categoryresult
-        }
+  name: 'AllArticle',
+  props: ['searchresult', 'categoryresult'],
+  data () {
+    return {
+      allArticle: ''
     }
+  },
+  methods: {
+    getAllArticle () {
+      let self = this
+
+      axios({
+        method: 'GET',
+        url: `${config.port}/articles`
+      })
+        .then((response) => {
+          self.allArticle = response.data
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    }
+  },
+  created () {
+    this.getAllArticle()
+  },
+  mounted () {
+    this.getAllArticle()
+  },
+  watch: {
+    searchresult: function (val) {
+      this.allArticle.data = this.searchresult
+    },
+    categoryresult: function (val) {
+      this.allArticle.data = this.categoryresult
+    }
+  }
 }
 </script>
 
