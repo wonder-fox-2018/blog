@@ -25,7 +25,7 @@
       <h6>You can upload an image here if you want to (<b>max. 3 MB</b>)</h6>
       <input type="file" accept="image/png, image/jpeg" @change='imgChange' style='width: auto; font-size: 14px; border: 2px solid #42b983'><br>
       <input type="text" v-model='title' placeholder="Title"><br>
-      <textarea v-model='content' placeholder="Content" rows="12"></textarea><br>
+      <wysiwyg v-model='content' style="height: 200px; overflow: auto" class="text-left"></wysiwyg><br>
       <div class='userloc border-top border-bottom'>
         <div v-if='!shareLoc'>
           <h6 v-if='detectedLoc'>We've detected that you're writing this from</h6>

@@ -260,11 +260,11 @@ a:hover {
 }
 
 #addModal {
-    top: 1%;
-    max-height: 98%;
+    top: 5%;
+    max-height: 95%;
 }
 
-#addModal input, #addModal textarea, #editModal input, #editModal textarea {
+#addModal input, #addModal wysiwyg, #editModal input, #editModal wysiwyg {
     border: none;
     margin: 1vh 0;
     width: 100%;
@@ -272,7 +272,7 @@ a:hover {
     font-family: 'Roboto', sans-serif;
 }
 
-#addModal input:focus, #addModal textarea:focus, #editModal input:focus, #editModal textarea:focus {
+#addModal input:focus, #addModal wysiwyg:focus, #editModal input:focus, #editModal wysiwyg:focus {
     outline: 2px solid #42b983;
 }
 
@@ -282,7 +282,7 @@ a:hover {
     padding: 10px 20px;
 }
 
-#addModal textarea, #editModal textarea {
+#addModal wysiwyg, #editModal wysiwyg {
     font-size: 15px;
     font-weight: 400;
     padding: 15px 20px;
@@ -372,13 +372,13 @@ a:hover {
     outline: none;
 }
 
-#comment textarea {
+#comment wysiwyg {
     width: 100%;
     padding: 10px 15px;
     font-size: 16px;
 }
 
-#comment textarea:focus {
+#comment wysiwyg:focus {
     outline: 2px solid #42b983
 }
 
@@ -398,14 +398,14 @@ a:hover {
     height: 75px !important;
 }
 
-.replies textarea {
+.replies wysiwyg {
     width: 100%;
     border: 1px solid gainsboro;
     font-size: 16px;
     padding: 10px;
 }
 
-.replies textarea:focus {
+.replies wysiwyg:focus {
     outline: 2px solid #42b983
 }
 

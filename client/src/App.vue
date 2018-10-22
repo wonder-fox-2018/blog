@@ -40,4 +40,5 @@ export default {
   font-family: 'Monthoers';
   src: local('Monthoers'), url('../src/assets/fonts/Monthoers.otf') format('opentype');
 }
+@import "~vue-wysiwyg/dist/vueWysiwyg.css";
 </style>

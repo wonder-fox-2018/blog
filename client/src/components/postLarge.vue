@@ -18,7 +18,7 @@
           <div class="img-overlay"></div>
           <div class="card-body">
             <h5 class="card-title border-bottom mb-4 pb-2"><strong>{{ post.title }}</strong></h5>
-            <p class="card-text">{{ post.content | contentSlice }}</p>
+            <p class="card-text" v-html='contentSlice(post.content)'></p>
           </div>
         </router-link>
       </div>
@@ -42,11 +42,11 @@
         <h5> <b>{{ detail.author.name }}</b></h5>
         <h6 v-if='detail.location.length > 0'  style="margin-bottom: 75px"><span class='writeLoc' @click='geocode'><b><i class="fas fa-map-marker-alt pr-1"></i> {{ detail.location }}</b></span></h6>
         <h6 v-else style="margin-bottom: 75px" class="placeholder">placeholder</h6>
-        <p class="card-text">{{ detail.content }}</p>
+        <p class="card-text" v-html='detail.content'></p>
       </div>
       <div v-if="signedin" class="text-left" id='comment'>
         <h5>Add your comments here . . .</h5>
-        <textarea rows="2" placeholder="Comment" onfocus='this.placeholder = ""' onblur='this.placeholder = "Comment"' v-model='comment'></textarea>
+        <wysiwyg class="text-left" style="height: 100px; overflow: auto" v-model='comment'></wysiwyg>
         <div class="text-center">
           <div v-if='commentNotice.length > 0' style='color: #42b983'>{{ commentNotice }}</div>
           <div v-else class="placeholder">placeholder</div>
@@ -67,7 +67,7 @@
           <div class="col-1" v-else></div>
           <div v-if='signedin' class="row col-12 mt-4 pr-0">
             <div class="col-11 mb-1 replies">
-              <textarea rows="2" placeholder="Reply to this comment"  onfocus='this.placeholder = ""' onblur='this.placeholder = "Reply to this comment"' v-model='reply[index]'></textarea>
+              <wysiwyg class='text-left' style="height: 100px; overflow: auto" placeholder="Reply to this comment"  onfocus='this.placeholder = ""' onblur='this.placeholder = "Reply to this comment"' v-model='reply[index]'></wysiwyg>
             </div>
             <div class="col-1 mb-1 replyBtn">
               <button @click='replyComment(comment._id, index)'><i class="fas fa-paper-plane"></i></button>
@@ -98,7 +98,7 @@
       <div id='editModal' v-if='openEditModal'>
         <button @click='editModal' class="float-right" style="margin: -25px -25px 0 0; padding: 0; border: 0; background: transparent; color: #42b983"><i class="far fa-times-circle"></i></button>
         <input type="text" v-model='title' placeholder="Title"><br>
-        <textarea v-model='content' placeholder="Content" rows="15"></textarea><br>
+        <wysiwyg v-model='content' class="text-left" style="height: 300px; overflow: auto"></wysiwyg><br>
         <div v-if='notice.length > 0' style='color: #42b983'>{{ notice }}</div>
         <div v-else class="placeholder">placeholder</div>
         <button @click='editModal'>Argh, no, it's perfect!</button>
@@ -342,9 +342,7 @@ export default {
     mapModal () {
       this.optBackdrop = !this.optBackdrop
       this.openMap = !this.openMap
-    }
-  },
-  filters: {
+    },
     contentSlice (value) {
       if (value.length > 280) {
         if (value[279] === ' ') {
