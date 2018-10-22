@@ -5,6 +5,8 @@ const Middlewares = require('../middlewares/index');
 
 router.get('/', ArticleController.showAll);
 
+router.get('/search/:keyword', ArticleController.findByKeyword);
+
 router.get('/:id', ArticleController.findById);
 
 router.use(Middlewares.isLogin);

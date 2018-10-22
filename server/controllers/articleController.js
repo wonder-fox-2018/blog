@@ -65,10 +65,20 @@ module.exports = {
     },
 
     findById: (req, res) => {
-        Article.findById(req.params.id).then((article) => {
+        Article.findById(req.params.id).populate('author', '_id first_name last_name').then((article) => {
             res.status(200).json(article);
         }).catch((err) => {
             res.status(500).json(err.message);
+        });
+    },
+
+    findByKeyword: (req, res) => {
+        Article.find( { $or: [{title: new RegExp(req.params.keyword, 'i')}, {content: new RegExp(req.params.keyword, 'i')}]}).then((result) => {
+            console.log(result);
+            res.status(200).json(result);
+        }).catch((err) => {
+            
+            res.status(500).json(err);
         });
     }
 
