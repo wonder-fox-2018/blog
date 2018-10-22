@@ -314,7 +314,7 @@ describe('Comment', function () {
                 .end((err, res) => {
                     expect(res).to.have.status(500)
                     expect(res.body).to.have.property('message')
-                    expect(res.body.message).to.equal('A comment has to have a content')
+                    expect(res.body.message).to.equal('A reply has to have a content')
                     done()
                 })
             })
@@ -390,8 +390,50 @@ describe('Comment', function () {
         })
 
         describe('=====> valid token', function () {
+
+            let commentId3 = ''
             
-            it('should delete added comment', function(done) {
+            this.beforeAll('Add one more level 2 comment', function(done) {
+                chai
+                .request(app)
+                .post('/comments/stack')
+                .set({
+                    token: token
+                })
+                .send({
+                    words: 'Comment Test',
+                    commentId: commentId,
+                })
+                .end((err, res) => {
+                    commentId3 = res.body.data._id
+                    done()
+                })
+            })
+
+            it('delete level 2 comment | should only delete the level 2 comment', function(done) {
+                chai
+                .request(app)
+                .delete(`/comments/${commentId3}`)
+                .set({
+                    token: token
+                })
+                .end((err, res) => {
+                    expect(res).to.have.status(200)
+                    
+                    // THIS ONE BELOW IS TO CHECK IF THE COMMENT IS DELETED
+                    chai
+                    .request(app)
+                    .get('/comments/')
+                    .end((err, res) => {
+                        expect(res).to.have.status(200)
+                        expect(res.body.data).to.be.a('array')
+                        expect(res.body.data).to.have.lengthOf(2) // CAUSE WE MADE 3 COMMENTS AND IT SHOULD ONLY DELETE 1
+                        done()
+                    })        
+                })
+            })
+
+            it('delete level 1 comment | should delete the level 1 comment and all associated level 2 comments', function(done) {
                 chai
                 .request(app)
                 .delete(`/comments/${commentId}`)
@@ -408,7 +450,7 @@ describe('Comment', function () {
                     .end((err, res) => {
                         expect(res).to.have.status(200)
                         expect(res.body.data).to.be.a('array')
-                        expect(res.body.data).to.have.lengthOf(1) // CAUSE WE MADE 2 COMMENTS AND WE ONLY DELETED 1
+                        expect(res.body.data).to.have.lengthOf(0) // CAUSE WE MADE 3 COMMENTS, WE SHOULD HAVE DELETED 1, AND IT SHOULD DELETE THE OTHER 2
                         done()
                     })        
                 })

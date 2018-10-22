@@ -254,7 +254,7 @@ describe('User', function() {
             .end((err, res) => {
                 expect(res).to.have.status(500)
                 expect(res.body).to.have.property('message')
-                expect(res.body.message).to.equal('The email is unregistered')
+                expect(res.body.message).to.equal('Incorrect email and/or password')
                 done()
             })
         })
@@ -286,7 +286,7 @@ describe('User', function() {
             .end((err, res) => {
                 expect(res).to.have.status(500)
                 expect(res.body).to.have.property('message')
-                expect(res.body.message).to.equal('Wrong password')
+                expect(res.body.message).to.equal('Incorrect email and/or password')
                 done()
             })
         })

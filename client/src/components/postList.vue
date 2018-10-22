@@ -230,10 +230,10 @@ export default {
     },
     detectLoc () {
       axios({
-        url: 'http://ip-api.com/json'
+        url: 'https://api.ipgeolocation.io/ipgeo?apiKey=09a9b19f92b24659af94da487a5ae169'
       })
         .then(data => {
-          this.userLoc = `${data.data.city}, ${data.data.country}`
+          this.userLoc = `${data.data.state_prov}, ${data.data.country_name}`
           this.detectedLoc = true
         })
         .catch(err => {
