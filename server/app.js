@@ -11,7 +11,6 @@ const mongoose = require('mongoose')
 const cors     = require('cors')
 require('dotenv').config()
 const app = express()
-const port = 3000
 
 // mongoose.connect(process.env.MY_LOCAL_MONGODB, { useNewUrlParser: true });
 mongoose.connect(process.env.MY_MLAB_MONGODB, { useNewUrlParser: true });
