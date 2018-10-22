@@ -5,7 +5,7 @@ import router from './router';
 
 
 Vue.config.productionTip = false;
-Vue.prototype.$server = axios.create({ baseURL: 'http://localhost:3000' });
+Vue.prototype.$server = axios.create({ baseURL: 'https://blog.payogaputra.com' });
 
 
 new Vue({
