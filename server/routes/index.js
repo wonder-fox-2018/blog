@@ -1,18 +1,16 @@
 'use strict'
 const express = require('express'),
       router = express.Router(),
-      images = require('../middleware/upload')
+      images = require('../helpers/images')
 
 /* GET main endpoint. */
 router.get('/', (req, res, next) => {
   res.send({ message: 'Welcome Buddy!' })
 })
-
 router.post('/upload',
   images.multer.single('image'), 
   images.sendUploadToGCS,
   (req, res) => {
-    console.log('msuk post upload...')
     res.send({
       status: 200,
       message: 'Your file is successfully uploaded',

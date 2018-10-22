@@ -63,34 +63,64 @@ export default {
         image: self.image
       }
       if(this.selectedFile) {
-        onUpload(this.selectedFile)
+        this.onUpload(this.selectedFile)
+      } else {
+        axios.post('http://localhost:3000/articles', data, {
+          headers: {
+            authorization: `Bearer ${localStorage.getItem('token')}`
+          }
+        })
+        .then((result) => {
+          // console.log(result)
+          self.success = true,
+          self.msg = 'Success created new Article'
+          this.clearState()
+        }).catch((err) => {
+          // console.log('ERROR:', err)
+          self.error = true
+          self.msg = err.response.data.message || 'internal server error!'
+        });
       }
-      axios.post('http://localhost:3000/articles', data, {
-        headers: {
-          authorization: `Bearer ${localStorage.getItem('token')}`
-        }
-      })
-      .then((result) => {
-        // console.log(result)
-        self.success = true,
-        self.msg = 'Success created new Article'
-      }).catch((err) => {
-        // console.log('ERROR:', err)
-        self.error = true
-        self.msg = err.response.data.message || 'internal server error!'
-      });
-      this.clearState()
+      
     },
     onFileSelected(event) {
       // console.log('upload event--', event)
       this.selectedFile = event.target.files[0]
     },
     onUpload(file) {
+      this.neutralize()
+      let self = this
       const fd = new FormData()
       fd.append('image', file, file.name)
-      axios.post('', fd)
-      .then()
-      .cathc(err=>{
+      console.log('ini fd---',file)
+      axios.post('http://localhost:3000/upload', fd)
+      .then(res=>{
+        let token = localStorage.getItem('token')
+        let userId = localStorage.getItem('userId')
+        let data = {
+          author: userId, 
+          title: self.title,
+          contents: self.contents,
+          image: res.data.link
+        }
+        console.log('ini hasil upload---',res, 'dan data', data)
+        axios.post('http://localhost:3000/articles', data, {
+          headers: {
+            authorization: `Bearer ${localStorage.getItem('token')}`
+          }
+        })
+        .then((result) => {
+          console.log(result)
+          self.success = true,
+          self.msg = 'Success created new Article'
+        }).catch((err) => {
+          console.log('ERROR:', err)
+          self.error = true
+          self.msg = err.response.data.message || 'internal server error!'
+        });
+        this.clearState()
+      })
+      .catch(err=>{
         console.log(err)
       })
     }
