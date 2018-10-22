@@ -13,7 +13,8 @@
             <input type="text" class="form-control" rows="3" v-model="input_title">
             <br>
             Content :
-            <textarea class="form-control" rows="3" v-model="input_content"></textarea>
+            <wysiwyg v-model="input_content"/>
+            <br>
           </div>
           <button class="btn btn-primary" v-on:click="submitArticle()">Submit Update</button>
       </div>
