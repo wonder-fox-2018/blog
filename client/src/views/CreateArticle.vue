@@ -41,6 +41,7 @@ import config from '@/config.js'
 
 export default {
   name: 'createarticle',
+  props: ['islogin'],
   data () {
     return {
       token: '',
@@ -120,6 +121,11 @@ export default {
   },
   created () {
     this.checkToken()
+  },
+  watch : {
+    islogin : function(val) {
+      this.checkToken()
+    }
   }
 }
 </script>

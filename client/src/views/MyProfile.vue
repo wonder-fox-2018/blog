@@ -1,6 +1,12 @@
 <template>
     <div class="container">
         <div class="row">
+            <div class="alert alert-success" v-if="success === true" role="alert">
+                Update Success!
+            </div>
+            <div class="alert alert-danger" v-if="failed === true" role="alert">
+                Update Failed :(
+            </div>
             <div class="col-md-6 img">
                 <img v-bind:src="profile_avatar"
                     alt="" class="img-rounded">
@@ -43,7 +49,10 @@ export default {
       profile_email: '',
       profile_age: '',
       profile_bio: '',
-      profile_avatar: ''
+      profile_avatar: '',
+
+      success : false,
+      failed : false
     }
   },
   methods: {
@@ -93,9 +102,11 @@ export default {
         data
       })
         .then((response) => {
+          self.success = true
           console.log(response)
         })
         .catch((err) => {
+          self.failed = true
           console.log(err)
         })
     }

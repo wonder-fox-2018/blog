@@ -46,7 +46,7 @@
 
           <!-- Single Comment -->
           <div class="media mb-4" v-for="(comment, index) in comments" :key="index">
-            <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+            <img class="d-flex mr-3 rounded-circle" style="max-height:50px;max-width:50px;" v-bind:src="comment.user.avatar" alt="">
             <div class="media-body">
               <h5 class="mt-0">{{comment.user.name}}</h5>
               {{comment.thecomment}}<br>
