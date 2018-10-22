@@ -12,8 +12,8 @@
           <!-- Side Widget -->
           <list></list>
 <!-- Side Widget -->
-          <banner></banner>
           <!-- tweeter -->
+          <chat></chat>
           <sosialMedia></sosialMedia>
         </div>
       </div>
@@ -22,12 +22,11 @@
 </template>
 
 <script>
-
+import chat from '@/components/chat.vue'
 import articlelist from '@/components/articlelist.vue'
 import searchWidget from '@/components/searchWidget.vue'
 import categories from '@/components/categories.vue'
 import sosialMedia from '@/components/sosialMedia.vue'
-import banner from '@/components/banner.vue'
 import list from '@/components/list.vue'
 export default {
   props : ['article'],
@@ -36,8 +35,8 @@ export default {
     searchWidget,
     categories,
     sosialMedia,
-    banner,
-    list
+    list,
+    chat
   },
   methods: {
     searchArticle(value) {

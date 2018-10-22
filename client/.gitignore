@@ -19,3 +19,11 @@ yarn-error.log*
 *.njsproj
 *.sln
 *.sw*
+
+#firebase
+.firebase
+.firebaserc
+firebase.json
+postcss.config.js
+.browserslistrc
+/src/assets/config.js

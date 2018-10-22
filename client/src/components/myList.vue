@@ -45,7 +45,6 @@ export default {
   watch: {
     category() {
       this.username = localStorage.getItem('username')
-      console.log(this.username)
       if(this.category === 'all'){
         this.getMyList()
       }
@@ -68,7 +67,6 @@ export default {
       this.idArticle = value
     },
     deleteArticle : function(value){
-      console.log(value)
       axios({
         method : 'DELETE',
         url : `${config.port}/articles/delete/${value}`,
@@ -77,7 +75,6 @@ export default {
         }
       })
       .then(response => {
-        console.log(response)
         this.getMyList()
         this.updatecomponent()
       })
@@ -114,12 +111,9 @@ export default {
         url : `${config.port}/articles/show`,
       })
       .then(response => {
-        // console.log(response.data)
-        // this.myArticle = response.data
         let byCategory = response.data.filter(datum => {
           return this.category === datum.category
         })
-        console.log(byCategory)
         this.myArticle = byCategory
       })
       .catch(err => {

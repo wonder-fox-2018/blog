@@ -1,8 +1,10 @@
 <template>
     <div class="card my-4">
         <h5 class="card-header">List</h5>
-        <div v-for="(value, index) in listArticle" :key="index">
-            <a class="btn" @click="detailArticle(value._id)">{{value.title}}</a>
+        <div class="card-body container">
+            <div class="d-flex justify-content-center" v-for="(value, index) in listArticle" :key="index">
+                <div id="div-link" @click="detailArticle(value._id)">{{value.title}}</div>
+            </div>
         </div>
     </div>
 </template>
@@ -45,6 +47,11 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+    /* .card {
+        overflow: scroll;
+    } */
+    #div-link {
+        cursor: pointer;
+    }
 </style>
