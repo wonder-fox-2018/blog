@@ -13,7 +13,8 @@ require('dotenv').config()
 const app = express()
 const port = 3000
 
-mongoose.connect(process.env.MY_LOCAL_MONGODB, { useNewUrlParser: true });
+// mongoose.connect(process.env.MY_LOCAL_MONGODB, { useNewUrlParser: true });
+mongoose.connect(process.env.MY_MLAB_MONGODB, { useNewUrlParser: true });
 
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'mongo failed to connect:'));

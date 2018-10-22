@@ -15,6 +15,10 @@
             Content :
             <wysiwyg v-model="input_content"/>
             <br>
+            <select v-model="input_category" name="Category">
+              <option value="5bcd95e598b8c41a2c71af56">Funny</option>
+              <option value="5bcd95e098b8c41a2c71af55">Serious</option>
+            </select>
           </div>
           <button class="btn btn-primary" v-on:click="submitArticle()">Submit Update</button>
       </div>
@@ -33,7 +37,9 @@ export default {
       input_content: '',
 
       input_image: '',
-      new_image: ''
+      new_image: '',
+
+      input_category: ''
     }
   },
   methods: {
@@ -60,12 +66,14 @@ export default {
           self.input_title = response.data.data.title
           self.input_content = response.data.data.content
           self.new_image = response.data.data.picture
+          self.input_category = response.data.data.category
         })
         .catch((err) => {
           console.log(err)
         })
     },
     submitArticle () {
+      
       if (this.new_image !== this.input_image) {
         let formdata = new FormData()
         formdata.append('image', this.new_image)
@@ -77,13 +85,15 @@ export default {
             let title = this.input_title
             let content = this.input_content
             let picture = response.data.link
+            let category = this.input_category
 
             let self = this
 
             let data = {
               title,
               content,
-              picture
+              picture,
+              category
             }
 
             axios({
@@ -108,13 +118,15 @@ export default {
         let title = this.input_title
         let content = this.input_content
         let picture = this.input_image
+        let category = this.input_category
 
         let self = this
 
         let data = {
           title,
           content,
-          picture
+          picture,
+          category
         }
 
         axios({

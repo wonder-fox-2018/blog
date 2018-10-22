@@ -27,8 +27,8 @@
                 Category :
                 <br>
                 <select v-model="input_category" name="Category">
-                    <option value="5bcd3a46991786086325b225">Funny</option>
-                    <option value="5bcd3a4b991786086325b226">Serious</option>
+                    <option value="5bcd95e598b8c41a2c71af56">Funny</option>
+                    <option value="5bcd95e098b8c41a2c71af55">Serious</option>
                 </select>
             </div>
             <button class="btn btn-primary" v-on:click="submitArticle()">Submit</button>

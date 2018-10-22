@@ -14,7 +14,8 @@ class Controller {
                 password: encryptedPassword,
                 avatar : 'http://placehold.it/50x50',
                 age : null,
-                bio : null
+                bio : null,
+                isadmin : false
             })
             return newUser
         })

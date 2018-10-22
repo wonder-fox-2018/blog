@@ -35,6 +35,9 @@ const userSchema = new Schema({
   },
   bio : {
     type : String
+  },
+  isadmin : {
+    type : Boolean
   }
 }, {
     timestamps : true
