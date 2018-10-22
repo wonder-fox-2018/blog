@@ -76,6 +76,7 @@ describe("ARTICLES POST", function() {
         .end(function(err, res) {
           expect(res.body).to.haveOwnProperty("message");
           expect(res.body.message).to.equal(`${dataArticle.title} created`);
+          expect(res).to.have.status(201)
           done();
         });
     });
@@ -496,8 +497,6 @@ describe("ARTICLES DELETE", function() {
         .end(function(err, res) {
           expect(res.body).to.haveOwnProperty("article");
           expect(res.body).to.haveOwnProperty("message");
-          expect(res.body.article).to.haveOwnProperty("ok");
-          expect(res.body.article.ok).to.equal(1);
           expect(res.body.message).to.equal(`delete article success`);
           expect(res).to.have.status(201);
           done();

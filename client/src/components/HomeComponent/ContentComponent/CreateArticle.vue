@@ -37,7 +37,8 @@
           </div>
           <div class="field">
             <label>Content</label>
-            <textarea placeholder="Content Article" v-model="content"></textarea>
+            <!-- <textarea placeholder="Content Article" v-model="content"></textarea> -->
+            <wysiwyg v-model="content" />
           </div>
           <button @click="btnCreateArticle" class="fluid ui button" type="submit" style="float:right;">Submit</button>
         </div>
@@ -47,6 +48,7 @@
 </template>
 
 <script>
+
 import axios from "axios";
 import config from "../../../config.js";
 
@@ -58,19 +60,26 @@ export default {
       title: "",
       categoryId: "",
       content: "",
+      image: "",
 
       messageSuccess: "",
       messageError: "",
       boxSuccess: false,
-      boxError: false
+      boxError: false,
     };
+  },
+  mounted() {
+    // CKEDITOR.replace( 'editor1' );
   },
   methods: {
     btnCreateArticle: function() {
+      // var content = CKEDITOR.editor1.getData();
+
       let data = {
         title: this.title,
         category: this.categoryId,
-        content: this.content
+        content: this.content,
+        picture: "dummy.jpg"
       };
 
       axios({
@@ -98,10 +107,16 @@ export default {
       this.boxError = false;
     }
   },
-  watch: {
-    isLogin: function() {
-      this.$router.push("/");
+  computed: {
+    checkLogin: function() {
+      // console.log(this.isLogin);
+      if (this.isLogin == false) {
+        this.$router.push("/");
+      }
     }
+  },
+  watch: {
+    checkLogin: function(value) {}
   }
 };
 </script>

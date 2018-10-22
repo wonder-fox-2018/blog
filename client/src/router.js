@@ -27,12 +27,8 @@ export default new Router({
           beforeEnter: (to, from, next) => {
             let token = localStorage.getItem("token");
             if (!token) {
-              console.log(token);
-
               next(from.fullPath);
             } else {
-              console.log("====", token);
-
               next();
             }
           }

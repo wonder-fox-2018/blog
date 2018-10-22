@@ -3,8 +3,9 @@
     <div class="ui cards" style="padding-top:20px;">
       
       <BtnCreateArticle v-if="isLogin"/>
-      <Category @set-categories="setCategories"/>
+      <Category @set-categories="setCategories" @article-from-category="articleFromCategory"/>
       <PopularArticle/>
+      <Chatting :is-login="isLogin" :user-email="userEmail"/>
 
     </div>
   </div>
@@ -14,6 +15,7 @@
 import Category from "./Categories.vue";
 import PopularArticle from "./PopularArticle";
 import BtnCreateArticle from "./BtnAddArticle";
+import Chatting from "./chatting"
 
 export default {
   name: "SideBar",
@@ -21,7 +23,8 @@ export default {
   components: {
     Category,
     PopularArticle,
-    BtnCreateArticle
+    BtnCreateArticle,
+    Chatting
   },
   data: function() {
     return {};
@@ -29,6 +32,9 @@ export default {
   methods: {
     setCategories: function(val) {
       this.$emit("set-categories", val);
+    },
+    articleFromCategory: function(val) {
+      this.$emit("article-from-category", val);
     }
   }
 };

@@ -24,7 +24,8 @@ export default {
   name: "Category",
   data: function() {
     return {
-      categories: []
+      categories: [],
+      updateListArticle: 0
     };
   },
   created() {
@@ -45,7 +46,13 @@ export default {
         });
     },
     getArticleFromCategory: function(categoryId) {
-      console.log(categoryId);
+      this.updateListArticle++;
+      let category = {
+        categoryid: categoryId,
+        updateListArticle: this.updateListArticle
+      };
+      this.$emit("article-from-category", category);
+      this.$router.push("/");
     }
   }
 };

@@ -11,18 +11,16 @@
           </span>
           <span style="float: right" v-if="isLogin && userEmail && article.author">
             <span style="cursor: pointer" onclick="updateArticle()" @click="btnUpdate(article._id)" v-if="userEmail == article.author.email"><i class="edit outline icon"></i> Edit</span>
-            <span style="cursor: pointer" v-if="userEmail == article.author.email"><i class="trash alternate icon"></i> Delete</span>
+            <span style="cursor: pointer" @click="btnDeleteArticle(article._id)" v-if="userEmail == article.author.email"><i class="trash alternate icon"></i> Delete</span>
           </span>
         </div>
 
         <div class="contentdetail">
           <div class="imgcontent " style="margin-bottom: 20px;">
-            <img src="../../../assets/img_1.png" alt="">
+            <img src="https://via.placeholder.com/650x650" alt="" style="width:100%; height: 300px;">
           </div>
           <div class="contentdesc">
-            <p style="text-align: justify; font-family: 'PT Sans', sans-serif; font-size:17px;">
-              {{ article.content }}
-            </p>
+            <div style="text-align: justify;" v-html="article.content"></div>
           </div>
         </div>
       </div>
@@ -32,7 +30,7 @@
         <div style="border: 1px grey solid; border-radius: 5px; padding: 2px; margin-bottom: 5px;">
           <div class="ui grid">
             <div class="two wide column" style="padding-top:20px; padding-left:20px;">
-              <img src="../../../assets/img_1.png" style="width: 100%;">
+              <img src="https://via.placeholder.com/150x150" style="width: 100%;">
             </div>
             <div class="fourteen wide column">
               <div class="content" style="width: 95%;">
@@ -53,7 +51,7 @@
         <div style="border: 1px grey solid; border-radius: 5px; padding: 2px; margin-bottom: 5px;">
           <div class="ui grid">
             <div class="two wide column" style="padding-top:20px; padding-left:20px;">
-              <img src="../../../assets/img_1.png" style="width: 100%;">
+              <img src="https://via.placeholder.com/150x150" style="width: 100%;">
             </div>
             <div class="fourteen wide column">
               <div class="content" style="width: 95%;">
@@ -75,6 +73,14 @@
 
       <div class="commentArticle" style="padding: 10px;">
 
+        <!-- START ERROR MESSAGE -->
+          <div class="ui negative message" v-if="boxError">
+            <i class="close icon" @click="closeErrorMsg"></i>
+            <div class="header">
+              <P style="text-transform: uppercase;">{{ messageError }}</P>
+            </div>
+          </div>
+
         <div class="boxComment">
           <div class="ui form">
             <div class="field">
@@ -87,7 +93,7 @@
           </div>
         </div>
 
-        <div class="listComment" style="margin-top:10px;">
+        <div class="listComment" style="margin-top:10px;" v-if="comments.length > 0">
           <h2>Comments : </h2>
           
           <div class="forLoopingComment">
@@ -95,7 +101,7 @@
               <div class="ui grid" style="padding:5px;">
                 <div class="two wide column">
                   <div style="margin-left:10px;">
-                    <img src="../../../assets/img_1.png" style="width: 100%;">
+                    <img src="https://via.placeholder.com/20x30" style="width: 100%;">
                   </div>
                 </div>
                 <div class="fourteen wide column">
@@ -111,7 +117,7 @@
                         <span style="float: right" v-if="comment.user.email">
                           <span style="cursor: pointer" onclick="updateComment()" @click="btnUpdateComment(comment.status, comment._id)" v-if="userEmail == comment.user.email"><i class="edit outline icon"></i>
                             Edit</span>
-                          <span style="cursor: pointer" v-if="userEmail == comment.user.email"><i class="trash alternate icon"></i> Delete</span>
+                          <span style="cursor: pointer" @click="btnDeleteComment(comment._id)" v-if="userEmail == comment.user.email"><i class="trash alternate icon"></i> Delete</span>
                         </span>
                       </div>
                       <div class="description">
@@ -155,7 +161,10 @@ export default {
       article: [],
       comments: [],
       articleid: "",
-      status: ""
+      status: "",
+
+      messageError: "",
+      boxError: false
     };
   },
   created() {
@@ -197,15 +206,52 @@ export default {
           this.documentReady();
         })
         .catch(err => {
-          console.log(err.response);
+          let error = "";
+          if (err.response.data.message == "access denied") {
+            error = "please login first";
+          } else {
+            error = err.response.data.err.errors.status.message;
+          }
+
+          this.messageError = error;
+          this.boxError = true;
         });
     },
     btnUpdateComment: function(valstatus, valid) {
       this.commentStatus = valstatus;
       this.commentId = valid;
     },
+    btnDeleteComment: function(commentId) {
+      axios({
+        method: "DELETE",
+        url: `${config.port}/comments/remove/${commentId}`,
+        headers: {
+          token: localStorage.getItem("token")
+        }
+      })
+        .then(response => {
+          this.documentReady();
+        })
+        .catch(err => {});
+    },
+    btnDeleteArticle: function(articleId) {
+      axios({
+        method: "DELETE",
+        url: `${config.port}/articles/remove/${articleId}`,
+        headers: {
+          token: localStorage.getItem("token")
+        }
+      })
+        .then(response => {
+          this.$router.push("/");
+        })
+        .catch(err => {});
+    },
     statusUpdateComment: function() {
       this.documentReady();
+    },
+    closeErrorMsg: function() {
+      this.boxError = false;
     }
   },
   watch: {

@@ -1,8 +1,8 @@
 <template>
   <div id="app">
     <div class="container" style="width:1100px; margin: 0 auto; padding:10px;">
-      <NavBar @status-login="statusLogin"  @status-email="statusEmail"/>
-      <router-view :is-login="isLogin" :user-email="userEmail"></router-view>
+      <NavBar @myarticle="MyArticle" @status-home="statushome" @status-login="statusLogin"  @status-email="statusEmail" @status-search-article="statusSearchArticle"/>
+      <router-view :myarticle="myarticle" :category-id-from-cat="categoryIdFromCat" @article-from-category="articleFromCategory" :status-home="statusHome" :is-login="isLogin" :user-email="userEmail" :search-article="searchArticle"></router-view>
     </div>
   </div>
 </template>
@@ -11,13 +11,18 @@
 import NavBar from "@/components/NavbarComponent/index.vue";
 
 export default {
+  name: 'App',
   components: {
     NavBar
   },
   data: function() {
     return {
       isLogin: false,
-      userEmail: ""
+      userEmail: "",
+      searchArticle: "",
+      statusHome: 0,
+      categoryIdFromCat: "",
+      myarticle: []
     };
   },
   methods: {
@@ -26,29 +31,24 @@ export default {
     },
     statusEmail: function(val) {
       this.userEmail = val;
+    },
+    statusSearchArticle: function(val) {
+      this.searchArticle = val;
+    },
+    statushome: function(val) {
+      this.statusHome = val;
+    },
+    articleFromCategory: function(val) {
+      this.categoryIdFromCat = val;
+    },
+    MyArticle: function(val) {
+      this.myarticle = val
     }
   }
 };
 </script>
 
-<style>
-/* #app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-#nav {
-  padding: 30px;
-}
+<style scoped>
+@import "~vue-wysiwyg/dist/vueWysiwyg.css";
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-} */
 </style>

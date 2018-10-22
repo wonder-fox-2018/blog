@@ -28,13 +28,20 @@
 
       <!-- START SECOND NAVABR -->
       <div class="ui pointing menu" style="background: #333333;">
-        <router-link to="/"><a class="active item" style="color: #FFFFFF;">
+        <!-- <router-link to="/"><a class="active item" style="color: #FFFFFF;">
           <i class="home icon" ></i> <span style="">Home</span>
-        </a></router-link>
+        </a></router-link> -->
+
+        <a class="active item" style="color: #FFFFFF;" @click="statushome">
+          <i class="home icon" ></i> <span style="">Home</span>
+        </a>
+        <a class="item" style="color: #FFFFFF;" v-if="isLogin" @click="btnMyArticle">
+          <i class="book icon" ></i> <span style="">My Article</span>
+        </a>
         <div class="right menu" style="padding: 4px;">
           <div class="item" style="background: #FFFFFF; margin-right: 5px;">
             <div class="ui transparent icon input">
-              <input type="text" placeholder="Search...">
+              <input type="text" placeholder="Search..." v-model="searchArticle">
               <i class="search link icon"></i>
             </div>
           </div>
@@ -57,6 +64,8 @@
 </template>
 
 <script>
+import axios from "axios";
+import config from "../../config.js"
 import LoginUser from "./login.vue";
 import RegisterUser from "./register.vue";
 
@@ -69,7 +78,10 @@ export default {
   data: function() {
     return {
       isLogin: false,
-      userEmail: ""
+      userEmail: "",
+      searchArticle: "",
+      statusHome: 0,
+      articles: []
     };
   },
   methods: {
@@ -88,6 +100,32 @@ export default {
       localStorage.removeItem("email");
       this.$emit("status-login", this.isLogin);
       this.$emit("status-email", this.userEmail);
+    },
+    statushome: function() {
+      this.statusHome++;
+      this.$emit("status-home", this.statusHome);
+      this.$router.push("/");
+    },
+    btnMyArticle: function() {
+      axios({
+        method: "GET",
+        url: `${config.port}/articles/myarticle`,
+        headers : {
+          token : localStorage.getItem("token")
+        }
+      })
+      .then((response) => {
+        this.articles = response.data.articles
+        this.$emit('myarticle', this.articles)
+      }).catch((err) => {
+        console.log(err.response)
+      });
+    }
+  },
+  watch: {
+    searchArticle: function(val) {
+      this.$emit("status-search-article", val);
+      this.$router.push("/");
     }
   }
 };

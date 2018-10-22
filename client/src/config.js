@@ -1,5 +1,5 @@
 const config = {
-  port: "http://localhost:3000"
+  port: "https://blognyelenehserver.harlesbayuanggara.tech"
 };
 
 export default config;

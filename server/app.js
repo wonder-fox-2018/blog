@@ -13,8 +13,12 @@ if (process.env.DATA_TESTING == "test") {
     { useNewUrlParser: true }
   );
 } else {
+  // mongoose.connect(
+  //   process.env.URL_MONGO_LOCAL,
+  //   { useNewUrlParser: true }
+  // );
   mongoose.connect(
-    process.env.URL_MONGO_LOCAL,
+    process.env.URL_MONGO_MLAB,
     { useNewUrlParser: true }
   );
 }

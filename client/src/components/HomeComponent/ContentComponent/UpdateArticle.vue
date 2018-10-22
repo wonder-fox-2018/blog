@@ -1,6 +1,6 @@
 <template>
   <!-- Start Modal Update Article -->
-  <div class="ui tiny modal modalUpdateArticle">
+  <div class="ui small modal modalUpdateArticle">
     <div class="header">
       Update Article
     </div>
@@ -33,7 +33,8 @@
             </div>
             <div class="field">
               <label>Content</label>
-              <textarea placeholder="Content Article" v-model="content"></textarea>
+              <!-- <textarea placeholder="Content Article" v-model="content"></textarea> -->
+              <wysiwyg v-model="content" />
             </div>
           </div>
 
@@ -55,7 +56,7 @@ import config from "../../../config.js";
 
 export default {
   name: "UpdateArtice",
-  props: ["articleId", "categories"],
+  props: ["articleId", "categories", "test"],
   data: function() {
     return {
       title: "",
@@ -67,17 +68,18 @@ export default {
 
       messageError: "",
       boxError: false,
-
-      statusUpdate: 0
+      statusUpdate: 0,
     };
   },
+  mounted() {},
   methods: {
     btnUpdate: function() {
+
       let data = {
         title: this.title,
         category: this.categoryId,
         content: this.content,
-        picture: this.image
+        picture: "dummy.jpg"
       };
 
       axios({
@@ -91,7 +93,7 @@ export default {
         .then(response => {
           this.statusUpdate++;
           this.$emit("status-update-article", this.statusUpdate);
-          $(".tiny.modal.modalUpdateArticle")
+          $(".small.modal.modalUpdateArticle")
             .modal({
               transition: "zoom"
             })
