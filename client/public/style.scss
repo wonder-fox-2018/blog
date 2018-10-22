@@ -1,0 +1,727 @@
+$color_1: transparent;
+$color_2: #42b983;
+$color_3: white;
+$color_4: black;
+$color_5: gray;
+$color_6: lightgray;
+$font_family_1: 'Monthoers', sans-serif;
+$font_family_2: 'Roboto', sans-serif;
+$font_family_3: 'Cambria', sans-serif;
+$background_color_1: rgba(0, 0, 0, 0.5);
+$background_color_2: #42b983;
+$background_color_3: transparent;
+$background_color_4: white;
+
+.placeholder {
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	cursor: default;
+	color: $color_1;
+}
+::-webkit-scrollbar {
+	display: none;
+}
+html {
+	width: 100%;
+	margin: 0px;
+	padding: 0px;
+	overflow-x: hidden;
+}
+body {
+	width: 100%;
+	margin: 0px;
+	padding: 0px;
+	overflow-x: hidden;
+}
+#app {
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	text-align: center;
+}
+#nav {
+	padding: 30px;
+	background: white;
+	position: absolute;
+	width: 99vw;
+	height: 100vh;
+	margin-top: -100vh;
+	z-index: 9000;
+	a {
+		text-decoration: none;
+		font-weight: bold;
+		color: $color_2;
+		font-size: 50px;
+		font-family: $font_family_1;
+	}
+}
+#navlinks {
+	position: absolute;
+	margin-top: 27.5vh;
+	width: 100%;
+}
+#signinit {
+	font-family: $font_family_1;
+}
+#signBackdrop {
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	background-color: $background_color_1;
+	z-index: 10000;
+}
+#signModal {
+	position: fixed;
+	width: 20%;
+	top: 25%;
+	left: 40%;
+	background-color: $background_color_2;
+	z-index: 11000;
+	border-radius: 50px;
+	input {
+		border: none;
+		margin: 1vh 0;
+		width: 80%;
+		font-size: 20px;
+		padding: 10px 20px;
+		font-family: $font_family_2;
+		text-align: center;
+		&:focus {
+			outline: none;
+		}
+	}
+}
+#signBtn {
+	button {
+		&:focus {
+			outline: none;
+		}
+		background: transparent;
+		color: $color_3;
+		border: none;
+		cursor: pointer;
+		padding: 0px 20px;
+		margin: 0px 10px;
+	}
+	margin-top: 3vh;
+	color: $color_3;
+	font-size: 30px;
+	font-family: $font_family_1;
+	button.active {
+		border-bottom: 3px solid white;
+	}
+}
+.signModalBtn {
+	&:focus {
+		outline: none;
+	}
+	background: transparent;
+	border: none;
+	margin-top: 1vh;
+	font-size: 20px;
+	cursor: pointer;
+}
+#phInput {
+	cursor: default;
+	background: transparent;
+}
+#notice {
+	color: $color_3;
+	font-family: $font_family_2;
+}
+#main {
+	margin: 105vh 0 0 0;
+	width: 99vw;
+	height: 95vh;
+	overflow: hidden;
+}
+a {
+	color: $color_4;
+	font-family: $font_family_2;
+	font-weight: 700;
+	&:hover {
+		color: $color_2;
+		text-decoration: none;
+	}
+}
+#menuLink {
+	a {
+		font-size: 30px;
+		letter-spacing: 5px;
+		font-family: $font_family_1;
+		font-weight: normal;
+		height: 45px;
+	}
+	div {
+		font-size: 30px;
+		letter-spacing: 5px;
+		font-family: $font_family_1;
+		font-weight: normal;
+		height: 45px;
+	}
+	button {
+		font-size: 30px;
+		letter-spacing: 5px;
+		font-family: $font_family_1;
+		font-weight: normal;
+		height: 45px;
+		background-color: $background_color_3;
+		border: none;
+		color: $color_5;
+		cursor: pointer;
+		&:hover {
+			color: $color_2;
+		}
+		&:focus {
+			outline: none;
+		}
+	}
+	button[disabled] {
+		color: $color_6;
+		cursor: default;
+	}
+}
+#postlist {
+	height: 95vh;
+	overflow: scroll;
+}
+#postlarge {
+	height: 95vh;
+	overflow: scroll;
+	a {
+		&:hover {
+			.img-overlay {
+				opacity: 0.5;
+			}
+		}
+	}
+}
+.img-overlay {
+	height: 250px;
+	margin-top: -250px;
+	opacity: 0;
+	transition: 0.5s ease;
+	background-color: $background_color_2;
+	&:hover {
+		opacity: 0.5;
+	}
+}
+.card-body {
+	font-family: $font_family_2;
+}
+.card-title {
+	font-weight: 700;
+}
+.card-text {
+	font-weight: 400;
+	text-align: justify;
+	text-indent: 10%;
+}
+#addBtn {
+	border: transparent;
+	height: 50px;
+	width: 100%;
+	font-size: 20px;
+	padding: 15px 20px;
+	margin-bottom: 30px;
+	border-radius: 25px;
+	background: #42b983;
+	color: $color_3;
+	cursor: pointer;
+	font-family: $font_family_1;
+	&:hover {
+		background: white;
+		color: $color_2;
+		border: 3px solid #42b983;
+		padding: 12px 17px;
+	}
+	&:focus {
+		outline: none;
+	}
+}
+#listBackdrop {
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	background-color: $background_color_1;
+	z-index: 10000;
+}
+#optBackdrop {
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	background-color: $background_color_1;
+	z-index: 10000;
+}
+#addModal {
+	position: fixed;
+	width: 50%;
+	top: 15%;
+	left: 25%;
+	background-color: $background_color_4;
+	z-index: 11000;
+	padding: 50px;
+	padding-bottom: 10px;
+	max-height: 70%;
+	overflow: auto;
+	top: 5%;
+	max-height: 95%;
+	input {
+		border: none;
+		margin: 1vh 0;
+		width: 100%;
+		background: transparent;
+		font-family: $font_family_2;
+		font-size: 20px;
+		font-weight: 700;
+		padding: 10px 20px;
+		&:focus {
+			outline: 2px solid #42b983;
+		}
+	}
+	wysiwyg {
+		border: none;
+		margin: 1vh 0;
+		width: 100%;
+		background: transparent;
+		font-family: $font_family_2;
+		font-size: 15px;
+		font-weight: 400;
+		padding: 15px 20px;
+		&:focus {
+			outline: 2px solid #42b983;
+		}
+	}
+	button {
+		border: transparent;
+		height: 45px;
+		font-size: 20px;
+		padding: 10px 30px 15px 30px;
+		margin: 20px;
+		border-radius: 22.5px;
+		background: #42b983;
+		color: $color_3;
+		cursor: pointer;
+		font-family: $font_family_1;
+		&:hover {
+			background: white;
+			color: $color_2;
+			border: 3px solid #42b983;
+			padding: 7px 27px 12px 27px;
+		}
+		&:focus {
+			outline: none;
+		}
+	}
+}
+#editModal {
+	position: fixed;
+	width: 50%;
+	top: 15%;
+	left: 25%;
+	background-color: $background_color_4;
+	z-index: 11000;
+	padding: 50px;
+	padding-bottom: 10px;
+	max-height: 70%;
+	overflow: auto;
+	input {
+		border: none;
+		margin: 1vh 0;
+		width: 100%;
+		background: transparent;
+		font-family: $font_family_2;
+		font-size: 20px;
+		font-weight: 700;
+		padding: 10px 20px;
+		&:focus {
+			outline: 2px solid #42b983;
+		}
+	}
+	wysiwyg {
+		border: none;
+		margin: 1vh 0;
+		width: 100%;
+		background: transparent;
+		font-family: $font_family_2;
+		font-size: 15px;
+		font-weight: 400;
+		padding: 15px 20px;
+		&:focus {
+			outline: 2px solid #42b983;
+		}
+	}
+	button {
+		border: transparent;
+		height: 45px;
+		font-size: 20px;
+		padding: 10px 30px 15px 30px;
+		margin: 20px;
+		border-radius: 22.5px;
+		background: #42b983;
+		color: $color_3;
+		cursor: pointer;
+		font-family: $font_family_1;
+		&:hover {
+			background: white;
+			color: $color_2;
+			border: 3px solid #42b983;
+			padding: 7px 27px 12px 27px;
+		}
+		&:focus {
+			outline: none;
+		}
+	}
+}
+#deleteModal {
+	position: fixed;
+	width: 50%;
+	top: 15%;
+	left: 25%;
+	background-color: $background_color_4;
+	z-index: 11000;
+	padding: 50px;
+	padding-bottom: 10px;
+	max-height: 70%;
+	overflow: auto;
+	button {
+		border: transparent;
+		height: 45px;
+		font-size: 20px;
+		padding: 10px 30px 15px 30px;
+		margin: 20px;
+		border-radius: 22.5px;
+		background: #42b983;
+		color: $color_3;
+		cursor: pointer;
+		font-family: $font_family_1;
+		&:hover {
+			background: white;
+			color: $color_2;
+			border: 3px solid #42b983;
+			padding: 7px 27px 12px 27px;
+		}
+		&:focus {
+			outline: none;
+		}
+	}
+	h2 {
+		font-family: $font_family_1;
+		font-size: 40px;
+		span {
+			font-family: $font_family_3;
+			font-size: 45px;
+		}
+	}
+	h5 {
+		font-family: $font_family_2;
+	}
+}
+#delComModal {
+	position: fixed;
+	width: 50%;
+	top: 15%;
+	left: 25%;
+	background-color: $background_color_4;
+	z-index: 11000;
+	padding: 50px;
+	padding-bottom: 10px;
+	max-height: 70%;
+	overflow: auto;
+	button {
+		border: transparent;
+		height: 45px;
+		font-size: 20px;
+		padding: 10px 30px 15px 30px;
+		margin: 20px;
+		border-radius: 22.5px;
+		background: #42b983;
+		color: $color_3;
+		cursor: pointer;
+		font-family: $font_family_1;
+		&:hover {
+			background: white;
+			color: $color_2;
+			border: 3px solid #42b983;
+			padding: 7px 27px 12px 27px;
+		}
+		&:focus {
+			outline: none;
+		}
+	}
+	h2 {
+		font-family: $font_family_1;
+		font-size: 40px;
+		span {
+			font-family: $font_family_3;
+			font-size: 45px;
+		}
+	}
+	h5 {
+		font-family: $font_family_2;
+	}
+}
+#comment {
+	button {
+		border: transparent;
+		height: 45px;
+		font-size: 20px;
+		padding: 10px 30px 15px 30px;
+		margin: 20px;
+		border-radius: 22.5px;
+		background: #42b983;
+		color: $color_3;
+		cursor: pointer;
+		font-family: $font_family_1;
+		&:hover {
+			background: white;
+			color: $color_2;
+			border: 3px solid #42b983;
+			padding: 7px 27px 12px 27px;
+		}
+		&:focus {
+			outline: none;
+		}
+	}
+	wysiwyg {
+		width: 100%;
+		padding: 10px 15px;
+		font-size: 16px;
+		&:focus {
+			outline: 2px solid #42b983;
+		}
+	}
+}
+#searchBtn {
+	width: 15%;
+	margin-bottom: 20px;
+	padding: 10px 0;
+	border: none;
+	background: transparent;
+	color: $color_2;
+	font-size: 20px;
+}
+#searchInput {
+	width: 70%;
+	margin-bottom: 20px;
+	padding: 10px 0px;
+	border: 2px solid transparent;
+	font-size: 20px;
+	&:focus {
+		border-bottom: 2px solid #42b983;
+		outline: none;
+	}
+}
+.optBtn {
+	height: 40px;
+	margin: 0px 10px;
+	button {
+		background: transparent;
+		border: none;
+		border-radius: 10px;
+		font-size: 15px;
+		color: $color_2;
+		padding: 5px 10px;
+		margin: 5px 2.5px;
+		&:hover {
+			background: rgba(0, 0, 0, 0.075);
+		}
+		&:focus {
+			outline: none;
+		}
+	}
+}
+.comments {
+	margin: 0;
+	margin-bottom: 100px;
+	padding: 0;
+}
+.commenter {
+	font-size: 14px;
+	margin-bottom: 10px;
+}
+.replies {
+	padding-right: 0px;
+	height: 75px !important;
+	wysiwyg {
+		width: 100%;
+		border: 1px solid gainsboro;
+		font-size: 16px;
+		padding: 10px;
+		&:focus {
+			outline: 2px solid #42b983;
+		}
+	}
+}
+.replyBtn {
+	height: 75px !important;
+	padding: 0px;
+	display: flex;
+	justify-content: center;
+	align-content: center;
+	button {
+		background: transparent;
+		border: none;
+		font-size: 20px;
+		padding: 5px 10px;
+		color: $color_2;
+		cursor: pointer;
+		&:focus {
+			outline: none;
+		}
+	}
+}
+.detail-body {
+	margin-bottom: 50px;
+	h5 {
+		font-weight: 400 !important;
+	}
+	h6 {
+		font-weight: 400 !important;
+	}
+}
+.comDelBtn {
+	background: transparent;
+	border: none;
+	border-radius: 10px;
+	font-size: 15px;
+	color: $color_2;
+	padding: 5px 10px;
+	margin: 5px 2.5px;
+	&:hover {
+		background: rgba(0, 0, 0, 0.075);
+	}
+	&:focus {
+		outline: none;
+	}
+}
+.userloc {
+	margin-top: 25px;
+	padding: 25px 0px;
+	min-height: 235px;
+	display: flex;
+	div {
+		margin: auto 0px;
+		width: 100%;
+	}
+}
+.fa-check-circle {
+	color: $color_2;
+	font-size: 30px;
+}
+#userLocInput {
+	text-align: center;
+	font-size: 24px !important;
+	font-weight: normal !important;
+	text-transform: capitalize;
+	&:focus {
+		outline: none !important;
+		border-bottom: 2px solid #42b983;
+		padding-bottom: 8px;
+	}
+}
+#userLocBtn {
+	border-radius: 0;
+	padding: 3px 15px;
+	background-color: $background_color_3;
+	margin: 0px !important;
+	&:hover {
+		background-color: $background_color_4;
+		color: $color_2;
+	}
+}
+#postLink {
+	height: 12.5vh;
+	overflow: auto;
+	a {
+		height: 2.5vh;
+	}
+}
+#mapContainer {
+	position: fixed !important;
+	width: 50%;
+	top: 15%;
+	left: 25%;
+	z-index: 11000;
+	padding: 50px;
+	padding-bottom: 10px;
+	height: 70%;
+	overflow: auto;
+	button {
+		cursor: pointer;
+		&:focus {
+			outline: none;
+		}
+	}
+}
+#map {
+	height: 100%;
+	width: 100%;
+}
+.writeLoc {
+	&:hover {
+		color: $color_2;
+		cursor: pointer;
+	}
+}
+#livechat {
+	width: 99vw;
+	height: 100vh;
+	overflow: hidden;
+	.container {
+		height: 100%;
+		display: flex;
+		#lcdiv {
+			margin: auto;
+			width: 50%;
+		}
+		div {
+			h1 {
+				font-family: $font_family_1;
+				color: $color_2;
+				font-size: 50px;
+				letter-spacing: 20px;
+				margin-top: -100px;
+				padding-bottom: 50px;
+			}
+		}
+	}
+}
+#chatbox {
+	border: 1px solid black;
+	height: 40vh;
+	overflow: auto;
+	.row {
+		width: 100%;
+	}
+}
+#addchat {
+	input {
+		padding: 5px 10px;
+		font-size: 16px;
+		width: 100%;
+		height: 40px;
+		&:focus {
+			outline: 2px solid #42b983;
+		}
+	}
+	button {
+		width: 100%;
+		height: 40px;
+		background: #42b983;
+		color: $color_3;
+		border: none;
+		&:hover {
+			background: white;
+			color: $color_2;
+			border: 2px solid #42b983;
+		}
+	}
+}
