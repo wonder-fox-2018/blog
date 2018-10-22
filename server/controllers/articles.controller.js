@@ -2,7 +2,7 @@
 
 const ModelArticle = require('../models/Article');
 const User = require('../models/UserModel');
-
+const helpers = require('../helpers/images')
 module.exports = {
     articleReadAll: (req, res) => {
         //console.log('-----------')
@@ -58,6 +58,15 @@ module.exports = {
             description: req.body.description,
             author: req.currentuser._id
         });
+        // helpers.multer.single('imagefile'),
+        // helpers.sendUploadToGCS,
+        // (req,res) => {
+        //     console.log('Status----', req.file)  
+        //     res.status(200).json({
+        //         msg: 'Success Upload',
+        //         link: req.file.cloudStoragePublicUrl
+        //     })
+        // }
         newArticle
             .save()
             .then((result) => {

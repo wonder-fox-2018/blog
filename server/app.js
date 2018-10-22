@@ -13,8 +13,8 @@ const articles = require('./routes/articles');
 const app = express();
 
 //const dbUrl = process.env.DB_URL;
- const dbUrl = 'mongodb://localhost:27017/blog';
-
+ //const dbUrl = 'mongodb://localhost:27017/blog';
+ const dbUrl='mongodb://rudy:kerenkeren12345@ds053139.mlab.com:53139/dbblogkeren'
 mongoose.connect(dbUrl, (err) => {
     if(!err) {console.log('Connected to Database');}
     else {throw new Error(err);}
