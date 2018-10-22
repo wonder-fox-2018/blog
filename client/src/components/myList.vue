@@ -1,6 +1,6 @@
 <template>
     <div class="col-md-12">
-      <div class="container py-3" v-for="(value, index) in myArticle" :key="index">
+      <div class="container py-3" v-for="(value) in myArticle" :key="value._id">
         <div class="card">
             <div class="card-footer text-muted">
                 <h4 class="card-title">{{value.title}}</h4>
@@ -16,14 +16,14 @@
                 <button class="btn btn-primary"  @click="detailArticle(value._id)">Read More</button>
                 </div>
                 <div class="py-3" v-if="username == value.username && username != ''">
-                  <button type="button" class="btn btn-secondary my-2 my-sm-0" data-toggle="modal" data-target="#modalEdit">Edit</button>
+                  <button type="button" class="btn btn-secondary my-2 my-sm-0" @click="test(value._id)" data-toggle="modal" data-target="#modalEdit">Edit</button>
                   <button class="btn btn-secondary" @click="deleteArticle(value._id)">Delete</button>
                 </div>
             </div>
           </div>
         </div>
-      <modalEdit :id="value._id" :getmylist="getMyList"></modalEdit>
     </div>
+    <modalEdit :id="idArticle" :getmylist="getMyList"></modalEdit>
   </div>
 </template>
 
@@ -38,6 +38,7 @@ export default {
     return {
       myArticle : '',
       username : '',
+      idArticle : ''
     }
   },
   watch: {
@@ -62,6 +63,9 @@ export default {
     }
   },
   methods: {
+    test(value){
+      this.idArticle = value
+    },
     deleteArticle : function(value){
       console.log(value)
       axios({

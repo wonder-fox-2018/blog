@@ -57,8 +57,13 @@ export default {
       img : ''
     }
   },
+  watch: {
+    id() {
+      this.getArticle()
+    },
+  },
   created : function(){
-    this.getArticle()
+    // this.getArticle()
   },
   methods : {
     getArticle(){
