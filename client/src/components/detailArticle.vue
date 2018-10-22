@@ -38,6 +38,7 @@
 </template>
 
 <script>
+import config from '@/config.js'
 export default {
     data(){
       return{
@@ -59,7 +60,7 @@ export default {
       addComment : function(){
         axios({
           method : 'POST',
-          url : 'http://localhost:3000/comments/add',
+          url : `${config.port}/comments/add`,
           headers : {
             token : localStorage.getItem('token'),
           },
@@ -79,7 +80,7 @@ export default {
         // self = this
         axios({
           method : 'GET',
-          url : `http://localhost:3000/articles/show/${this.id}`
+          url : `${config.port}/articles/show/${this.id}`
         })
         .then(response => {
           this.detail = response.data.article

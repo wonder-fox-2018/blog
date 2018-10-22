@@ -16,6 +16,7 @@
 </template>
 
 <script>
+import config from '@/config.js'
 import addArticle from '@/components/addArticle.vue'
 import categories from '@/components/categories.vue'
 import sosialMedia from '@/components/sosialMedia.vue'

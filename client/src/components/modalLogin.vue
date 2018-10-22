@@ -31,6 +31,7 @@
 </template>
 
 <script>
+import config from '@/config.js'
 export default {
   props : ['gettoken'],
   data(){
@@ -44,7 +45,7 @@ export default {
       self = this
       axios({
         method : 'POST',
-        url : 'http://localhost:3000/users/login',
+        url : `${config.port}/users/login`,
         data :{
           email : self.email,
           password : self.password

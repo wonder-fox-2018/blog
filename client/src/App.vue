@@ -24,6 +24,7 @@
 </template>
 
 <script>
+  import config from '@/config.js'
   import navbar from '@/components/navbar.vue'
   import bigcontainer from '@/components/bigContainer.vue'
   // import container from '@/components/container.vue'
@@ -89,7 +90,7 @@
       searchArticle(){
         axios({
           method : 'GET',
-          url : `http://localhost:3000/articles/search/${this.search}`
+          url : `${config.port}/articles/search/${this.search}`
         })
         .then(response => {
           console.log(response.data)
@@ -111,7 +112,7 @@
       getArticle : function(){
         axios({
           method : 'GET',
-          url : 'http://localhost:3000/articles/show',
+          url : `${config.port}/articles/show`,
         })
         .then(response => {
           let article = response.data

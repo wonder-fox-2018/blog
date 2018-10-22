@@ -36,6 +36,7 @@
 </template>
 
 <script>
+import config from '@/config.js'
 export default {
   data(){
     return {
@@ -50,7 +51,7 @@ export default {
       console.log(self.email)
       axios({
         method : 'POST',
-        url : 'http://localhost:3000/users/register',
+        url : `${config.port}/users/register`,
         data : {
           email : self.email,
           password : self.password,

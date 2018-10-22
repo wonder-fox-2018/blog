@@ -45,6 +45,7 @@ describe('User Get Profile Data API Test', function() {
                 done();
             });
     });
+  
 
     it('should return status 201 and article created data', function(done) {
         chai.request(app)
@@ -58,6 +59,8 @@ describe('User Get Profile Data API Test', function() {
                 expect(res.body.article).to.have.property('title');
                 expect(res.body.article).to.have.property('article')
                 expect(res.body.article).to.have.property('_id');
+                expect(res.body.article.title).to.equal('test')
+                expect(res.body.article.article).to.equal('ini adalah content article untuk test')
                 id = res.body.article._id;
                 done();
             });

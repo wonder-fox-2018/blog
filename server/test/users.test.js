@@ -20,16 +20,6 @@ let admin = {
 let token;
 
 describe('User Register API Test', function() {
-    before(function(done) {
-        User.deleteOne({email: 'zura@mail.com'})
-            .then(function(result) {
-                done();
-            })
-            .catch(function(err) {
-                console.log(err);
-            });
-    });
-
     after(function(done) {
         User.deleteOne({email: 'zura@mail.com'})
             .then(function(result) {
@@ -100,16 +90,6 @@ describe('User Register API Test', function() {
 
 // register admin 
 describe('Admin Register API Test', function() {
-  before(function(done) {
-      User.deleteOne({email: 'yuri@mail.com'})
-          .then(function(result) {
-              done();
-          })
-          .catch(function(err) {
-              console.log(err);
-          });
-  });
-
   after(function(done) {
       User.deleteOne({email: 'yuri@mail.com'})
           .then(function(result) {

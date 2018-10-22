@@ -8,6 +8,7 @@
 </template>
 
 <script>
+import config from '@/config.js'
 export default {
     data(){
         return {
@@ -31,7 +32,7 @@ export default {
         getList() {
             axios({
                 method : 'GET',
-                url : 'http://localhost:3000/articles/show'
+                url : `${config.port}/articles/show`
             })
             .then(response => {
                 this.listArticle = response.data

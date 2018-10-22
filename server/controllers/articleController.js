@@ -19,7 +19,9 @@ class ArticleController{
             })
         })
         .catch(err => {
-            res.status(500).json(err)
+            res.status(500).json({
+                message : 'Token not found'
+            })
         })
     }
     static updateArticle(req, res){

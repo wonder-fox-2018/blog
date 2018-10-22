@@ -28,6 +28,7 @@
 </template>
 
 <script>
+import config from '@/config.js'
 import modalEdit from '@/components/modalEdit.vue'
 export default {
   components :{
@@ -70,7 +71,7 @@ export default {
       console.log(value)
       axios({
         method : 'DELETE',
-        url : `http://localhost:3000/articles/delete/${value}`,
+        url : `${config.port}/articles/delete/${value}`,
         headers : {
           token : localStorage.getItem('token')
         }
@@ -95,7 +96,7 @@ export default {
     getMyList(){
       axios({
         method : 'GET',
-        url : `http://localhost:3000/articles/myarticle`,
+        url : `${config.port}/articles/myarticle`,
         headers : {
           token : localStorage.getItem('token')
         }
@@ -110,7 +111,7 @@ export default {
     getListByCategory(){
       axios({
         method : 'GET',
-        url : 'http://localhost:3000/articles/show',
+        url : `${config.port}/articles/show`,
       })
       .then(response => {
         // console.log(response.data)

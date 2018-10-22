@@ -47,6 +47,7 @@
 </template>
 
 <script>
+import config from '@/config.js'
 export default {
   props : ['getarticle', 'updatecomponent'],
   data(){
@@ -62,7 +63,7 @@ export default {
       self = this
       axios({
         method : 'POST',
-        url : 'http://localhost:3000/articles/add',
+        url : `${config.port}/articles/add`,
         headers : {
           token : localStorage.getItem('token')
         },

@@ -47,6 +47,7 @@
 </template>
 
 <script>
+import config from '@/config.js'
 export default {
   props : ['id', 'getmylist'],
   data(){
@@ -69,7 +70,7 @@ export default {
     getArticle(){
       axios({
         method : 'GET',
-        url : `http://localhost:3000/articles/show/${this.id}`,
+        url : `${config.port}/articles/show/${this.id}`,
         headers:{
           token : localStorage.getItem('token')
         }
@@ -88,7 +89,7 @@ export default {
     updateArticle(){
       axios({
         method : 'PUT',
-        url : `http://localhost:3000/articles/update/${this.id}`,
+        url : `${config.port}/articles/update/${this.id}`,
         headers : {
           token : localStorage.getItem('token')
         },
