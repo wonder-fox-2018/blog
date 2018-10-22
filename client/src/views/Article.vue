@@ -29,8 +29,8 @@
           <hr>
 
           <!-- Post Content -->
-          <p class="lead">{{article.data.content}}</p>
-
+          <!-- <p class="lead">{{article.data.content}}</p> -->
+          <div v-html="article.data.content"></div>
           <hr>
 
           <!-- Comments Form -->
