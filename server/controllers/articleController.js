@@ -73,7 +73,7 @@ module.exports = {
     },
 
     findByKeyword: (req, res) => {
-        Article.find( { $or: [{title: new RegExp(req.params.keyword, 'i')}, {content: new RegExp(req.params.keyword, 'i')}]}).then((result) => {
+        Article.find( { $or: [{title: new RegExp(req.params.keyword, 'i')}, {content: new RegExp(req.params.keyword, 'i')}]}).populate('author', '_id first_name last_name').then((result) => {
             console.log(result);
             res.status(200).json(result);
         }).catch((err) => {
