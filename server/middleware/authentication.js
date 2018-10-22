@@ -8,7 +8,7 @@ const authenticate = (req, res, next) => {
       let tokens = req.headers['authorization'].split(' ')      
       if (tokens[0] == 'Bearer') {          
         jwt.verify(tokens[1], process.env.JWT_KEY, (err, decoded) => {
-          console.log('decoded===>', decoded, err)
+          // console.log('decoded===>', decoded, err)
           if (!err && decoded) {
             req.user = decoded                                                   
             User.findById(req.user.id)
