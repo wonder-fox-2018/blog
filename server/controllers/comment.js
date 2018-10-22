@@ -31,6 +31,16 @@ class Controller {
       })
   }
   
+  static getComment(req,res){
+      console.log(req.decoded.id)
+      Comment.find({userId:req.decoded.id})
+      .then((data)=>{
+          res.status(200).json(data)
+      })
+      .catch((err)=>{
+          res.status(500).json(err)
+      })
+  }
   static deleteComment(req, res) {
     Comment.deleteOne({_id: req.params.id})
       .then(() => {

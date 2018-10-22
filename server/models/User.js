@@ -22,15 +22,16 @@ const userSchema = new mongoose.Schema({
         required : true,
         match : [/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/, 'Invalid email format!']
     },
+    avatar :{
+        type : String,
+        required:true,
+        default:"https://storage.googleapis.com/ecommerce.agusrr.xyz/1540203578253download.png"
+    },
     password : {
         type: String,
         required : true,
         validate: passValidator
-    },
-    purchase : [{
-        type : mongoose.Schema.Types.ObjectId,
-        ref : 'Purchase'
-    }]
+    }
 }, {timestamps:true})
 
 userSchema.plugin(uniqueValidator)

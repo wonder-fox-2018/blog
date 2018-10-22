@@ -5,7 +5,14 @@ const {article} = require('../middleware/isHim')
 
 const articleController = require('../controllers/article')
 
+
+router.get('/search/:keyword',articleController.getSearch)
+ 
+router.get('/my/name',auth,articleController.getMyArticle)
+
 router.get('/', articleController.getArticle)
+
+router.get('/find/:id', articleController.getArticleById)
 
 router.get('/:id', articleController.findArticle)
 

@@ -28,8 +28,21 @@ describe('Users', () => {
       .send({name: 'Bimo', email: '', password: '12345'})
       .end((err, result) => {
         expect(result).to.have.status(500)
+        expect(result.body).to.have.property('error')
         done()
       })
+  })
+
+  it('POST /users with empty password or password length<6 must be validate',(done)=>{
+     chai.request(app)
+     .post('/users')
+     .send({name:'Bimo',email:'bimo@mail.com',password:'123'})
+     .end((err,result)=>{
+       expect(result).to.have.status(500)
+       expect(result.body).to.have.property('error')
+       expect(result.body.error).to.equals("User validation failed: password: Password should be between 6 and 16 characters")
+       done()
+     })
   })
 
   it('POST /users should return new user', (done) => {

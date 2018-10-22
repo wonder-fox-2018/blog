@@ -62,6 +62,45 @@ describe('Articles', () => {
       })
   })
   
+  it('POST /articles with blank title should be return with warning message',(done)=>{
+    chai.request(app)
+      .post('/articles')
+      .send({title:'',content:''})
+      .set('token',token)
+      .end((err,result)=>{
+          expect(result).to.have.status(500)
+          expect(result.body).to.have.property('message')
+          expect(result.body.message).to.equal('your input wrong')
+          done()
+      })
+  })
+
+  it('GET MY Articles with token should return My Articles',(done)=>{
+    chai.request(app)
+      .get('/articles/my/name')
+      .set('token',token)
+      .end((err,result)=>{
+          console.log("ini error==>",err)
+          expect(result).to.have.status(200)
+          expect(result.body[0]).to.have.property('content')
+          expect(result.body[0]).to.have.property('title')
+          expect(result.body[0]).to.have.property('_id')
+          done()
+      })
+  })
+
+  it('POST /articles with wrong token should be return warning message',(done)=>{
+    chai.request(app)
+      .post('/articles')
+      .send({title:'hello',content:'world'})
+      .set('token','asdffaasdsa')
+      .end((err,result)=>{
+          expect(result).to.have.status(500)
+          expect(result.body.name).to.equal('JsonWebTokenError')
+          expect(result.body.message).to.equal('jwt malformed')
+          done()
+      })
+  })
 
   it('POST /articles should return new article', (done) => {
     chai.request(app)
@@ -116,8 +155,8 @@ describe('Articles', () => {
       .get(`/articles/${articleId}`)
       .end((err, result) => {
         expect(result).to.have.status(200)
-        expect(result.body).to.have.property('title')
-        expect(result.body.comments).to.be.a('array')
+        expect(result.body[0]).to.have.property('title')
+        expect(result.body[0].comments).to.be.a('array')
         done()
       })
   })

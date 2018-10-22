@@ -19,6 +19,9 @@ const articleSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  imgUrl:{
+    type: String
+  },
   userId: {
     type: mongoose.Schema.Types.ObjectId, 
     ref: 'User'
@@ -26,6 +29,10 @@ const articleSchema = new mongoose.Schema({
   comments: [{
     type: mongoose.Schema.Types.ObjectId, 
     ref: 'Comment' 
+  }],
+  like: [{
+    type: mongoose.Schema.Types.ObjectId, 
+    ref: 'User' 
   }]
 }, {timestamps: true})
 

@@ -3,6 +3,17 @@ const Comment = require('../models/Comment')
 
 class Controller {
   
+  static getSearch(req,res){
+      console.log(req.params.keyword)
+      Article.find({title: new RegExp(req.params.keyword, 'i')})
+      .then(data => {
+          res.status(200).json(data)
+       })
+      .catch(err => {
+          res.status(500).json({error: err.message})
+      })
+  }
+
   static getArticle(req, res) {
     Article.find()
       .populate({
@@ -17,7 +28,7 @@ class Controller {
           model: 'User',
           select: '_id name email'
         }
-      })
+      }).sort({createdAt:-1})
       .then(articles => {
         res.status(200).json(articles)
       })
@@ -25,14 +36,67 @@ class Controller {
         res.status(500).json({error: err.message})
       })
   }
-  
+
+  static getMyArticle(req, res) {
+    Article.find({userId:req.decoded.id})
+      .populate({
+        path: 'userId', 
+        select: '_id name email'
+      })
+      .populate({
+        path: 'comments', 
+        select: '_id comment userId',
+        populate: {
+          path: 'userId',
+          model: 'User',
+          select: '_id name email'
+        }
+      }).sort({createdAt:-1})
+      .then(articles => {
+        res.status(200).json(articles)
+      })
+      .catch(err => {
+        res.status(500).json({error: err.message})
+      })
+  }
+
+  static getArticleById(req, res) {
+    Article.find({_id:req.params.id})
+      .populate({
+        path: 'userId', 
+        select: '_id name email'
+      })
+      .populate({
+        path: 'comments', 
+        select: '_id comment userId',
+        populate: {
+          path: 'userId',
+          model: 'User',
+          select: '_id name email'
+        }
+      }).sort({createdAt:-1})
+      .then(articles => {
+        res.status(200).json(articles)
+      })
+      .catch(err => {
+        res.status(500).json({error: err.message})
+      })
+  }
+
   static createArticle(req, res) {
-    let newArticle = {
+      
+      let newArticle = {
       title: req.body.title,
       content: req.body.content,
+      imgUrl:req.body.imgUrl,
       userId: req.decoded.id
     }
     
+    if(req.body.title==''||req.body.content==''){
+      res.status(500).json({message:'your input wrong'})
+    }
+
+
     Article.create(newArticle)
       .then(article => {
         Article.findById(article._id)
@@ -42,6 +106,7 @@ class Controller {
           })
       })
       .catch(err => {
+        console.log(err)
         res.status(500).json({error: err.message})
       })
   }
@@ -65,7 +130,8 @@ class Controller {
   static update(req, res) {
     let newArticle = {
       title: req.body.title,
-      content: req.body.content
+      content: req.body.content,
+      imgUrl:req.body.imgUrl
     }
     
     Article.updateOne({_id: req.params.id}, newArticle)
@@ -78,8 +144,11 @@ class Controller {
   }
   
   static findArticle(req, res) {
-    Article.findById(req.params.id)
-      .populate('userId', '_id name')
+    Article.find({_id:req.params.id})
+      .populate({
+        path: 'userId', 
+        select: '_id name email'
+      })
       .populate({
         path: 'comments', 
         select: '_id comment userId',
@@ -89,14 +158,13 @@ class Controller {
           select: '_id name email'
         }
       })
-      .then(article => {
-        res.status(200).json(article)
+      .then(articles => {
+        res.status(200).json(articles)
       })
       .catch(err => {
         res.status(500).json({error: err.message})
       })
   }
-  
 }
 
 module.exports = Controller

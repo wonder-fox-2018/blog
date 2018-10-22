@@ -6,7 +6,7 @@ const {comment} = require('../middleware/isHim')
 const commentController = require('../controllers/comment')
 
 router.post('/:id', auth, commentController.comment)
-
+router.get('/',auth,commentController.getComment)
 router.delete('/:id', auth, comment, commentController.deleteComment)
 
 module.exports = router;
