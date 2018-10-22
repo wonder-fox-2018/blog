@@ -45,7 +45,7 @@ export default {
                 method: 'GET',
                 url: `/article/${this.$route.params.id}`
             }).then((result) => {
-                console.log(result.data, 'data');
+                
                 this.article = result.data;
             }).catch((err) => {
                 console.log(err);
