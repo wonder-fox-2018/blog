@@ -5,17 +5,17 @@ const bcrypt = require('bcryptjs')
 var userSchema = new Schema({
     name : {
         type: String,
-        required: [true, 'name is required']
+        required: [true, 'Nama Harus Diisi']
     },
     email : {
         type: String,
-        unique: [true, 'email is already exists'],
-        required: [true, 'email is required']
+        unique: [true, 'Email Sudah Terdaftar'],
+        required: [true, 'email Harus Diisi']
     },
     password : {
         type: String,
-        minlength: [5, 'password min 5 characters'],
-        required: [true, 'password is required']
+        minlength: [5, 'Password Minimal 5 Karakter'],
+        required: [true, 'Password Harus Diisi']
     },
     articles: [{
         type: mongoose.Schema.Types.ObjectId,

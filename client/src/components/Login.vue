@@ -20,12 +20,11 @@
                     <div class="modal-body">
                         <div class="form-group">
                             <label for="exampleInputEmail1">Email address</label>
-                            <input type="email" class="form-control" v-model="loginEmail" aria-describedby="emailHelp"
-                                placeholder="Enter email">
+                            <input type="email" class="form-control" v-model="loginEmail" aria-describedby="emailHelp" placeholder="Enter email" required>
                         </div>
                         <div class="form-group">
                             <label for="exampleInputPassword1">Password</label>
-                            <input type="password" class="form-control" v-model="loginPassword" placeholder="Password">
+                            <input type="password" class="form-control" v-model="loginPassword" placeholder="Password" required>
                         </div>
                         <button class="btn btn-primary" data-dismiss="modal"  v-on:click="login">Login</button>
                         <div class="form-group">
@@ -102,13 +101,14 @@ export default {
                 }
             })
             .then((result) => {
+                console.log(result.data.msg);
                 localStorage.setItem('blogToken', result.data.token)
                 this.loginEmail = '',
                 this.loginPassword = ''
                 this.setUser()
             }).catch((err) => {
                 this.loginPassword = ''
-                console.log(err.response.data);
+                console.log(err.response.data.msg);
             });
         },
         register(){
@@ -127,14 +127,17 @@ export default {
                 this.registerEmail = '',
                 this.registerPassword = ''
             }).catch((err) => {
-                console.log(err.response.data.errors);
+                // console.log(err.response.data.errors);
                 this.registerPassword = ''
+                console.log(err.response.data.message);
+                
             });
         },
         logout(){
             localStorage.removeItem('blogToken')
             this.setUser()
-
+            console.log('Logout berhasil');
+            
         }
 
     }

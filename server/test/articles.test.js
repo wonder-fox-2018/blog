@@ -76,7 +76,7 @@ describe('Articles', () => {
         chai.request(app)
           .get('/articles')
           .end((err, res) => {
-              console.log(res.body);
+              // console.log(res.body);
             res.should.have.status(200);
             res.body.should.be.a('array');
             done();
@@ -84,7 +84,7 @@ describe('Articles', () => {
       });
     });
   
-    afterEach((done) => { //Before each test we empty the database
+    afterEach((done) => { 
       Article.remove({}, (err) => {
         User.remove({}, err=>{
           done();

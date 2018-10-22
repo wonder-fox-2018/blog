@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const User = require('./user');
+const Article = require('./article')
 
 const commentSchema = new Schema({
     comment:{
@@ -16,7 +17,7 @@ const commentSchema = new Schema({
 });
 
 // commentSchema.pre('remove', function(next) {
-//     User.update({ _id: this.user }, { "$pull": { "comments": this._id }},function(err, obj) {
+//     Article.update({ _id: this._id }, { "$pull": { "comments": this._id }},function(err, obj) {
 //         next();
 //     });
 // });

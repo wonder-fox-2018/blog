@@ -24,7 +24,7 @@ module.exports = {
         .then((result) => {
             if(!result){
                 res.status( 400 ).json({
-                    msg: 'User not found!'
+                    msg: 'User tidak ditemukan!'
                 })
             }
             let valid = bcrypt.compareSync(req.body.password, result.password)
@@ -40,7 +40,7 @@ module.exports = {
                         })
                     } else {
                         res.status( 200 ).json({
-                            msg : 'login success',
+                            msg : 'login berhasil',
                             token : token
                         })
                     }
@@ -53,7 +53,7 @@ module.exports = {
             }
         })  
         .catch((err) => {            
-            res.status(500).json(err)
+            res.status(500).json({msg: 'login gagal', err: err})
         });
     },
     update: (req, res) => {

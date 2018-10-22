@@ -1,19 +1,77 @@
 <template>
+<div>
     <div class="container">
             <div class="float-md-right small text-muted">{{time.slice(0, 10)}}</div>
             <h2>{{title}}</h2>
-            <h5>by. {{author}}</h5><br>
+            <h5>by. {{author}}</h5>
+            <div>
+                share:
+            <h5>
+                <a class="twitter-share-button fab fa-twitter fa-stack-1x" :href="'https://twitter.com/intent/tweet?text=Blog cakep nih, cek yah... http:localhost:3000/articles/' + articleId  "  data-size="large"></a>
+            </h5> <br>
+            </div>
+            
             <img :src="img">
             <br><br>
         <p>
             {{text}}
         </p>
+
+        <!-- button edit/delete -->
+        <div v-if="user && authorId === user.id">
+            <button class="btn btn-primary" data-toggle="modal" data-target="#modal-edit" @click="getArticle(articleId)">Edit</button>  
+            <button class="btn btn-primary" @click="deleteArticle">Hapus</button>
+
+            <!-- modal Edit article -->
+            <div id="modal-edit" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content" style="padding: 5% 10%;">
+                        <!-- form  -->
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Title</label>
+                            <input type="text" class="form-control" id="exampleInputEmsacasail1" aria-describedby="emailHelp"
+                                placeholder="Judul" v-model="editTitle">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Url Image</label>
+                            <input type="url" class="form-control" id="exampleInputEm" aria-describedby="emailHelp" placeholder="Url img" v-model="editImg">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleFormControlTextarea1">Text</label>
+                            <textarea class="form-control" id="exampleFormControlsacTextarea1" rows="20" v-model="editText"></textarea>
+                        </div>
+                        <button class="btn btn-primary" data-dismiss="modal" @click="editArticle">Submit</button>
+                        <!--  -->
+                    </div>
+                </div>
+            </div>
+            <!-- akhir modal -->
+        </div>
+        <div class="row">
+            <h3 class="mb-2">Komentar</h3>
+
+            <add-comment v-if="user" :user="user" :articleId="articleId" @get-article="getArticle(articleId)"></add-comment>
+            <comment :user="user" v-for="(comment, index) in comments" :key="index" :coment="comment" @get-article="getArticle(articleId)" ></comment>
+        </div>
+
     </div>
+    
+
+</div>
 </template>
 <script>
     import axios from 'axios'
+    import comment from '@/components/comment.vue'
+    import addComment from '@/components/addcomment.vue'
+
     export default {
         name: 'detailArticle' ,
+        props: ['user'],
+        components: {
+            comment,
+            addComment
+        },
         data(){
             return {
                 server: 'http://localhost:3000',
@@ -21,31 +79,76 @@
                 author: '',
                 text: '',
                 img: '',
-                time: ''
+                time: '',
+                articleId: '',
+                authorId: '',
+                editTitle: '',
+                editText: '',
+                editImg: '',
+                comments: ''
             }
         },
         methods: {
-            getArticle(id){
+            getArticle(id){                                                
                 axios({
                     method: 'GET',
                     url: `${this.server}/articles/${id}`
                 })
                 .then((result) => {
-                    console.log(result.data);
+                    // console.log(result);
+                    this.articleId = result.data._id
                     this.text = result.data.text
                     this.title = result.data.title
                     this.author = result.data.author.name
+                    this.authorId = result.data.author._id
                     this.img = result.data.img
                     this.time = result.data.createdAt
-                    
+                    this.editText = result.data.text
+                    this.editTitle = result.data.title
+                    this.editImg = result.data.img
+                    this.comments = result.data.comments
                 }).catch((err) => {
                     console.log(err);
-                    
+                });
+            },
+            editArticle(){ 
+                axios({
+                    method: 'PUT',
+                    url: `${this.server}/articles/${this.articleId}`,
+                    headers: {
+                        token : localStorage.getItem('blogToken')
+                    },
+                    data: {
+                        title: this.editTitle,
+                        text: this.editText,
+                        img: this.editImg
+                    }
+                })
+                .then((result) => {     
+                    this.getArticle(this.articleId)
+                    this.$emit('get-all-articles')
+                }).catch((err) => {
+                   console.log(err);
+                });
+            },
+            deleteArticle(){
+                axios({
+                    method: 'DELETE',
+                    url: `${this.server}/articles/${this.articleId}`,
+                    headers: {
+                        token : localStorage.getItem('blogToken')
+                    }
+                })
+                .then((result) => {
+                    console.log('hapus sukses', result);
+                    this.$emit('get-all-articles')
+                    this.$router.push({path: '/articles'})
+                }).catch((err) => {
+                   console.log(err);
                 });
             }
         },
-        created() {
-            // console.log(this.$route.params.id)
+        created() {            
             this.getArticle(this.$route.params.id)
 
         },
@@ -56,8 +159,6 @@
         },
         watch:{
             getParamsId: function(val){
-                // this.idArticle = val
-                // console.log(this.idArticle)
                 this.getArticle(val)
             }
         }

@@ -1,7 +1,5 @@
 <template>
-
     <div>
-
         <nav class="navbar navbar-expand-lg navbar-light static-top sb-navbar">
             <div class="container">
                 <a class="navbar-brand">Blog Warung Coffee</a>
@@ -41,8 +39,7 @@
                 </div>
             </div>
         </nav>
-
-        
+    <!-- <div class="alert alert-success" role="alert"> {{msg}} </div> -->
 
 
     </div>

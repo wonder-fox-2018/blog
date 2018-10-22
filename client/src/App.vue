@@ -1,17 +1,24 @@
 <template>
-  <div id="app">
+  <div id="app" class="container">
     <div id="nav">
-    <navbar :user="user" :setUser="setUser"></navbar>
-    <footer></footer>
+      <navbar :user="user" :setUser="setUser"></navbar>
     </div>
-    <router-view :user='user'></router-view>
+    <div>
+      <router-view :user='user'></router-view>
+    </div>
+    <div >
+      <chat :user="user"></chat>
+      <footerx></footerx>
+    </div>
+    
   </div>
 </template>
 
 <script>
 import axios from 'axios'
 import navbar from '@/components/Navbar.vue'
-import footer from '@/components/footer.vue'
+import footerx from '@/components/footer.vue'
+import chat from '@/components/chat.vue'
 
 export default {
   data() {
@@ -22,12 +29,10 @@ export default {
   },
   components : {
     navbar,
-    footer
+    footerx,
+    chat
   },
   methods: {
-    isLogin : function() {
-
-    },
     setUser: function() {
       let token = localStorage.getItem('blogToken')
       if(token){                
