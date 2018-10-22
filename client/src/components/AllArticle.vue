@@ -56,8 +56,6 @@ export default {
             this.allArticle.data = this.searchresult
         },
         categoryresult : function(val){
-            // console.log('all article data',this.allArticle.data)
-            // console.log('category result data',this.categoryresult.data)
             this.allArticle.data = this.categoryresult
         }
     }
