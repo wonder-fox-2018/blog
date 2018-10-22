@@ -1,5 +1,6 @@
 const Article = require('../models/article');
 const ServerResponse = require('../helpers/serverResponse');
+const Comment = require('../models/comment');
 
 module.exports = {
     create: (req, res) => {
@@ -48,8 +49,12 @@ module.exports = {
     },
 
     delete: (req, res) => {
-        Article.deleteOne({_id: req.params.id, author: req.decoded.id}).then((result) => {
-                res.status(200).json(result);
+        Article.deleteOne({_id: req.params.id, author: req.decoded.id}).then((diff) => {
+            Comment.deleteMany({article: req.params.id}).then((result) => {
+                res.status(200).json(diff);
+            }).catch((err) => {
+                res.status(500).json(err.message);
+            });
         }).catch((err) => {
             ServerResponse.error(res, 401, 'user is not authorized to delete this article')
         });

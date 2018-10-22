@@ -4,6 +4,7 @@ const UserController = require('../controllers/userController');
 const Middlewares = require('../middlewares/index');
 const articleRoute = require('./article');
 const profileRoute = require('./profile');
+const commentRoute = require('./comment');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -20,6 +21,8 @@ router.post('/login', UserController.login);
 router.use('/article', articleRoute);
 
 router.use('/profile', profileRoute);
+
+router.use('/comment', commentRoute);
 
 
 
