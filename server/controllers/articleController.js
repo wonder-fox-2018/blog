@@ -1,4 +1,6 @@
 const Article = require('../models/articleModel.js');
+const Comment = require('../models/commentModel.js');
+const mongoose = require('mongoose');
 
 class ArticleController {
     static create(req, res) {
@@ -17,12 +19,13 @@ class ArticleController {
                 res.status(201).json(response);
             })
             .catch(function(err) {
+                console.log(err)
                 res.status(500).json(err);
             });
     }
 
     static showAll(req, res) {
-        Article.find()
+        Article.find().populate('author')
             .then(function(articles) {
                 res.status(200).json(articles);
             })
@@ -32,7 +35,7 @@ class ArticleController {
     }
 
     static findWithId(req, res) {
-        Article.findById(req.params.id)
+        Article.findById(req.params.id).populate('author')
             .then(function(article) {
                 res.status(200).json(article);
             })
@@ -71,16 +74,46 @@ class ArticleController {
     }
 
     static delete(req, res) {
-        Article.deleteOne({_id: req.params.id})
+        Article.deleteOne({_id: req.params.id, author: req.user._id})
             .then(function(result) {
-                const response = {
-                    success: true,
-                    message: `Article successfully deleted`
-                };
-                res.status(200).json(response);
+                Comment.deleteMany({article: req.params.id})
+                    .then(function(resultComment) {                        
+                        const response = {
+                            success: true,
+                            message: `Article successfully deleted`
+                        };
+                        res.status(200).json(response);
+                    })
+                    .catch(function(err) {
+                        res.status(500).json(err);
+                    });
             })
             .catch(function(err) {
                 res.status(500).json(err);
+            });
+    }
+
+    static findByAuthor(req, res) {
+        const userId = new mongoose.Types.ObjectId(req.user._id)
+        Article.find().populate('author')
+            .then(function(articles) {
+                const result = articles.filter(function(datum) {
+                    return userId.equals(datum.author._id);
+                });
+                res.status(200).json(result);
+            })
+            .catch(function(err) {
+                res.status(500).json(err);
+            });
+    }
+
+    static searchArticle(req, res) {
+        Article.find({name: new RegExp(req.params.keyword, 'i')})
+            .then(function(articles) {
+                res.status(200).json(articles);
+            })
+            .catch(function(err) {
+                res.status(500).json(err.message); 
             });
     }
 }

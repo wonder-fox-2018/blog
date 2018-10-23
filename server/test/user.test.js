@@ -42,8 +42,8 @@ describe('User Register API Test', function() {
             .send(user)
             .end(function(err, res) {
                 expect(res).to.have.status(201);
-                expect(res.body).to.have.property('success');
-                expect(res.body).to.have.property('message');
+                expect(res.body).to.have.property('success').to.equal(true);
+                expect(res.body).to.have.property('message').to.equal(`Account ${user.name} registered`);
                 done();
             });
     });
@@ -55,6 +55,7 @@ describe('User Register API Test', function() {
             .send(user)
             .end(function(err, res) {
                 expect(res).to.have.status(500);
+                expect(res.body).to.have.property('message').to.equal("User validation failed: name: Name is required")
                 done();
             });
     });
@@ -67,6 +68,7 @@ describe('User Register API Test', function() {
             .send(user)
             .end(function(err, res) {
                 expect(res).to.have.status(500);
+                expect(res.body).to.have.property('message').to.equal("User validation failed: email: Email is required")
                 done();
             });
     });
@@ -79,7 +81,7 @@ describe('User Register API Test', function() {
             .send(user)
             .end(function(err, res) {
                 expect(res).to.have.status(500);
-                expect(res.body).to.equal("User validation failed: password: Password is required");
+                expect(res.body).to.have.property('message').to.equal("User validation failed: password: Password is required");
                 done();
             });
     });
@@ -91,7 +93,7 @@ describe('User Register API Test', function() {
             .send(user)
             .end(function(err, res) {
                 expect(res).to.have.status(500);
-                expect(res.body).to.equal("User validation failed: password: Min characters length is 4");
+                expect(res.body).to.have.property('message').to.equal("User validation failed: password: Min characters length is 4");
                 done();
             });
     });
@@ -103,7 +105,7 @@ describe('User Register API Test', function() {
             .send(user)
             .end(function(err, res) {
                 expect(res).to.have.status(500);
-                expect(res.body).to.equal("User validation failed: password: Max characters length is 10");
+                expect(res.body).to.have.property('message').to.equal("User validation failed: password: Max characters length is 10");
                 done();
             });
     });

@@ -7,7 +7,8 @@ class UserController {
             name: req.body.name,
             email: req.body.email,
             password: req.body.password,
-            role: 'user'
+            role: 'user',
+            avatarURL: req.body.avatarURL
         });
         user.save()
             .then(function(user) {
@@ -18,7 +19,7 @@ class UserController {
                 res.status(201).json(response);
             })
             .catch(function(err) {
-                res.status(500).json(err.message);
+                res.status(500).json(err);
             });
     }
 

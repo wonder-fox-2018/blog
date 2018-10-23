@@ -17,7 +17,8 @@ const userSchema = new Schema({
         minlength: [4, 'Min characters length is 4'],
         maxlength: [10, 'Max characters length is 10']
     },
-    role: String
+    role: String,
+    avatarURL: String
 }, {
     timestamps: true
 });

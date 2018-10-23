@@ -104,7 +104,7 @@ describe('Article Create API Test', function() {
             })
             .end(function(err, res) {
                 expect(res).to.have.status(500);
-                expect(res.body).to.have.property('message');
+                expect(res.body).to.have.property('message').to.equal("Article validation failed: title: Title is required");
                 done();
             });
     });
@@ -119,7 +119,7 @@ describe('Article Create API Test', function() {
             })
             .end(function(err, res) {
                 expect(res).to.have.status(500);
-                expect(res.body).to.have.property('message');
+                expect(res.body).to.have.property('message').to.equal("Article validation failed: description: Description is required");
                 done();
             });
     });
@@ -147,7 +147,7 @@ describe('Article Show All Data API Test', function() {
 describe('Article Find By Id Data API Test', function() {
     it('should return status 200 and the article data (if id is valid)', function(done) {
         chai.request(app)
-            .get('/articles/5bc802234f0b188630ab5ec4')
+            .get('/articles/5bcccfdc7d966f0918be5601')
             .end(function(err, res) {
                 expect(res).to.have.status(200);
                 expect(res.body).to.have.property('_id');
@@ -165,7 +165,7 @@ describe('Article Find By Id Data API Test', function() {
             .get('/articles/5b')
             .end(function(err, res) {
                 expect(res).to.have.status(500);
-                expect(res.body).to.have.property('message');
+                expect(res.body).to.have.property('message').to.equal("Cast to ObjectId failed for value 5bcccfdc7d966f0918be56 at path _id for model Article");
                 done();
             });
     });
@@ -247,8 +247,8 @@ describe('Article Update API Test', function() {
             })
             .end(function(err, res) {
                 expect(res).to.have.status(200);
-                expect(res.body).to.have.property('success');
-                expect(res.body).to.have.property('message');
+                expect(res.body).to.have.property('success').to.equal(true);
+                expect(res.body).to.have.property('message').to.equal("Article successfully updated");
                 done();
             });
     });
@@ -327,8 +327,8 @@ describe('Article Delete API Test', function() {
             .set('access-token', token)
             .end(function(err, res) {
                 expect(res).to.have.status(200);
-                expect(res.body).to.have.property('success');
-                expect(res.body).to.have.property('message');
+                expect(res.body).to.have.property('success').to.equal(true);
+                expect(res.body).to.have.property('message').to.equal('Article successfully deleted');
                 done();
             });
     });
