@@ -211,10 +211,9 @@ export default {
       })
         .then(() => {
           this.editModal()
+          this.$emit('reload')
           if (this.$route.params.id) {
             this.getDetail(this.$route.params.id)
-          } else {
-            this.$emit('reload')
           }
         })
         .catch(err => {
