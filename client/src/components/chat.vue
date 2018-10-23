@@ -27,15 +27,20 @@ export default {
   methods: {
     submitChat() {
       const id = localStorage.getItem('token');
-      try {
-        db.ref('/db/globalChat/').push({
-          name: localStorage.getItem('username'),
-          message: this.messageChat,
-        });
-      } catch (error) {
-        console.log(error);
+      if(id){
+        try {
+          db.ref('/db/globalChat/').push({
+            name: localStorage.getItem('username'),
+            message: this.messageChat,
+          });
+        } catch (error) {
+          console.log(error);
+        }
+        this.messageChat = '';
       }
-      this.messageChat = '';
+      else{
+
+      }
     },
     refreshLobby() {
       db.ref('/db/globalChat').on('value', (snapshot) => {
@@ -49,6 +54,11 @@ export default {
             .slice(9);
         }
       });
+    },
+  },
+  watch: {
+    messageChat() {
+      this.refreshLobby()
     },
   },
   created() {

@@ -31,12 +31,6 @@ export default {
     banner,
     list
   },
-  // methods: {
-  //   searchArticle(value) {
-  //     console.log(value, 'ini dari home')
-  //     this.$emit('searchArticle', value)
-  //   },
-  // },
 }
 </script>
 

@@ -40,7 +40,6 @@ export default {
   },
   methods: {
     searchArticle(value) {
-      console.log(value, 'ini dari home')
       this.$emit('searchArticle', value)
     },
   },

@@ -47,6 +47,7 @@
     },
     data : function(){
       return {
+        chatShow : false,
         show : true,
         isLogin : false ,
         user : {

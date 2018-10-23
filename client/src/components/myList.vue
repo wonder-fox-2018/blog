@@ -55,11 +55,18 @@ export default {
   },
   created : function(){
     this.username  = localStorage.getItem('username')
-    if(this.category === 'all'){
-      this.getMyList()
+    if(this.username){
+      if(this.category === 'all'){
+        this.getMyList()
+      }
+      else{
+        this.getListByCategory()
+      }
     }
     else{
-      this.getListByCategory()
+      this.$router.push({
+        name : 'home'
+      })
     }
   },
   methods: {
