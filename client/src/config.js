@@ -1,5 +1,5 @@
 const config = {
-    port: 'http://35.197.154.79'
+    port: 'https://blogserver2.reshalem.info'
 };
 
 export default config;
