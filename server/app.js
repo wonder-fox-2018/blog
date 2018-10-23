@@ -5,6 +5,7 @@ var logger = require('morgan');
 const cors = require('cors')
 const mongoose =  require('mongoose')
 
+
 var indexRouter = require('./routes/index');
 
 var app = express();
@@ -14,8 +15,8 @@ var mongodbUri ='mongodb://@ds153715.mlab.com:53715/blogtiv';
 mongoose.connect(mongodbUri, {
   useNewUrlParser: true,
   auth: {
-    user: 'franshiro',
-    password: 'yuri1412'
+    user: process.env.MONGOUSER,
+    password: process.env.MONGOPASS
   }
 })
 app.use(logger('dev'));
