@@ -60,6 +60,7 @@
 
 <script>
 import EditModal from '@/components/EditModal.vue'
+import config from '@/config.js'
 
 export default {
     name: 'OneArticle',
@@ -81,7 +82,7 @@ export default {
         getOneArticle: function() {
             axios({
                 method: 'GET',
-                url: `http://localhost:3000/articles/${this.id}`
+                url: `${config.port}/articles/${this.id}`
             })
                 .then((article) => {
                     this.article = article.data
@@ -93,7 +94,7 @@ export default {
         getComments: function() {
             axios({
                 method: 'GET',
-                url: `http://localhost:3000/comments/${this.id}`,
+                url: `${config.port}/comments/${this.id}`,
                 headers: {
                     'access-token': localStorage.getItem('token')
                 }
@@ -110,7 +111,7 @@ export default {
         addComment: function() {
             axios({
                 method: 'POST',
-                url: `http://localhost:3000/comments/${this.id}`,
+                url: `${config.port}/comments/${this.id}`,
                 data: {
                     content: this.commentContent
                 },
@@ -129,7 +130,7 @@ export default {
         deleteComment: function(commentId) {
             axios({
                 method: 'DELETE',
-                url: `http://localhost:3000/comments/${this.id}`,
+                url: `${config.port}/comments/${this.id}`,
                 headers: {
                     'access-token': localStorage.getItem('token')
                 },
@@ -157,7 +158,7 @@ export default {
         deleteArticle: function(articleId) {
             axios({
                 method: 'DELETE',
-                url: `http://localhost:3000/articles/${articleId}`,
+                url: `${config.port}/articles/${articleId}`,
                 headers: {
                     'access-token': localStorage.getItem('token')
                 }
@@ -182,7 +183,7 @@ export default {
 
             axios({
                 method: 'GET',
-                url: `http://localhost:3000/articles/${this.articleId}`
+                url: `${config.port}/articles/${this.articleId}`
             })
                 .then((article) => {
                     this.article = article.data

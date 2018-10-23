@@ -28,6 +28,8 @@
 </template>
 
 <script>
+import config from '@/config.js'
+
 export default {
   name: 'EditModal',
   props: ['articleId', 'getonearticle'],
@@ -43,7 +45,7 @@ export default {
     getCurrentArticle: function() {
       axios({
         method: 'GET',
-        url: `http://localhost:3000/articles/${this.articleId}`
+        url: `${config.port}/articles/${this.articleId}`
       })
         .then((article) => {
             this.currentArticle.title = article.data.title
@@ -56,7 +58,7 @@ export default {
     editArticle: function() {
       axios({
         method: 'PUT',
-        url: `http://localhost:3000/articles/${this.articleId}`,
+        url: `${config.port}/articles/${this.articleId}`,
         data: {
           title: this.currentArticle.title,
           description: this.currentArticle.description

@@ -49,6 +49,8 @@
 </template>
 
 <script>
+import config from '@/config.js'
+
 export default {
     name: 'Profile',
     props: ['isLogin', 'userEmail', 'checktoken'],
@@ -63,7 +65,7 @@ export default {
         getUserProfile: function() {
             axios({
                 method: 'GET',
-                url: 'http://localhost:3000/users',
+                url: `${config.port}/users`,
                 headers: {
                     'access-token': localStorage.getItem('token')
                 }
@@ -81,7 +83,7 @@ export default {
         getUserArticle: function() {
             axios({
                 method: 'GET',
-                url: 'http://localhost:3000/articles/ownsarticle/user',
+                url: `${config.port}/articles/ownsarticle/user`,
                 headers: {
                     'access-token': localStorage.getItem('token')
                 }

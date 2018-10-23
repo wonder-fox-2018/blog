@@ -35,6 +35,7 @@
 <script>
 // import axios from 'axios'
 import Header from '@/components/Header.vue'
+import config from '@/config.js'
 
 export default {
   name: 'Register',
@@ -56,13 +57,13 @@ export default {
 			let formdata = new FormData()
 			formdata.append('image', this.registerUser.avatar);
 
-			axios.post('http://localhost:3000/uploadavatar', formdata, {
+			axios.post(`${config.port}/uploadavatar`, formdata, {
 					
 			})
 				.then((response) => {
 					axios({
 						method: 'POST',
-						url: 'http://localhost:3000/register',
+						url: `${config.port}/register`,
 						data: {
 							name: this.registerUser.name,
 							email: this.registerUser.email,
@@ -83,7 +84,7 @@ export default {
 				})
 		},
 		getImage(link){
-      this.registerUser.avatar = link.target.files[0]
+            this.registerUser.avatar = link.target.files[0]
 		}
   }
 }

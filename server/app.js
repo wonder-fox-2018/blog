@@ -10,16 +10,16 @@ const userRouter = require('./routes/userRouter.js');
 const articleRouter = require('./routes/articleRouter.js');
 const commentRouter = require('./routes/commentRouter.js');
 
-mongoose.connect('mongodb://localhost/blog', {useNewUrlParser: true});
+// mongoose.connect('mongodb://localhost/blog', {useNewUrlParser: true});
 
 app.use(cors());
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 
-// var mongodbUri = `mongodb://${process.env.MLAB_USER}:${process.env.MLAB_PASSWORD}@ds137763.mlab.com:37763/blog`;
-// mongoose.connect(mongodbUri, {
-//     useNewUrlParser: true
-// });
+var mongodbUri = `mongodb://${process.env.MLAB_USER}:${process.env.MLAB_PASSWORD}@ds137763.mlab.com:37763/blog`;
+mongoose.connect(mongodbUri, {
+    useNewUrlParser: true
+});
 
 app.use('/', indexRouter);
 app.use('/users', userRouter);

@@ -23,6 +23,7 @@
 
 <script>
 import EditModal from '@/components/EditModal.vue'
+import config from '@/config.js'
 
 export default {
     name: 'AllArticles',
@@ -43,7 +44,7 @@ export default {
         getArticles: function() {
             axios({
                 method: 'GET',
-                url: 'http://localhost:3000/articles'
+                url: `${config.port}/articles`
             })
                 .then((articles) => {
                     this.articles = articles.data
@@ -58,7 +59,7 @@ export default {
         deleteArticle: function(articleId) {
             axios({
                 method: 'DELETE',
-                url: `http://localhost:3000/articles/${articleId}`,
+                url: `${config.port}/articles/${articleId}`,
                 headers: {
                     'access-token': localStorage.getItem('token')
                 }

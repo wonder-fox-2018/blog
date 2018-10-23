@@ -50,6 +50,8 @@
 </template>
 
 <script>
+import config from '@/config.js'
+
 export default {
     name: 'Article',
     props: ['isLogin', 'userEmail', 'checktoken'],
@@ -68,7 +70,7 @@ export default {
         getArticles: function() {
             axios({
                 method: 'GET',
-                url: 'http://localhost:3000/articles'
+                url: `${config.port}/articles`
             })
                 .then((articles) => {
                     this.articles = articles.data
@@ -80,7 +82,7 @@ export default {
         createArticle: function() {
             axios({
                 method: 'POST',
-                url: 'http://localhost:3000/articles/create',
+                url: `${config.port}/articles/create`,
                 data: {
                     title: this.createdArticle.title,
                     description: this.createdArticle.description
@@ -101,7 +103,7 @@ export default {
         searchArticle: function() {
             axios({
                 method: 'GET',
-                url: `http://localhost:3000/articles/search/${this.keyword}`,
+                url: `${config.port}/articles/search/${this.keyword}`,
                 headers: {
                     'access-token': localStorage.getItem('token')
                 }
