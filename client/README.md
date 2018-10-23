@@ -1,4 +1,8 @@
+#link deploy
+blog.fmurtadho.com
+
 # client
+
 
 ## Project setup
 ```
