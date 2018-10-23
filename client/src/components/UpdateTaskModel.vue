@@ -20,6 +20,11 @@
                             <input type="text" v-model="task.description" class="form-control" placeholder="Enter Description">
                             <small style="color: red">{{ MsgDescEditTask }}</small>
                         </div>
+                         <div class="form-group">
+                             <img class="m-1" v-bind:src="task.imageurl" style="width: 200px; height:200px">
+                            <input type="file" v-on:change="getImage" class="form-control" id="file2" ref="file2" placeholder="Enter Image">
+                            <small style="color: red">{{ MsgImgTask }}</small>
+                        </div>
                         <button type="button" class="btn btn-primary" v-on:click="doUpdateTask" default>Submit</button>
                     </form>
                 </div>
@@ -40,26 +45,40 @@ export default {
             taskInputDescription: '',
             MsgTitleEditTask: '',
             MsgDescEditTask: '',
+            MsgImgTask: '',
+            imageupload: ''
         }
     },
     methods:{
+        getImage(){
+            this.imageupload = this.$refs.file2.files[0] 
+        },
         doUpdateTask(){
             let apptoken = localStorage.getItem('apptoken')
-            this.$server({
-                url:  `/articles`,
-                method: 'PUT',
-                data:{
+            let uploaddata = new FormData()
+            uploaddata.append("imagefile", this.imageupload)
+            let data={
                     articleid:this.idTask,
                     title: this.task.title,
                     description: this.task.description
-                },
+                }
+            uploaddata.append("data",data)
+
+            this.$server({
+                url:  `/articles`,
+                method: 'PUT',
+                data:uploaddata,
                 headers: {
-                    apptoken: apptoken 
+                    apptoken: apptoken,
+                    articleid:this.idTask,
+                    title: this.task.title,
+                    description: this.task.description
                 }
             })
             .then(({data}) => {
                 $('#editTaskModal').modal('hide');
                 this.refreshContent(); //refresh di parent ke child maincontent tanpa emit
+                $('#file2').val(''); 
                 //this.$emit('to-parent-edit-articles', data.articles )
             })
             .catch((err) => {

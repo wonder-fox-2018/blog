@@ -20,6 +20,11 @@
                             <input v-model="taskInputDescription" type="text" class="form-control" placeholder="Enter Description">
                             <small style="color: red">{{ MsgDescTask }}</small>
                         </div>
+                        <div class="form-group">
+                            <label>Image </label>
+                            <input type="file" v-modal="taskInputImage" v-on:change="getImage" class="form-control" id="file" ref="file" placeholder="Enter Image">
+                            <small style="color: red">{{ MsgImgTask }}</small>
+                        </div>
                         <button type="button" class="btn btn-primary" v-on:click="doAddTask" default>Submit</button>
                     </form>
                 </div>
@@ -36,31 +41,48 @@ export default {
         return {
             taskInputTitle: '',
             taskInputDescription: '',
+            taskInputImage: '',
             MsgTitleTask: '',
             MsgDescTask: '',
+            MsgImgTask: '',
+            imageupload: ''
         }
     },
     methods:{
+        getImage(){
+            this.imageupload = this.$refs.file.files[0] 
+        },
         clearTask(){
             this.taskInputTitle= ''
             this.taskInputDescription= ''
+            this.taskInputImage= ''
+            this.imageupload= ''
             this.MsgTitleTask= ''
             this.MsgDescTask= ''
+            $('#file').val(''); 
+            //this.$refs.file.files.length=0
         },
         doAddTask(){
             let apptoken = localStorage.getItem('apptoken')
+            let uploaddata = new FormData()
+            uploaddata.append("imagefile", this.imageupload)
+            let data={
+                    title: this.taskInputTitle,
+                    description: this.taskInputDescription,
+                }
+            uploaddata.append("data",data)
             this.$server({
                 url:  `/articles`,
                 method: 'POST',
-                data:{
+                data:uploaddata,
+                headers: {
+                    apptoken: apptoken,
                     title: this.taskInputTitle,
                     description: this.taskInputDescription
-                },
-                headers: {
-                    apptoken: apptoken 
                 }
             })
             .then(({data}) => {
+                console.log(data)
                 this.$emit('to-parent-add-articles', data.articles )
                 this.clearTask()
                 $('#addTaskModal').modal('hide');

@@ -4,7 +4,8 @@
         <div class="row">
         <div class="card w-40" style="margin: 20px 20px" v-for="(article, index) in articles" :key="index">
         <div class="card-body">
-            <h5 class="card-title">Title: {{ article.title }} </h5>
+            <img class="card-img-top mb-1" v-bind:src="article.imageurl" alt="Card image" style="width: 200px; height:200px">
+            <h5 class="card-title">Title: {{ article.title }}</h5>
             <h6 class="card-subtitle mb-2 text-muted">Created by: {{ article.author.first_name + ' ' + article.author.last_name }}</h6>
             <p class="card-text">Description: {{ article.description }}</p>
             <div class="card-footer bg-transparent">
@@ -13,8 +14,9 @@
                 <!-- <div> <small> {{ article.author._id + 'id user ' + iduser  }}</small></div> -->
                 <span v-if="isLogin && iduser==article.author._id">
                     <a @click="doDelete(article._id,index)" href="#" class="card-link">Delete</a>
-                    <a @click="doUpdate(article._id)" href="#" class="card-link" data-toggle="modal" data-target="#editTaskModal" >Update</a>
+                    <a @click="doUpdate(article._id)" href="#" class="card-link" data-toggle="modal" data-target="#editTaskModal" >Update </a>
                 </span>
+                <span> <a @click="doDetail(article._id)" href="#" class="card-link" > ReadMore</a></span>
              </div>
         </div>
         </div>
@@ -33,6 +35,10 @@ export default {
         }
     },
     methods:{
+        doDetail(idArticle){
+            this.$emit('parent-detail',idArticle)
+            this.$router.push(`/detail/${idArticle}`)
+        },
         formatDate(d) {
           let datetime=new Date(d)
           let date = `${datetime.getDate()}/${datetime.getMonth() + 1}/${datetime.getFullYear()} ${datetime.getHours()}:${datetime.getMinutes()}:${datetime.getSeconds()} `

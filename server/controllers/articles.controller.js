@@ -53,20 +53,16 @@ module.exports = {
             })
     },
     articleCreate: (req, res) => {  
+
+        console.log('Status----', req.file)  
+        //console.table(Object.values(req.body.data))
+        //console.table(req.headers.title)
         let newArticle = new ModelArticle({
-            title: req.body.title,
-            description: req.body.description,
+            title: req.headers.title,
+            description: req.headers.description,
+            imageurl: req.file.cloudStoragePublicUrl,
             author: req.currentuser._id
         });
-        // helpers.multer.single('imagefile'),
-        // helpers.sendUploadToGCS,
-        // (req,res) => {
-        //     console.log('Status----', req.file)  
-        //     res.status(200).json({
-        //         msg: 'Success Upload',
-        //         link: req.file.cloudStoragePublicUrl
-        //     })
-        // }
         newArticle
             .save()
             .then((result) => {
@@ -85,13 +81,23 @@ module.exports = {
 
     articleUpdate: (req, res) => {    
         let updateValue={};
-        Object.assign(updateValue, 
-            req.body.title ? { title: req.body.title } : null,
-            req.body.description ? { description: req.body.description } : null
-        );
+        console.log(req.hasOwnProperty('file'))
+        if (req.hasOwnProperty('file')){
+            Object.assign(updateValue, 
+                req.headers.title ? { title: req.headers.title } : null,
+                req.headers.description ? { description: req.headers.description } : null,
+                req.file.cloudStoragePublicUrl ? { imageurl: req.file.cloudStoragePublicUrl } : null
+            );
+        }else
+        {
+            Object.assign(updateValue, 
+                req.headers.title ? { title: req.headers.title } : null,
+                req.headers.description ? { description: req.headers.description } : null,
+            );
+        }
         ModelArticle
             .findOneAndUpdate(
-            { _id:req.body.articleid, author: req.currentuser._id },updateValue)
+            { _id:req.headers.articleid, author: req.currentuser._id },updateValue)
             .then((result) => {
                 res.status(200).json({message: "Article Updated", article:result})
             }).catch((err) => {

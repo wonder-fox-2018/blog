@@ -2,7 +2,7 @@
 <template>
     <div>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="#">Blog</a>
+            <a class="navbar-brand" href="#">Blog Kuliner</a>
             <div class="collapse navbar-collapse">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
@@ -13,7 +13,7 @@
                 </ul>
                 <div class="form-inline my-2 my-lg-0">
                     <span v-if="isLogin" class="login" >
-                        <button  class="btn btn-outline-primary mr-2 addtask" data-toggle="modal" data-target="#addTaskModal" type="button">Add Task</button>
+                        <button  class="btn btn-outline-primary mr-2 addtask" data-toggle="modal" data-target="#addTaskModal" type="button">Add Article</button>
                         <router-link to="/profile" type="button" class="btn btn-outline-primary mr-2 circle"> <i class="fas fa-user-circle" style="font-size:20px"></i></router-link>
                         <button class="btn btn-outline-primary logout" type="button" @click="doLogout">Logout</button>
                     </span>

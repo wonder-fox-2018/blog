@@ -3,10 +3,9 @@
 const mongoose = require('mongoose');
 const schema = mongoose.Schema;
 
-module.exports = mongoose.model('Article', schema({
+module.exports = mongoose.model('Comment', schema({
     title: String,
     description: String,
-    imageurl:String,
     author: {
         type: schema.Types.ObjectId,
         ref: 'User'

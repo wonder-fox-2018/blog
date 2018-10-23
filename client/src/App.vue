@@ -13,9 +13,10 @@
 <script>
 // @ is an alias to /src
 import navbar from '@/components/Navbar.vue'
+import addtaskmodal from '@/components/AddTaskModal.vue'
 import loginmodal from '@/components/LoginModal.vue'
 import registermodal from '@/components/RegisterModal.vue'
-import addtaskmodal from '@/components/AddTaskModal.vue'
+
 /* eslint-disable */
 export default {
   name: 'appvue',
