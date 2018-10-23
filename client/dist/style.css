@@ -1,0 +1,11 @@
+@import "~vue-wysiwyg/dist/vueWysiwyg.css";
+#capture {
+    max-height: 500px;
+}
+
+#nav {
+    margin: 20px;
+    padding: 29px;
+}
+
+
