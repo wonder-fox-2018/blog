@@ -35,6 +35,7 @@
 <script>
 import axios from 'axios';
 import Shared from '@/components/shared.vue';
+var baseurl='https://blog.agusrr.xyz'
 
 export default {
   components: {
@@ -47,7 +48,7 @@ export default {
   },
   created() {
     const self = this;
-    axios.get('http://localhost:3000/articles')
+    axios.get(`${baseurl}/articles`)
       .then((data) => {
         self.dataarticle = data.data;
       })

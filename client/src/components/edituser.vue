@@ -38,6 +38,7 @@
 
 <script>
 import axios from 'axios';
+var baseurl='https://blog.agusrr.xyz'
 
 export default {
   data() {
@@ -56,10 +57,10 @@ export default {
         const formdata = new FormData();
         formdata.append('image', this.result);
 
-        axios.post('http://localhost:3000/upload', formdata)
+        axios.post(`${baseurl}/upload`, formdata)
           .then((image) => {
             const self = this;
-            axios.put('http://localhost:3000/users', {
+            axios.put(`${baseurl}/users`, {
               name: this.name,
               imgUrl: image.data.link,
             }, {
@@ -80,7 +81,7 @@ export default {
           });
       } else {
         const self = this;
-        axios.put('http://localhost:3000/users', {
+        axios.put(`${baseurl}/users`, {
           name: this.name,
           imgUrl: this.image,
         }, {

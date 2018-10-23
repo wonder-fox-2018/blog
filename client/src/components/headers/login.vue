@@ -39,7 +39,7 @@
 
 <script>
 import axios from 'axios';
-
+var baseurl='https://blog.agusrr.xyz'
 export default {
   data() {
     return {
@@ -55,7 +55,7 @@ export default {
       const email = this.email;
       const password = this.password;
       const self = this;
-      axios.post('http://localhost:3000/users/login', {
+      axios.post(`${baseurl}/users/login`, {
         email,
         password,
       })

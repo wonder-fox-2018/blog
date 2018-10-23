@@ -46,6 +46,7 @@
 
 <script>
 import axios from 'axios';
+var baseurl='https://blog.agusrr.xyz'
 
 export default {
   data() {
@@ -57,7 +58,7 @@ export default {
   },
   created() {
     const self = this;
-    axios(`http://localhost:3000/articles/${this.$route.params.id}`)
+    axios(`${baseurl}/articles/${this.$route.params.id}`)
       .then((data) => {
         self.data = data.data;
         console.clear();
@@ -69,7 +70,7 @@ export default {
   methods: {
     comment() {
       const self = this;
-      axios.post(`http://localhost:3000/comment/${this.$route.params.id}`, {
+      axios.post(`${baseurl}/comment/${this.$route.params.id}`, {
         comment: this.commit,
       }, {
         headers: {
@@ -87,7 +88,7 @@ export default {
     },
     fetchdata() {
       const self = this;
-      axios.get(`http://localhost:3000/articles/${this.$route.params.id}`)
+      axios.get(`${baseurl}/articles/${this.$route.params.id}`)
         .then((data) => {
           self.data = data.data;
         })
@@ -97,7 +98,7 @@ export default {
     },
     deleted(val) {
       const self = this;
-      axios.delete(`http://localhost:3000/comment/${val}`, {
+      axios.delete(`${baseurl}/comment/${val}`, {
         headers: {
           token: localStorage.getItem('token'),
         },
@@ -114,7 +115,7 @@ export default {
   watch: {
     $route(val) {
       const self = this;
-      axios(`http://localhost:3000/articles/${this.$route.params.id}`)
+      axios(`${baseurl}/articles/${this.$route.params.id}`)
         .then((data) => {
           self.data = data.data;
         })

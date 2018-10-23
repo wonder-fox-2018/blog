@@ -35,6 +35,7 @@
 
 <script>
 import axios from 'axios';
+var baseurl='https://blog.agusrr.xyz'
 
 export default {
   data() {
@@ -44,7 +45,7 @@ export default {
   },
   created() {
     const self = this;
-    axios('http://localhost:3000/articles/my/name', {
+    axios(`${baseurl}/articles/my/name`, {
       headers: {
         token: localStorage.getItem('token'),
       },
@@ -63,7 +64,7 @@ export default {
     },
     deleted(val) {
       const self = this;
-      axios.delete(`http://localhost:3000/articles/${val}`, {
+      axios.delete(`${baseurl}/articles/${val}`,{
         headers: {
           token: localStorage.getItem('token'),
         },
@@ -78,7 +79,7 @@ export default {
     },
     fetch_article() {
       const self = this;
-      axios('http://localhost:3000/articles/my/name', {
+      axios(`${baseurl}/articles/my/name`, {
         headers: {
           token: localStorage.getItem('token'),
         },

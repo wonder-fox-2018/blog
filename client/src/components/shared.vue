@@ -33,10 +33,10 @@
     },
     data() {
       return {
-        url: 'http://localhost:8080/',
-        shareUrl : `http://localhost:8080/articles/${this.article._id}`,
+        url: 'https://blog.agusrr.xyz',
+        shareUrl : `https://blog.agusrr.xyz/articles/${this.article._id}`,
         title: 'H8 Blog ID',
-        source: 'http://localhost:8080/',
+        source: 'https://blog.agusrr.xyz/',
         media: '',
         twit: ''
       }

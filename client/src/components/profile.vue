@@ -12,6 +12,7 @@
 
 <script>
 import axios from 'axios';
+var baseurl='https://blog.agusrr.xyz'
 
 export default {
   data() {
@@ -25,7 +26,7 @@ export default {
   methods: {
     fetcharticle() {
       const self = this;
-      axios('http://localhost:3000/articles/my/name', {
+      axios(`${baseurl}/articles/my/name`, {
         headers: {
           token: localStorage.getItem('token'),
         },
@@ -40,7 +41,7 @@ export default {
 
     fetchcomment() {
       const self = this;
-      axios('http://localhost:3000/comment', {
+      axios(`${baseurl}/comment`, {
         headers: {
           token: localStorage.getItem('token'),
         },
@@ -54,7 +55,7 @@ export default {
     },
     fetchprofile() {
       const self = this;
-      axios.get('http://localhost:3000/users/profile', {
+      axios.get(`${baseurl}/users/profile`, {
         headers: {
           token: localStorage.getItem('token'),
         },
@@ -74,7 +75,7 @@ export default {
   },
   created() {
     const self = this;
-    axios.get('http://localhost:3000/users/profile', {
+    axios.get(`${baseurl}/users/profile`, {
       headers: {
         token: localStorage.getItem('token'),
       },

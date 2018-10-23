@@ -17,6 +17,8 @@
 import Sidebar from '@/components/sidebar.vue';
 import axios from 'axios';
 
+var baseurl='https://blog.agusrr.xyz'
+
 export default {
   components: {
     Sidebar,
@@ -39,7 +41,7 @@ export default {
     fetchArticle() {
       const self = this;
 
-      axios.get('http://localhost:3000/articles')
+      axios.get(`${baseurl}/articles`)
         .then((data) => {
           self.article = data.data;
         })

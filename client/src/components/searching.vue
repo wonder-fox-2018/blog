@@ -29,7 +29,7 @@
 
 <script>
 import axios from 'axios';
-
+var baseurl='https://blog.agusrr.xyz'
 export default {
   data() {
     return {
@@ -38,7 +38,7 @@ export default {
   },
   methods: {
     dapetgak() {
-      axios.get(`http://localhost:3000/articles/search/${this.search}`)
+      axios.get(`${baseurl}/articles/search/${this.search}`)
         .then((data) => {
           this.render = data.data;
           console.log(hasil);
