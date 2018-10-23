@@ -527,7 +527,38 @@ describe('Article', function () {
 
         describe('=====> valid token', function () {
             
-            it('should delete added article', function(done) {
+            this.beforeAll('Add a comment to the article and a reply to the comment', function (done) {
+                chai
+                .request(app)
+                .post('/comments/')
+                .set({
+                    token: token
+                })
+                .send({
+                    words: 'A comment',
+                    postId: id,
+                })
+                .end((err, res) => {
+                    expect(res).to.have.status(201)
+
+                    chai
+                    .request(app)
+                    .post('/comments/stack')
+                    .set({
+                        token: token
+                    })
+                    .send({
+                        words: 'A reply',
+                        commentId: res.body.data._id
+                    })
+                    .end((err, res2) => {
+                        expect(res2).to.have.status(201)
+                        done()
+                    })
+                })
+            })
+            
+            it('should delete added article and all the comments associated with it', function(done) {
                 chai
                 .request(app)
                 .delete(`/articles/${id}`)
@@ -541,10 +572,20 @@ describe('Article', function () {
                     chai
                     .request(app)
                     .get(`/articles/${id}`)
-                    .end((err, res) => {
-                        expect(res).to.have.status(200)
-                        expect(res.body.data).to.equal(null)
-                        done()
+                    .end((err, res2) => {
+                        expect(res2).to.have.status(200)
+                        expect(res2.body.data).to.equal(null)
+
+                        // THIS ONE BELOW IS TO CHECK IF THE COMMENTS ASSOCIATED WITH THE QUESTION ARE DELETED
+                        chai
+                        .request(app)
+                        .get('/comments/')
+                        .end((err, res3) => {
+                            expect(res3).to.have.status(200)
+                            expect(res3.body.data).to.be.a('array')
+                            expect(res3.body.data).to.have.lengthOf(0)
+                            done()
+                        })
                     })
                 })
             })

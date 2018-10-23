@@ -1,6 +1,5 @@
 const Comment = require('../models/commentModel')
 const Article = require('../models/articleModel')
-const User = require('../models/userModel')
 
 module.exports = {
     

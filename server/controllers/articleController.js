@@ -1,4 +1,5 @@
 const Article = require('../models/articleModel')
+const Comment = require('../models/commentModel')
 
 module.exports = {
     
@@ -108,12 +109,70 @@ module.exports = {
     },
 
     remove: function(req, res) {
-        Article.deleteOne({
-            _id: req.params.id,
-            author: req.userId 
-        })
-        .then(data => {
-            res.status(200).json({data: data})
+        Article.findById(req.params.id)
+        .then(article => {
+            if (article.comments.length === 0) {
+                aDel()
+            } else {
+                Comment.find({
+                    _id: {
+                        $in: article.comments
+                    }
+                })
+                .then(comments => {
+                    for (let i = 0; i < comments.length; i++) {
+                        if (comments[i].level === 1) {
+                            Comment.deleteMany({
+                                _id: {
+                                    $in: comments[i].comments
+                                }
+                            })
+                            .then(() => {
+                                if (i === comments.length - 1) {
+                                    cDel()
+                                }
+                            })
+                            .catch(err => {
+                                res.status(500).json({message: err})
+                            })
+                        } else {
+                            if (i === comments.length - 1) {
+                                cDel()
+                            }
+                        }
+                    }
+                })
+                .catch(err => {
+                    res.status(500).json({message: err})
+                })
+
+                function cDel() {
+                    Comment.deleteMany({
+                        _id: {
+                            $in: article.comments
+                        }
+                    })
+                    .then(() => {
+                        aDel()
+                    })
+                    .catch(err => {
+                        res.status(500).json({message: err})
+                    })
+                }
+            }
+
+            function aDel() {
+                Article.deleteOne({
+                    _id: req.params.id,
+                    author: req.userId 
+                })
+                .then(() => {
+                    res.status(200).json({})
+                })
+                .catch(err => {
+                    res.status(500).json({message: err})
+                })
+            }
         })
         .catch(err => {
             res.status(500).json({message: err})
