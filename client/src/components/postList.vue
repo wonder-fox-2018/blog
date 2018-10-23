@@ -117,6 +117,7 @@ export default {
       this.openAddModal = !this.openAddModal
       this.openListBackdrop = !this.openListBackdrop
       this.notice = ''
+      this.shareLoc = false
     },
     addPost () {
       let loc = ''
