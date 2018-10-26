@@ -65,41 +65,35 @@ class CommentController{
         })
           .then(comment =>{
               let deleteComment = comment
-              // check user 
-              if(deleteComment.userid == req.decoded.userid){
-                // Update article
-                Article.findOneAndUpdate({
-                    _id: deleteComment.articleid
+              
+              // Update article
+              Article.findOneAndUpdate({
+                _id: deleteComment.articleid
                 },{
                     $pull: {
                         listcomments: deleteComment._id
                     }
                 })
-                 .then(article =>{
+                .then(article =>{
                     // delete comment
                     Commentary.findOneAndRemove({ _id: req.params.id})
-                      .then(deletedComment =>{  
-                          res.status(201).json({
-                              msg: 'Comment Deleted',
-                              data: deletedComment
-                          })
-                      })
-                      .catch(error =>{
-                          res.status(500).json({
-                              msg: 'ERROR Delete Comment'
-                          })
-                      })
-                 }) 
-                 .catch(error =>{
-                     res.status(500).json({
-                         msg: 'ERROR Update Article when delete comment ',error
-                     })
-                 })
-              }else if(deleteComment.userid != req.decoded.userid){
-                  res.status(403).json({
-                      msg: 'User is not authorized to delete comment'
-                  })
-              }
+                    .then(deletedComment =>{  
+                        res.status(201).json({
+                            msg: 'Comment Deleted',
+                            data: deletedComment
+                        })
+                    })
+                    .catch(error =>{
+                        res.status(500).json({
+                            msg: 'ERROR Delete Comment'
+                        })
+                    })
+                }) 
+                .catch(error =>{
+                    res.status(500).json({
+                        msg: 'ERROR Update Article when delete comment ',error
+                    })
+                })
           })
           .catch(error =>{
               res.status(500).json({
