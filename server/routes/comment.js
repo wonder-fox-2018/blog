@@ -10,6 +10,6 @@ router.get('/', (req, res)=> {
 router.get('/showall', commentController.showAllComment)
 router.post('/add',midleware.isLogin, commentController.createComment)
 router.put('/edit/:id', commentController.updateComment)
-router.delete('/delete/:id',midleware.isLogin, midleware.isAdmin, commentController.deleteComment)
+router.delete('/delete/:id',midleware.isLogin, midleware.isYou, commentController.deleteComment)
 
 module.exports = router

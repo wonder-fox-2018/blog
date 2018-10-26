@@ -4,7 +4,10 @@ const Schema = mongoose.Schema
 const articleSchema = new Schema({
     title : String,
     article : String,
-    img : String,
+    img : {
+        type : String,
+        default : 'https://www.finansialku.com/wp-content/uploads/2018/01/Gambar-Tipografi-01-Finansialku.jpg'
+    },
     category : String,
     username : String,
     user : {

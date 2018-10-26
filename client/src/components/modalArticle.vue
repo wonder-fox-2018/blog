@@ -3,7 +3,7 @@
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalCenterTitle">Register</h5>
+          <h5 class="modal-title" id="exampleModalCenterTitle">Create Article</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -71,10 +71,14 @@ export default {
           title : self.title,
           article : self.content,
           category : self.category,
-          img : self.img
+          img : self.img || 'https://www.finansialku.com/wp-content/uploads/2018/01/Gambar-Tipografi-01-Finansialku.jpg'
         }
       })
       .then(response => {
+        this.title = ''
+        this.article = ''
+        this.category = ''
+        this.img = ''
         console.log(response)
         this.getarticle()
         this.updatecomponent()

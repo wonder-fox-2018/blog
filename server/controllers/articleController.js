@@ -51,7 +51,7 @@ class ArticleController{
 
     }
     static deleteArticle(req, res){
-        Article.findOneAndDelete({ _id : req.params.id})
+        Article.deleteOne({ _id : req.params.id})
         .then(deleted => {
             res.status(200).json(deleted)
         })

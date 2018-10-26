@@ -20,16 +20,24 @@
                        <button class="btn btn-primary" @click="addComment">add comment</button> 
                     </span>
                 </div>
-                <ul class="comments-list" v-for="(list,index) in detail.comments" :key="index">
-                    <li class="comment">
+                <div class="border">
+                  <ul class="comments-list" v-for="(list,index) in detail.comments" :key="index">
+                      <li class="comment border">
                         <div class="comment-body">
                             <div class="comment-heading">
                                 <h4 class="user">{{list.user}}</h4>
                             </div>
                             <p>{{list.comment}}</p>
                         </div>
+                        <div class="d-flex">
+                          <div v-if="username != list.user && username != ''">
+                          </div>
+                            <button v-if="username == list.user && username != ''" @click="deleteComment(list._id)" class="ml-auto" data-toggle='modal' data-target='#editComment'>Delete</button>
+                        </div>
                     </li>
                 </ul>
+                  </ul>
+                </div>
             </div>
         </div>
     </div>
@@ -44,12 +52,14 @@ export default {
       return{
         detail : '',
         show : true, 
-        comment : ''
+        comment : '',
+        username : ''
       }
     },
     props : ['id'],
     created : function(){
       this.getDetailArticle()
+      this.username = localStorage.getItem('username')
     },
     watch : {
       id(){
@@ -57,6 +67,22 @@ export default {
       }
     },
     methods: {
+      deleteComment : function(value){
+        console.log(value)
+        axios({
+          method : 'DELETE',
+          url : `${config.port}/comments/delete/${value}`,
+          headers : {
+            token : localStorage.getItem('token')
+          }
+        })
+        .then(response => {
+          this.getDetailArticle()
+        })
+        .catch(err => {
+          console.log(err)
+        })
+      },
       addComment : function(){
         axios({
           method : 'POST',
@@ -71,6 +97,7 @@ export default {
         })
         .then(response => {
           this.getDetailArticle()
+          this.username = localStorage.getItem('username')
         })
         .catch(err => {
           console.log(err)
