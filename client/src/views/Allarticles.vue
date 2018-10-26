@@ -1,10 +1,12 @@
 <template>
     <div>
+        <br>
+        <br>
         <h1>List Articles</h1>
         <div v-for="(article,index) in listarticles" :key="index">
             <div style="width: 52rem;" class="card">
                 <div class="card-body">
-                    <button type="button" class="btn btn-primary">{{ article.title }}</button>
+                    <label class="badge">{{ article.title }}</label>
                     <br>
                     <p class="card-text">Author: {{ article.author.name}}</p>
                     <hr>

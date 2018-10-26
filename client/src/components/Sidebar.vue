@@ -20,7 +20,9 @@
             <br>
             <br>
             <ul class="list-unstyled components">
-                <p style="color: red">List of Articles</p>
+                <router-link :to="{ path: '/article'}">
+                  <p style="color: red">List of Articles</p>
+                </router-link>
                 <hr>
                 <ul class="list-unstyled" id="homeSubmenu">
                     <li v-for="(article, index) in listarticles" :key="index">
