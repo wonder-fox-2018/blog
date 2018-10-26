@@ -16,15 +16,6 @@
                         </form>
                     </div>
                 </div>
-                <!-- <div class="d-flex flex-column justify-content-start">
-                    <p>Search Article</p>
-                    <form @submit.prevent="searchArticle()" class="mb-2">
-                        <div class="form-group">
-                            <input v-model="keyword" type="text" class="form-control" placeholder="Article Name">
-                        </div>
-                        <button type="submit" class="btn btn-primary btn-block">Search</button>
-                    </form>
-                </div> -->
                 <div class="card">
                     <div class="card-header">Article List</div>
                     <div class="card-body">
@@ -97,22 +88,6 @@ export default {
                     this.shouldUpdate += 1
                 })
                 .catch((err) => {
-                    console.log(err)
-                })
-        },
-        searchArticle: function() {
-            axios({
-                method: 'GET',
-                url: `${config.port}/articles/search/${this.keyword}`,
-                headers: {
-                    'access-token': localStorage.getItem('token')
-                }
-            })
-                .then(function(articles) {
-                    this.articles = articles.data
-                    this.getArticles()
-                })
-                .catch(function(err) {
                     console.log(err)
                 })
         }

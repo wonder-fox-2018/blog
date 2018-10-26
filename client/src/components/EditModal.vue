@@ -79,6 +79,21 @@ export default {
   created() {
     this.getCurrentArticle()
     this.getonearticle()
+  },
+  watch: {
+    articleId() {
+      axios({
+          method: 'GET',
+          url: `${config.port}/articles/${this.articleId}`
+      })
+          .then((article) => {
+              this.currentArticle.title = article.data.title
+              this.currentArticle.description = article.data.description
+          })
+          .catch((err) => {
+              console.log(err)
+          })
+    }
   }
 }
 </script>

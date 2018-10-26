@@ -6,7 +6,6 @@
                     <i class="fas fa-fingerprint text-danger mr-2" id="btn-fingerprint"></i>
                     Your Article
                 </div>
-                <EditModal :articleId="article._id" :getarticles="getArticles"></EditModal>
                 <h4 class="card-title">{{ article.title }}</h4>
                 <p class="card-text">{{ article.description }}</p>
                 <div class="d-flex justify-content-between align-items-center mb-4">
