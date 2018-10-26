@@ -44,41 +44,24 @@ class ArticleController{
 
     // edit article
     static editArticle(req,res){
-        Article.findOne({
+        Article.findOneAndUpdate({
             _id: req.params.id
-        })
-          .then(article =>{
-            // check user
-            if(article.author == req.decoded.userid){
-                Article.findOneAndUpdate({
-                    _id: req.params.id
-                },{
-                    $set: {
-                       title:req.body.title,
-                       description: req.body.description 
-                    }
-                })
-                  .then(updatedarticle =>{     
-                    res.status(201).json({
-                        msg: 'Article updated',
-                        data: updatedarticle
-                    }) 
-                  })
-                  .catch(error =>{
-                     res.status(500).json({
-                         msg: 'ERROR Update Article ',error
-                     })
-                  })
-            }else if(article.author != req.decoded.userid){
-                res.status(401).json({
-                    msg: 'User is not authorized to update article'
-                })
+        },{
+            $set: {
+                title: req.body.title,
+                description: req.body.description
             }
-          })
-          .catch(error =>{
-              res.status(500).json({
-                  msg: 'ERROR Edit article ',error
+        })
+          .then(updatedarticle => {
+              res.status(201).json({
+                 msg: 'Article updated',
+                 data: updatedarticle
               })
+          })
+          .catch(error => {
+            res.status(500).json({
+                msg: 'ERROR Update Article ',error
+            })
           })
     }
 
@@ -122,56 +105,50 @@ class ArticleController{
         })
           .then(article =>{
               let deleteArticle = article
-             // check user
-             if(article.author == req.decoded.userid){
-                // Update user data
-                User.findOneAndUpdate({
-                    _id: req.decoded.userid
-                },{
-                    $pull: {
-                        articleslist: deleteArticle._id
-                    }
-                })
-                 .then(user=>{
 
-                    // update comment collections --> 
-                    // delete all comments related to this article
-                    Commentary.deleteMany({
-                        articleid: deleteArticle._id
-                    })
-                      .then(commentupdated =>{
-                          // completely remove article
-                          Article.findOneAndRemove({
-                              _id: req.params.id
+              // Update user data
+              User.findOneAndUpdate({
+                _id: req.decoded.userid
+            },{
+                $pull: {
+                    articleslist: deleteArticle._id
+                }
+            })
+             .then(user=>{
+
+                // update comment collections --> 
+                // delete all comments related to this article
+                Commentary.deleteMany({
+                    articleid: deleteArticle._id
+                })
+                  .then(commentupdated =>{
+                      // completely remove article
+                      Article.findOneAndRemove({
+                          _id: req.params.id
+                      })
+                        .then(deletedArticle =>{
+                          res.status(201).json({
+                              msg: 'Article Deleted',
+                              data: deletedArticle
                           })
-                            .then(deletedArticle =>{
-                              res.status(201).json({
-                                  msg: 'Article Deleted',
-                                  data: deletedArticle
-                              })
+                        })
+                        .catch(error =>{
+                            res.status(500).json({
+                                msg: 'ERROR Delete Article ',error
                             })
-                            .catch(error =>{
-                                res.status(500).json({
-                                    msg: 'ERROR Delete Article ',error
-                                })
-                            })  
+                        })  
+                  })
+                  .catch(error =>{
+                      res.status(500).json({
+                         msg:'ERROR Update Comment while delete article' 
                       })
-                      .catch(error =>{
-                          res.status(500).json({
-                             msg:'ERROR Update Comment while delete article' 
-                          })
-                      })
+                  })
+             })
+             .catch(error =>{
+                 res.status(500).json({
+                     msg: 'ERROR Update User data when delete article',error
                  })
-                 .catch(error =>{
-                     res.status(500).json({
-                         msg: 'ERROR Update User data when delete article',error
-                     })
-                 })
-             }else{
-                 res.status(403).json({
-                     msg: 'User is not authorized to delete article'
-                 })
-             }
+             })  
           })
           .catch(error =>{
               res.status(500).json({
