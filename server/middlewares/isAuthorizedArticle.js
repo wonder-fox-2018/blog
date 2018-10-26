@@ -10,7 +10,7 @@ function isAuthorizedArticle(req,res,next){
         if(article.author == req.decoded.userid) {
             next()
         } else if (article.author != req.decoded.userid) {
-            res.status(401).json({
+            res.status(403).json({
                 msg: 'User is not authorized to update/delete article'
             })
         }

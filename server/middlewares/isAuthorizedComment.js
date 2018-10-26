@@ -9,7 +9,7 @@ function isAuthorizedComment(req,res,next) {
         if(comment.userid  == req.decoded.userid){
             next()
         } else if (comment.userid  != req.decoded.userid) {
-            res.status(401).json({
+            res.status(403).json({
                 msg: 'User is not authorized to delete comment'
             })
         }

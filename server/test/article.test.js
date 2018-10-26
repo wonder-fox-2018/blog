@@ -86,9 +86,13 @@ describe('Article CRUD', ()=>{
             chai.request(app)
                 .get('/articles/lists')
                 .end((err,res)=>{
+                    console.log('res.body---------', res.body)
                     expect(res).to.have.status(200)
                     expect(res.body.data).to.be.an('array')
                     expect(res.body.data).to.have.lengthOf(1)
+                    expect(res.body.data[0]).to.have.property('title')
+                    expect(res.body.data[0]).to.have.property('description')
+                    expect(res.body.data[0].title).to.equal('Sample Article')
                     done()
                 })
         })
@@ -167,7 +171,7 @@ describe('Article CRUD', ()=>{
                     .set('token', anotherToken)
                     .end((err,res)=>{
                         expect(res).to.have.status(403)
-                        expect(res.body.msg).to.equal('User is not authorized to delete article')
+                        expect(res.body.msg).to.equal('User is not authorized to update/delete article')
                         done()
                     })
               })
