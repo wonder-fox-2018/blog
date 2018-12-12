@@ -7,18 +7,20 @@
             </div>
           <div class="row ">
             <div class="col-md-4 col-12">
-                <img :src="value.img" width="200" height="200">
+                <img class="list-img" :src="value.img" width="200" height="200">
             </div>
             <div class="col-md-8 col-12 px-6">
+              <div class="list-content">
                 <div class="card-block px-3">
-                <p class="card-text">Posted on {{value.createAt}}</p>
-                <p class="card-text">by {{value.username}}</p>
-                <button class="btn btn-primary"  @click="detailArticle(value._id)">Read More</button>
+                  <p class="card-text">Posted on {{value.createAt}}</p>
+                  <p class="card-text">by {{value.username}}</p>
+                  <button class="btn btn-primary"  @click="detailArticle(value._id)">Read More</button>
                 </div>
                 <div class="py-3" v-if="username == value.username && username != ''">
                   <button type="button" class="btn btn-secondary my-2 my-sm-0" @click="test(value._id)" data-toggle="modal" data-target="#modalEdit">Edit</button>
                   <button class="btn btn-secondary" @click="deleteArticle(value._id)">Delete</button>
                 </div>
+              </div>
             </div>
           </div>
         </div>

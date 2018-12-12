@@ -1,17 +1,17 @@
 <template>
-    <div class="ui segment">
-          <div>
-            <h3>Chat global</h3>
-          </div>
-          <div class="ui form">
-            <div id="chats" style="height: 450px; justify-self:end;">
-              <div class="ui floating mini message" v-for="(chat,index) in listChat" :key='index'>
-                <p>{{ chat.name }}: {{ chat.message }}</p>
-              </div>
-            </div>
-            <input type="text" placeholder="Type your message" @keyup.enter="submitChat"  v-model="messageChat">
-          </div>
+  <div class="card my-4">
+    <h5 class="card-header"> Chat </h5>
+    <div class="ui form">
+      <div id="chats" style="height: 450px; justify-self:end;">
+        <div class="ui floating mini message" v-for="(chat,index) in listChat" :key='index'>
+          <p>{{ chat.name }}: {{ chat.message }}</p>
         </div>
+      </div>
+      <div class="input-chat">
+        <input type="text" placeholder="Type your message" @keyup.enter="submitChat"  v-model="messageChat">
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -74,9 +74,15 @@ export default {
 </script>
 
 <style>
-#chats {
+  #chats {
     overflow: auto;
     margin-bottom: 15px;
-}
+    margin-left: 5px
+  }
+  .input-chat{
+    width: 95%;
+    margin : auto;
+    padding-bottom : 5px;
+  }
 
 </style>

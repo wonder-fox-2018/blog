@@ -11,15 +11,15 @@ var indexRouter = require('./routes/index');
 var app = express();
 
 app.use(cors())
-// mongoose.connect('mongodb://localhost/blog', {useNewUrlParser : true})
-var mongodbUri ='mongodb://@ds153715.mlab.com:53715/blogtiv';
-mongoose.connect(mongodbUri, {
-  useNewUrlParser: true,
-  auth: {
-    user: process.env.MONGOUSER,
-    password: process.env.MONGOPASS
-  }
-})
+mongoose.connect('mongodb://localhost/blog', {useNewUrlParser : true})
+// var mongodbUri ='mongodb://@ds153715.mlab.com:53715/blogtiv';
+// mongoose.connect(mongodbUri, {
+//   useNewUrlParser: true,
+//   auth: {
+//     user: process.env.MONGOUSER,
+//     password: process.env.MONGOPASS
+//   }
+// })
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

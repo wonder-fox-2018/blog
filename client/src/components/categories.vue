@@ -9,26 +9,23 @@
                     <router-link :to="{name : 'myList', params:{category : 'all'}}" >All</router-link>
                 </li>
                 <li>
-                    <router-link :to="{name : 'myList', params:{category : 'Manga'}}" >Manga</router-link>
+                    <router-link :to="{name : 'myList', params:{category : 'Puisi'}}" >Puisi</router-link>
                 </li>
                 <li>
-                    <router-link :to="{name : 'myList', params:{category : 'Manwa'}}" >manwa</router-link>
-                </li>
-                <li>
-                    <router-link :to="{name : 'myList', params:{category : 'Manhua'}}" >manhua</router-link>
+                    <router-link :to="{name : 'myList', params:{category : 'Cerita'}}" >Cerita</router-link>
                 </li>
             </ul>
             </div>
             <div class="col-lg-6">
             <ul class="list-unstyled mb-0">
                 <li>
-                    <router-link :to="{name : 'myList', params:{category : 'Anime'}}" >anime</router-link>
+                    <router-link :to="{name : 'myList', params:{category : 'Lirik'}}" >Lirik</router-link>
                 </li>
                 <li>
-                     <router-link :to="{name : 'myList', params:{category : 'Gunpla'}}" >gunpla</router-link>
+                     <router-link :to="{name : 'myList', params:{category : 'Info'}}" >Info</router-link>
                 </li>
                 <li>
-                    <router-link :to="{name : 'myList', params:{category : 'Figure'}}" >figure</router-link>
+                    <router-link :to="{name : 'myList', params:{category : ''}}" >Uncategorized</router-link>
                 </li>
             </ul>
             </div>

@@ -1,5 +1,5 @@
 <template>
-  <div class="col-md-8">
+  <div class="col-md-8 mt-1">
       <div class="container py-3" v-for="(value, index) in article" :key="index">
         <div class="card">
             <div class="card-footer text-muted">
@@ -7,14 +7,16 @@
             </div>
         <div class="row ">
         <div class="col-md-4 col-12">
-            <img :src="value.img" width="200" height="200">
+            <img class="list-img" :src="value.img" width="200" height="200">
         </div>
         <div class="col-md-8 col-12 px-6">
+          <div class="list-content">
             <div class="card-block px-3">
-            <p class="card-text">Posted on {{value.createAt}}</p>
-            <p class="card-text">by {{value.username}}</p>
-            <button class="btn btn-primary"  @click="detailArticle(value._id)">Read More</button>
+              <p class="card-text">Posted on {{value.createAt}}</p>
+              <p class="card-text">by {{value.username}}</p>
+              <button class="btn btn-primary"  @click="detailArticle(value._id)">Read More</button>
             </div>
+          </div>
         </div>
         </div>
       </div>
@@ -43,12 +45,12 @@ export default {
 }
 </script>
 
-<style>
-.card{
-  width: 95%!important;
-}
-.col-md-4{
-  width: 100%!important
-}
-
+<style scoped>
+  .card{
+    width: 95%!important;
+  }
+  .col-md-4 .col-12{
+    width: 90%!important;
+    margin: auto
+  }
 </style>

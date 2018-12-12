@@ -1,46 +1,43 @@
 <template>
-  <div class="card mb-4" v-if="show">
-    <div class="card-footer text-muted">
-      Posted on {{detail.createAt}} by
-      <a href="#">{{detail.username}}</a>
+  <div class="card mt-4 mb-4" v-if="show">
+    <div class="posted-author">
+      Posted by <a href="#">{{detail.username}}</a>
     </div>
-    <img class="card-img-top" :src="detail.img">
+    <img class="detail-img-top" :src="detail.img">
     <h3>{{detail.title}}</h3>
     <div class="card-body">
-        <h2 class="card-title">{{detail.category}}</h2>
-        <p class="card-text" v-html="detail.article"></p>
+      <p class="card-text" v-html="detail.article"></p>
     </div>
     <div class="card-footer text-muted">
-    <div class="col-sm-12">
+      <div class="col-sm-12">
         <div class="panel panel-white post panel-shadow">
-            <div class="post-footer">
-                <div class="input-group"> 
-                    <input class="form-control" v-model="comment" placeholder="Add a comment" type="text">
-                    <span class="input-group-addon">
-                       <button class="btn btn-primary" @click="addComment">add comment</button> 
-                    </span>
-                </div>
-                <div class="border">
-                  <ul class="comments-list" v-for="(list,index) in detail.comments" :key="index">
-                      <li class="comment border">
-                        <div class="comment-body">
-                            <div class="comment-heading">
-                                <h4 class="user">{{list.user}}</h4>
-                            </div>
-                            <p>{{list.comment}}</p>
-                        </div>
-                        <div class="d-flex">
-                          <div v-if="username != list.user && username != ''">
-                          </div>
-                            <button v-if="username == list.user && username != ''" @click="deleteComment(list._id)" class="ml-auto" data-toggle='modal' data-target='#editComment'>Delete</button>
-                        </div>
-                    </li>
-                </ul>
-                  </ul>
-                </div>
+          <div class="post-footer">
+            <div class="input-group"> 
+              <input class="form-control" v-model="comment" placeholder="Add a comment" type="text">
+              <span class="input-group-addon">
+                <button class="btn btn-primary" @click="addComment">add comment</button> 
+              </span>
             </div>
+            <div class="border">
+              <ul class="comments-list" v-for="(list,index) in detail.comments" :key="index">
+                <li class="comment border">
+                <div class="comment-body">
+                  <div class="comment-heading">
+                    <h4 class="user">{{list.user}}</h4>
+                  </div>
+                  <p>{{list.comment}}</p>
+                </div>
+                <div class="d-flex">
+                  <div v-if="username != list.user && username != ''">
+                  </div>
+                  <button v-if="username == list.user && username != ''" @click="deleteComment(list._id)" class="ml-auto" data-toggle='modal' data-target='#editComment'>Delete</button>
+                </div>
+                </li>
+              </ul>
+            </div>
+          </div>
         </div>
-    </div>
+      </div>
     </div>
   </div>
 </template>
@@ -119,4 +116,17 @@ export default {
     },
 }
 </script>
+<style scoped>
+  .posted-author{
+    margin-top: 2%;
+    text-align: left;
+    margin-left: 2.5%
+  }
+  .detail-img-top{
+    margin: auto;
+    width: 95%;
+    align-content: center;
+  }
+</style>
+
 
