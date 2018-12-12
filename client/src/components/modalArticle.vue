@@ -23,12 +23,10 @@
               <div class="form-group">
                 <label for="sel1">Select list:</label>
                 <select class="form-control" v-model="category" id="sel1">
-                  <option>Manga</option>
-                  <option>Manwa</option>
-                  <option>Manhua</option>
-                  <option>Anime</option>
-                  <option>Gunpla</option>
-                  <option>Figure</option>
+                  <option>Puisi</option>
+                  <option>Cerita</option>
+                  <option>Lirik</option>
+                  <option>Info</option>
                 </select>
               </div>
               <div class="form-group col-md-12">

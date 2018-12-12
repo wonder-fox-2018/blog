@@ -77,14 +77,13 @@
     },
     methods : {
       updateComponent() {
-      this.show = false
+        this.show = false
 
-      this.$nextTick(function() {
-        this.show = true
-      })
-      this.getArticle()
-      console.log('refresh')
-    },
+        this.$nextTick(function() {
+          this.show = true
+        })
+        this.getArticle()
+      },
       setSearch(value){
         this.search = value
       },

@@ -61,6 +61,9 @@ class ArticleController{
     }
     static showAllArticle(req, res){
         Article.find({})
+        .sort({
+            createdAt : -1
+        })
         .then(articles => {
             res.status(200).json(articles)
         })
@@ -84,6 +87,9 @@ class ArticleController{
         Article.find({
             title: new RegExp(req.params.keyword, 'i')
         })
+        .sort({
+            createdAt : -1
+        })
         .then(data => {
             res.status(200).json(data)
         })
@@ -94,6 +100,9 @@ class ArticleController{
     static showUserArticle(req, res){
         const userId = new mongoose.Types.ObjectId(req.login.id);
         Article.find({}).populate('user')
+        .sort({
+            createdAt : -1
+        })
         .then(article => {
             const result = article.filter(function (datum) {
                 return userId.equals(datum.user._id);

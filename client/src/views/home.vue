@@ -1,23 +1,16 @@
 <template>
     <div class="container">
       <div class="row">
-        <!-- Blog Entries Column -->
         <articlelist :article="article"></articlelist>
-        <!-- Sidebar Widgets Column -->
         <div class="col-md-4">
-          <!-- Search Widget -->
           <searchWidget @searchArticle="searchArticle"></searchWidget>
-          <!-- Categories Widget -->
           <categories></categories>
-          <!-- Side Widget -->
           <list></list>
-<!-- Side Widget -->
-          <!-- tweeter -->
           <chat></chat>
+          <banner></banner>
           <sosialMedia></sosialMedia>
         </div>
       </div>
-      <!-- /.row -->
     </div>
 </template>
 
@@ -28,12 +21,14 @@ import searchWidget from '@/components/searchWidget.vue'
 import categories from '@/components/categories.vue'
 import sosialMedia from '@/components/sosialMedia.vue'
 import list from '@/components/list.vue'
+import banner from '@/components/banner.vue'
 export default {
   props : ['article'],
   components : {
     articlelist,
     searchWidget,
     categories,
+    banner,
     sosialMedia,
     list,
     chat
