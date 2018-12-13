@@ -23,14 +23,16 @@
                 <li class="comment border">
                 <div class="comment-body">
                   <div class="comment-heading">
-                    <h4 class="user">{{list.user}}</h4>
+                    <h4 class="user"># {{list.user}}</h4>
                   </div>
                   <p>{{list.comment}}</p>
                 </div>
                 <div class="d-flex">
                   <div v-if="username != list.user && username != ''">
                   </div>
-                  <button v-if="username == list.user && username != ''" @click="deleteComment(list._id)" class="ml-auto" data-toggle='modal' data-target='#editComment'>Delete</button>
+                  <button class="delete-button ml-auto" v-if="username == list.user && username != ''" @click="deleteComment(list._id)" data-toggle='modal' data-target='#editComment'>
+                    <span class="fas fa-trash-alt"></span>
+                  </button>
                 </div>
                 </li>
               </ul>
@@ -65,7 +67,6 @@ export default {
     },
     methods: {
       deleteComment : function(value){
-        console.log(value)
         axios({
           method : 'DELETE',
           url : `${config.port}/comments/delete/${value}`,
@@ -93,6 +94,7 @@ export default {
           }
         })
         .then(response => {
+          this.comment = ''
           this.getDetailArticle()
           this.username = localStorage.getItem('username')
         })
@@ -126,6 +128,19 @@ export default {
     margin: auto;
     width: 95%;
     align-content: center;
+  }
+  .user{
+    color : blue;
+  }
+  .delete-button{
+    margin : 5px;
+    border-radius: 50%;
+    font-size: 20px;
+    background-color: transparent;
+  }
+  .delete-button:hover{
+    color : red;
+    border: solid red 1px;
   }
 </style>
 

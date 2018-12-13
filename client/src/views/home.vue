@@ -1,10 +1,11 @@
 <template>
     <div class="container">
       <div class="row">
-        <articlelist :article="article"></articlelist>
-        <div class="col-md-4">
+        <div class="col-lg-8 col-md-6 col-12">
+          <articlelist :article="article"></articlelist>
+        </div>
+        <div class="col-lg-4 col-md-6 col-12">
           <searchWidget @searchArticle="searchArticle"></searchWidget>
-          <categories></categories>
           <list></list>
           <chat></chat>
           <banner></banner>
